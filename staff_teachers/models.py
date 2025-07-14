@@ -1,4 +1,5 @@
 from django.db import models
+from student.models import TblStudentsAdmissions
 
 # Create your models here.
 class TblTeachersPay(models.Model):
@@ -202,28 +203,273 @@ DAY_CHOICES = [
 
 class Timetable(models.Model):
     day = models.CharField(max_length=200, choices=DAY_CHOICES, null=True, blank=True)
-    class_no = models.IntegerField()
+    year = models.IntegerField()
     from_time = models.CharField(max_length=200, null=True, blank=True)
     to_time = models.CharField(max_length=200, null=True, blank=True)
     lecturer = models.CharField(max_length=250, null=True, blank=True)
     courses = models.CharField(max_length=256, null=True, blank=True)
     room = models.CharField(max_length=100, null=True, blank=True)
 
-class studentsResults(models.Model):
+
+
+SCHOOL_CHOICES = [
+    ('School of Theology', 'School of Theology'),
+    ('School of Counselling Psychology', 'School Of Counselling Psychology'),
+    ('School Of Philosophy', 'School Of Philosophy')
+]
+
+QUALIFICATION_CHOICES = [
+    ('Baccalaurete','Baccalaurete'),
+    ('Bachelor', 'Bachelor'),
+    ('Diploma', 'Diploma'),
+    ('Certificate', 'Certificate'),
+    ('No Award', 'No Award')
+]
+
+PHILOSOPHY_COURSE_CHOICES = [
+    ('CPH 100', 'Introduction to Philosophy'),
+    ('CPH 113.1', 'Cosmology I (Philosophy of Nature)'),
+    ('CPH 113.2','Cosmology II (Philosophy of Nature)'),
+    ('CPH 180', 'History of Ancient Philosophy')
+]
+
+THEOLOGY_COURSE_CHOICES = [
+    ('CTBSC 101','Introduction to the Judeo-Christian Scriptures'),
+    ('CTCHC 101', 'Church History I: The Early Centuries'),
+    ('CTGKL 101','New Testament Greek I'),
+    ('CTLTL 101', 'Latin I (afternoon)'),
+]
+
+ACADEMIC_YEAR_CHOICES = [
+    ('2020-21', '2020-21'),
+    ('2021-22', '2021-22'),
+    ('2022-23', '2022-23'),
+    ('2023-24', '2023-24'),
+    ('2025-26', '2025-26'),
+    ('2026-27', '2026-27'),
+    ('2027-28', '2027-28'),
+    ('2028-29', '2028-29'),
+    ('2029-30', '2029-30'),
+]
+
+class AcademicPeriod(models.Model):
+    academic_year = models.CharField(max_length=9, choices=ACADEMIC_YEAR_CHOICES)  # e.g., "2020-21"
+    semester = models.CharField(max_length=100, choices=[('Semester 1', 'Semester 1'), ('Semester 2', 'Semester 2')])
+
+    class Meta:
+        unique_together = ['academic_year', 'semester']
+    
+    def __str__(self):
+        return f"{self.academic_year} Semester {self.semester}"
+    
+class Course(models.Model):
+    code = models.CharField(max_length=20, null=True, blank=True)
+    credit = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    year = models.IntegerField(null=True, blank=True)
+    semester = models.IntegerField(null=True, blank=True)
+    school = models.CharField(max_length=250, null=True, blank=True)
+    marks = models.CharField(max_length=250, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.code} - {self.title}"
+    
+    
+    
+class CourseLists(models.Model):
+    year= models.CharField(max_length=250, null=True, blank=True)
+    semester = models.CharField(max_length=250, null=True, blank=True)
+    course_code = models.CharField(max_length=250, null=True, blank=True)
+    course_title = models.CharField(max_length=250, null=True, blank=True)
+    credit = models.CharField(max_length=250, null=True, blank=True)
+    school = models.CharField(max_length=250, null=True, blank=True)
+    
+    
+
+
+class TranscriptSummary(models.Model):
+    student = models.OneToOneField(TblStudentsAdmissions, on_delete=models.CASCADE)
+    overall_average = models.DecimalField(max_digits=5, decimal_places=2)
+    accumulated_credits = models.DecimalField(max_digits=5, decimal_places=2)
+    class_awarded = models.CharField(max_length=50, null=True, blank=True)  # e.g., Upper Second Class Honours
+    award_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.student} Summary"
+    
+
+class GradeScale(models.Model):
+    min_score = models.PositiveIntegerField()
+    max_score = models.PositiveIntegerField()
+    letter_grade = models.CharField(max_length=2, null=True, blank=True)
+    description = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.letter_grade} ({self.min_score} - {self.max_score})"
+    
+
+class PhilosophystudentsResults(models.Model):
+    student = models.ForeignKey(TblStudentsAdmissions, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     congregation = models.CharField(max_length=200, null=True, blank=True)
     s_no = models.CharField(max_length=200, null=True, blank=True)
-    reg_no = models.CharField(max_length=200, null=True, blank=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
-    plato_republic = models.CharField(max_length=200, null=True, blank=True)
-    modern_world_history = models.CharField(max_length=200, null=True, blank=True)
-    special_ethicks = models.CharField(max_length=200, null=True, blank=True)
-    logic = models.CharField(max_length=200, null=True, blank=True)
-    emmanuel_kant = models.CharField(max_length=200, null=True, blank=True)
-    edith_stein = models.CharField(max_length=200, null=True, blank=True)
-    philosophical_latin = models.CharField(max_length=200, null=True, blank=True)
-    christianity_philosophy = models.CharField(max_length=200, null=True, blank=True)
-    ancient_thought = models.CharField(max_length=200, null=True, blank=True)
-    comprehensive_written = models.CharField(max_length=200, null=True, blank=True)
-    comprehensives_oral = models.CharField(max_length=200, null=True, blank=True)
-    
+    # period = models.ForeignKey(AcademicPeriod, on_delete=models.CASCADE)
+
+
+
+class TranscriptEntry(models.Model):
+    student = models.ForeignKey(TblStudentsAdmissions, on_delete=models.CASCADE)
+    course = models.ForeignKey(PhilosophystudentsResults, on_delete=models.CASCADE)
+    period = models.ForeignKey(AcademicPeriod, on_delete=models.CASCADE)
+    score = models.DecimalField(max_digits=5, decimal_places=2)
+    period = models.ForeignKey(AcademicPeriod, on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"{self.student.last_name} {self.student.first_name}"
+
+
+MONTH_CHOICES = [
+    ("JANUARY", "January"),
+    ("FEBRUARY", "February"),
+    ("MARCH", "March"),
+    ("APRIL", "April"),
+    ("MAY", "May"),
+    ("JUNE", "June"),
+    ("JULLY", "Jully"),
+    ("AUGUST", "August"),
+    ("SEPTEMBER", "September"),
+    ("OCTOBER", "October"),
+    ("NOVEMBER", "November"),
+    ("DECEMBER", "December"),
+]
+class TblClaimSheet(models.Model):
+    name = models.CharField(max_length=100)
+    language = models.CharField(max_length=100)
+    month = models.CharField(max_length=100, choices=MONTH_CHOICES)
+    normal_class = models.CharField(max_length=100)
+    normal_time = models.CharField(max_length=100)
+    normal_mark = models.CharField(max_length=100)
+    normal_number = models.CharField(max_length=100)
+    special_class = models.CharField(max_length=100)
+    special_time = models.CharField(max_length=100)
+    special_mark = models.CharField(max_length=100)
+    special_number = models.CharField(max_length=100)
+    onsite_class = models.CharField(max_length=100)
+    onsite_time = models.CharField(max_length=100)
+    level = models.CharField(max_length=100)
+    date_created = models.CharField(max_length=100)
+
+
+    class Meta:
+        db_table = 'tbl_claim_sheet'
+        managed = False  # Since the table already exists in the DB
+
+
+STATE_CHOICES = [
+    ('Registrar Approval', 'Registrar Approval'),
+    ('DVC Finance Approval', 'DVC Finance Approval'),
+    ('Payment', 'Payment'),
+    ('Paid', 'Paid'),
+
+]
+class ClaimForm(models.Model):
+    """Main form metadata"""
+    staff_name = models.CharField(max_length=100, null=True, blank=True)
+    staff_email = models.CharField(max_length=100, null=True, blank=True)
+    month = models.CharField(max_length=100, choices=MONTH_CHOICES)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    comments = models.TextField(null=True, blank=True)
+    total = models.FloatField(null=True, blank=True)
+    state = models.CharField(max_length=250, choices=STATE_CHOICES, null=True, blank=True)
+
+    @property
+    def grand_total(self):
+        return sum(item.total for item in self.claimitems.all())
+
+
+class ClaimItem(models.Model):
+    """Row item with calculated total"""
+    CATEGORY_CHOICES = [
+        ('hours', 'Hours'),
+        ('meetings', 'Meetings'),
+        ('invigilation_core', 'Invigilation - Core Course'),
+        ('invigilation_elective', 'Invigilation - Elective Course'),
+        ('marking_cat', 'Marking of CATs'),
+        ('marking_exam', 'Marking of Final Exams'),
+    ]
+
+    claim_form = models.ForeignKey(ClaimForm, on_delete=models.CASCADE, related_name='claimitems')
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    description = models.CharField(max_length=100, blank=True, null=True)  # e.g., "Core course"
+    quantity = models.PositiveIntegerField()
+    rate = models.DecimalField(max_digits=10, decimal_places=2)
+
+    @property
+    def total(self):
+        return self.quantity * self.rate
+
+    def __str__(self):
+        return f"{self.get_category_display()} - {self.description or ''}"
+
+
+
+DAYS = [
+    ('Monday', 'Monday'),
+    ('Tuesday', 'Tuesday'),
+    ('Wednesday', 'Wednesday'),
+    ('Thursday', 'Thursday'),
+    ('Friday', 'Friday'),
+]
+
+CLASS_LEVELS = [
+    (1, 'Class 1'),
+    (2, 'Class 2'),
+    (3, 'Class 3'),
+]
+
+TIME_SLOTS = [
+    ('08:30-09:20', '08:30–09:20'),
+    ('09:25-10:15', '09:25–10:15'),
+    ('10:30-11:20', '10:30–11:20'),
+    ('11:25-12:15', '11:25–12:15'),
+    ('14:30-15:30', '14:30–15:30'),
+    ('15:30-16:30', '15:30–16:30'),
+]
+
+class TimetableEntry(models.Model):
+    day = models.CharField(max_length=10, choices=DAYS)
+    class_level = models.IntegerField(choices=CLASS_LEVELS)
+    course_code_first = models.CharField(max_length=100, null=True, blank=True)
+    course_title_first = models.TextField()
+    lecturer_first = models.CharField(max_length=100, null=True, blank=True)
+    first_room = models.CharField(max_length=20, null=True, blank=True)
+    course_code_second = models.CharField(max_length=100, null=True, blank=True)
+    course_title_second = models.TextField(null=True, blank=True)
+    lecturer_second = models.CharField(max_length=100, null=True, blank=True)
+    second_room = models.CharField(max_length=20, null=True, blank=True)
+    after_break_course_code_first = models.CharField(max_length=100, null=True, blank=True)
+    after_break_course_title_first = models.TextField(null=True, blank=True)
+    after_break_lecturer_first = models.CharField(max_length=100, null=True, blank=True)
+    after_break_first_room = models.CharField(max_length=20, null=True, blank=True)
+    after_break_course_code_second = models.CharField(max_length=100, null=True, blank=True)
+    after_break_course_title_second = models.TextField(null=True, blank=True)
+    after_break_lecturer_second = models.CharField(max_length=100, null=True, blank=True)
+    after_break_second_room = models.CharField(max_length=20, null=True, blank=True)
+    after_lunch_course_code_first = models.CharField(max_length=100, null=True, blank=True)
+    after_lunch_course_title_first = models.TextField(null=True, blank=True)
+    after_lunch_lecturer_first = models.CharField(max_length=100, null=True, blank=True)
+    after_lunch_first_room = models.CharField(max_length=100, null=True, blank=True)
+    after_lunch_course_code_second = models.CharField(max_length=100, null=True, blank=True)
+    after_lunch_course_title_second = models.TextField(null=True, blank=True)
+    after_lunch_lecturer_second = models.CharField(max_length=100, null=True, blank=True)
+    after_lunch_second_room = models.CharField(max_length=20, null=True, blank=True)
+    lecturer = models.CharField(max_length=100, null=True, blank=True)
+    time_slot = models.CharField(max_length=100, null=True, blank=True)
+    room = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.day} - Class {self.class_level} - {self.time_slot}"
+
+
 

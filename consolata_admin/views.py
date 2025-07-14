@@ -5,7 +5,7 @@ from student.models import TblStudentsAdmissions
 from .forms import StudentCreationForm
 from django.core.mail import send_mass_mail
 from django.db.models import Q
-
+from django.core.mail import EmailMessage
 
 
 # Create your views here.
@@ -76,36 +76,26 @@ def view_individual_sudent(request, id):
     return render(request,template,context)
 
 @login_required
+def view_individual_applicant(request, id):
+    template = 'admin/individual_applicant.html'
+    student = TblStudentsAdmissions.objects.get(studentid=id)
+    form = StudentCreationForm()
+
+    context = {
+        'student': student,
+        'form': form
+    }
+
+    return render(request,template,context)
+
+@login_required
 def update_student_records(request, id):
     if request.method == 'POST':
         post = request.POST
         student = TblStudentsAdmissions.objects.get(studentid=id)
         
-        student.photo = request.FILES.get('photo')
         student.registration_number = post.get('reg-no')
-        student.first_name = post.get('first-name')
-        student.last_name = post.get('last-name')
-        student.nationality = post.get('nationality')
-        student.Id_or_passport_no = post.get('id-passport')
-        student.date_of_birth = post.get('birth-date')
-        student.contact = post.get('contact')
-        student.email = post.get('email')
-        student.occupation = post.get('occupation')
-        student.address = post.get('address')
-        student.sponsor = post.get('sponsor')
-        student.year_of_admission = post.get('year-of-admission')
-        student.month_of_admission = post.get('month-of-admission')
-        student.name_of_responsible = post.get('responsible-name')
-        student.phone = post.get('telephone')
-        student.type_of_sponsorship = post.get('type_of_sponsorship')
-        student.language_spoken = post.get('spoken-language')
-        student.language_to_learn = post.get('language-to-learn')
-        student.type_of_course = post.get('type-of-course')
-        student.duration = post.get('duration')
-        student.beginning_date = post.get('biggining-date')
-        student.other_courses = post.get('other-courses')
-        student.self = post.get('self')
-        student.modality = post.get('modality_of_study')
+        
         student.save()
 
         messages.success(request, "Student record updated successfully")
@@ -145,6 +135,32 @@ def send_bulk_email(request):
         return redirect('consolata_admin:mailing-list')  # Replace with your actual redirect
 
     return render(request, 'admin/mailing_list.html')
+
+@login_required
+def send_email_to_ndividual_applicant(request, id):
+    if request.method == 'POST':
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        attachment = request.FILES.get('attachment')
+        from_email = 'you@example.com'  # or settings.DEFAULT_FROM_EMAIL
+
+        student = TblStudentsAdmissions.objects.get(pk=id)
+
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=from_email,
+            to=[student.email]
+        )
+
+        if attachment:
+            email.attach(attachment.name, attachment.read(), attachment.content_type)
+
+        email.send(fail_silently=False)
+        messages.success(request, "Email sent successfully.")
+        return redirect('consolata_admin:individual-application', id=id)
+
+    return render(request, 'admin/individual_application.html')
 
 @login_required
 def applications(request):

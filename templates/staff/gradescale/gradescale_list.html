@@ -1,0 +1,31 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h2>Grade Scales</h2>
+<a href="{% url 'staff_teachers:gradescale-add' %}" class="btn btn-success mb-3">Add Grade Scale</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Grade</th>
+            <th>Min Score</th>
+            <th>Max Score</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{ grade.letter_grade }}</td>
+            <td>{{ grade.min_score }}</td>
+            <td>{{ grade.max_score }}</td>
+            <td>{{ grade.description }}</td>
+            <td>
+                <a href="{% url 'staff_teachers:gradescale-detail' grade.pk %}" class="btn btn-info btn-sm">View</a>
+                <a href="{% url 'staff_teachers:gradescale-edit' grade.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'staff_teachers:gradescale-delete' grade.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

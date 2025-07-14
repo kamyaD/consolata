@@ -1,0 +1,10 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h2>Delete Grade Scale</h2>
+<p>Are you sure you want to delete grade <strong>{{ object.letter_grade }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-danger">Delete</button>
+    <a href="{% url 'staff_teachers:gradescale-list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

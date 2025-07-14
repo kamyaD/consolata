@@ -1,0 +1,15 @@
+{% extends 'staff/base.html' %}
+{% block title %}Courses{% endblock %}
+{% block content %}
+<h2>Course List</h2>
+<a class="btn btn-primary" href="{% url 'staff_teachers:course-add' %}">Add Course</a><span>
+<ul class="list-group">
+    
+    {% for course in object_list %}
+        
+        <li class="list-group-item">
+            <a href="{% url 'staff_teachers:course-detail' course.pk %}">{{ course.code }} - {{ course.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

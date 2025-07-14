@@ -1,0 +1,270 @@
+{% extends 'home/base2.html' %}
+{% load static %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
+{% endblock %}
+
+{% block objectives %}active{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="card-title">Students Enrolment</h2>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#createClaimModal">Create Claim</a>
+                        </div>
+                    </div>
+                    
+                    <table id="biannual_appraisals" class="table table-striped table-bordered display text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Language</th>
+                                <th>Month</th>
+                                <th>Normal Class</th>
+                                <th>Normal Time</th>
+                                <th>Normal Mark</th>
+                                <th>Normal Number</th>
+                                <th>Special Class</th>
+                                <th>Special Time</th>
+                                <th>Special Mark</th>
+                                <th>Special Number</th>
+                                <th>Onsite Class</th>
+                                <th>Onsite Time</th>
+                                <th>Level</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </thead>    
+                        <tbody>
+                            {% for sheet in sheets %}
+                            
+                            <tr>
+                                <td>{{sheet.id}}</td>
+                                <td>{{sheet.name}}</a></td>
+                                <td>{{sheet.language}}</td>
+                                <td>{{sheet.month}}</td>
+                                <td>{{sheet.normal_class}}</td>
+                                <td>{{sheet.normal_time}}</td>
+                                <td>{{sheet.normal_mark}}</td>
+                                <td>{{sheet.normal_number}}</td>
+                                <td>{{sheet.special_class}}</td> 
+                                <td>{{sheet.special_time}}</td> 
+                                <td>{{sheet.special_mark}}</td>
+                                <td>{{sheet.special_number}}</td>
+                                <td>{{sheet.onsite_class}}</td> 
+                                <td>{{sheet.onsite_time}}</td>
+                                <td>{{sheet.level}}</td>
+                                <td>{{sheet.date_created}}</td>  
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade mt-10" id="createClaimModal" data-backdrop="static" data-keyboard="false" style="width:100%">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          
+          <form method="post" id="submitForm" action="{% url 'staff_teachers:create-claim' %}"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card shadow mb-4">
+              <div class="card-body">
+                <div class="mb-5">
+                    <center><h5 class="card-title align-items-center">Create Student Enrolment</h5></center>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="ticketFunction" class="col-sm-4 col-form-label">Name:</label>
+                      <div class="col-sm-8  py-2">
+                        <input type="text" class="form-control" id="name" name="name">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="ticketFunction" class="col-sm-4 col-form-label">Language:</label>
+                      <div class="col-sm-8  py-2">
+                        <input type="text" class="form-control" id="language" name="language">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="ticketFunction" class="col-sm-4 col-form-label">Month:</label>
+                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                      <div class="col-sm-8  py-2">
+                        <select name="month" id="month" class="form-control" required>
+                            {% for choice in form.month.field.choices %}
+                              <option value="{{ choice.0 }}" {% if choice.0 == form.month.value %}selected{% endif %}>
+                                {{ choice.1 }}
+                              </option>
+                            {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="ticketFunction" class="col-sm-4 col-form-label">Normal Class:</label>
+                      <div class="col-sm-8  py-2">
+                        <input type="text" class="form-control" id="normal-class" name="normal-class" >
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="ticketFunction" class="col-sm-4 col-form-label">Normal Time:</label>
+                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                      <div class="col-sm-8  py-2">
+                        <input type="text" class="form-control" id="normal-time" name="normal-time" >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <label for="ticketFunction" class="col-sm-4 col-form-label">Normal Mark:</label>
+                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                      <div class="col-sm-8  py-2">
+                        <input type="text" class="form-control" id="normal-mark" name="normal-mark" >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="ticketFunction" class="col-sm-4 col-form-label">Normal Number:</label>
+                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                        <div class="col-sm-8  py-2">
+                          <input type="text" class="form-control" id="normal-number" name="normal-number" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="ticketFunction" class="col-sm-4 col-form-label">Special Class:</label>
+                          <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                          <div class="col-sm-8  py-2">
+                            <input type="text" class="form-control" id="special-class" name="special-class" >
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="ticketFunction" class="col-sm-4 col-form-label">Special Time:</label>
+                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                        <div class="col-sm-8  py-2">
+                          <input type="text" class="form-control" id="special-time" name="special-time" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="ticketFunction" class="col-sm-4 col-form-label">Special Mark:</label>
+                          <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                          <div class="col-sm-8  py-2">
+                            <input type="text" class="form-control" id="special-mark" name="special-mark" >
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="ticketFunction" class="col-sm-4 col-form-label">Special Number:</label>
+                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                        <div class="col-sm-8  py-2">
+                          <input type="text" class="form-control" id="special-number" name="special-number" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="ticketFunction" class="col-sm-4 col-form-label">Onsite Class:</label>
+                          <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                          <div class="col-sm-8  py-2">
+                            <input type="text" class="form-control" id="onsite-class" name="onsite-class" >
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="ticketFunction" class="col-sm-4 col-form-label">Onsite Time:</label>
+                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                        <div class="col-sm-8  py-2">
+                          <input type="text" class="form-control" id="onsite-time" name="onsite-time" >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                          <label for="ticketFunction" class="col-sm-4 col-form-label">Level:</label>
+                          <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                          <div class="col-sm-8  py-2">
+                            <input type="text" class="form-control" id="level" name="level" >
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group row">
+                        <label for="ticketFunction" class="col-sm-4 col-form-label">Date Created:</label>
+                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                        <div class="col-sm-8  py-2">
+                          <input type="text" class="form-control" id="date-created" name="date-created" >
+                        </div>
+                      </div>
+                    </div>
+                  
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <div class="submit-spinner" id="spinner"></div>
+                  <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+              </div>
+              </div>
+            </div>
+                                        
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatable-basic.init.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#biannual_appraisals').DataTable({
+            "order": [[ 1, "desc" ]]  // Order by the Period column (4th column)
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h2>Grade Scale: {{ grade.letter_grade }}</h2>
+<ul class="list-group">
+    <li class="list-group-item">Min Score: {{ grade.min_score }}</li>
+    <li class="list-group-item">Max Score: {{ grade.max_score }}</li>
+    <li class="list-group-item">Description: {{ grade.description }}</li>
+</ul>
+<a href="{% url 'staff_teachers:gradescale-edit' grade.pk %}" class="btn btn-warning mt-3">Edit</a>
+<a href="{% url 'staff_teachers:gradescale-list' %}" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

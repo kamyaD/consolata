@@ -1,0 +1,93 @@
+{% extends 'home/base2.html' %}
+{% load static %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
+{% endblock %}
+
+{% block objectives %}active{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="card-title">ALL Claims</h2>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        </div>
+                    </div>
+                    
+                    <table id="biannual_appraisals" class="table table-striped table-bordered display text-nowrap">
+                        <thead>
+                            <tr>
+                                <!-- <th>ID</th> -->
+                                <th>Staff Name</th>
+                                <!-- <th>Staff Email</th> -->
+                                <th>Month</th>
+                                <th>Date Submitted</th>
+                                <th>Amount</th>
+                                <th>State</th>
+                                <th>Review</th>
+                                <th>Approval</th>
+                                
+                            </tr>
+                        </thead>    
+                        <tbody>
+                            {% for claim in claims %}
+                            
+                            <tr>
+                                <!-- <td>{{claim.id}}</td> -->
+                                <td>{{claim.staff_name}}</a></td>
+                                <!-- <td>{{claim.staff_email}}</td> -->
+                                <td>{{claim.month}}</td>
+                                <td>{{claim.submitted_at}}</td>
+                                <td>{{claim.total}}</td>
+                                <td>{{claim.state}}</td>
+                                <td>
+                                    {% if claim.state == 'Registrar Approval' or claim.state == 'DVC Finance Approval' %}
+                                    <a href="{% url 'staff_teachers:edit-claim-form' claim.id %}" type="button" class="btn btn-outline-info">Review</a>
+                                    {% endif %}
+                                <td>
+                                    {% if claim.state == 'Registrar Approval' and request.user.role == 'Registrar' %}
+                                    <form method="post" action="{% url 'staff_teachers:approve-claim' claim.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-secondary">Registrar Approve</button>
+                                    </form>
+                                    {% elif claim.state == 'DVC Finance Approval' and request.user.role == 'DVC Finance' %}
+                                    <form method="post" action="{% url 'staff_teachers:approve-claim' claim.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-secondary">DVC Approve</button>
+                                    </form>
+                                    {% elif claim.state == 'Payment' and request.user.role == 'Finance Controller' %}
+                                    <form method="post" action="{% url 'staff_teachers:approve-claim' claim.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-outline-secondary">Pay</button>
+                                    </form>
+                                    {% else %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatable-basic.init.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#biannual_appraisals').DataTable({
+            "order": [[ 1, "desc" ]]  // Order by the Period column (4th column)
+        });
+    });
+</script>
+
+{% endblock %}

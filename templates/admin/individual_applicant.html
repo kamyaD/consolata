@@ -1,0 +1,341 @@
+{% extends 'home/base2.html' %}
+{% load static %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
+{% endblock %}
+
+{% block objectives %}active{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <!-- Student name on the left -->
+                  <h5 class="card-title mb-0">{{student.first_name}} {{student.sir_name}}</h5>
+                  
+                  <!-- Buttons grouped to the right -->
+                  <div class="d-flex gap-2">
+                    <!-- <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#studentModal">Assign Registration</a> -->
+                    <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#sendIndividualEmailModal">Send Email</a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+        </div>  
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                
+                <div class="row">
+                  <div class="col-12">
+                  <div class="col-8 d-flex justify-content-center">
+                    {% if student.image %}
+                    <img src="{{ student.image.url}}"  alt="Passport Photo" style="width: 120px; height: auto; border-radius: 5px; " />
+                    {% else %}
+                    <img src="{% static 'img/passport 2.jpg' %}"  alt="Passport Photo" style="width: 120px; height: auto; border-radius: 5px; " />
+                    {% endif %}
+                  </div>
+                  </div>
+                    <div class="col-6">
+                      
+                        <p style="color: black;"><strong>Other Names </strong>: {{student.other_names}}</p>
+                        <p style="color: black;"><strong>Gender </strong>: {{student.gender}}</p>
+                        <p style="color: black;"><strong>Citizenship</strong>: {{student.nationality}}</p>
+                        
+                        
+                    </div>
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Passport/ID</strong>: {{student.id_passport}}</p>
+                        <p style="color: black;"><strong>Date Of Birth </strong>: {{student.date_of_birth}}</p>
+                        <p style="color: black;"><strong>Marital Status</strong>: {{student.marital_status}}</p>
+                        
+                    </div>
+                    <!-- <hr> -->
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Diocese </strong>: {{student.diocese}}</p>
+                        <p style="color: black;"><strong>Religious Affiliation </strong>: {{student.religion}}</p>
+                        <p style="color: black;"><strong>Congregation</strong>: {{student.congregation}}</p>
+                    </div>
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Permanent Address</strong>: {{student.permanent_address}}</p>
+                        <p style="color: black;"><strong>Email Address</strong>: {{student.email}}</p>
+                        <!-- <p style="color: black;"><strong>Organization </strong>: {{student.email}}</p> -->
+                        
+                        
+                        <p style="color: black;"><strong>Phone Number </strong>: {{student.telephone}}</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Next Of Kin Address </strong>: {{student.next_of_kin_address}}</p>
+                        <p style="color: black;"><strong>Next Of Kin Email Address </strong>: {{student.next_of_kin_email}}</p>
+                        <p style="color: black;"><strong>Next Of Kin Phone Number</strong>: {{student.next_of_kin_phone}}</p>
+                        
+                    </div>
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Registration/Student Status</strong>: {{student.registration_status}}</p>
+                        <p style="color: black;"><strong>School</strong>: {{student.school}}</p>
+                        {% if student.school_of_philosophy %}
+                        <p style="color: black;"><strong>Expected Qualification</strong>: {{student.school_of_philosophy}}</p>
+                        {% elif student.school_of_theology %}
+                        <p style="color: black;"><strong>Expected Qualification </strong>: {{student.school_of_theology}}</p>
+                        {% elif student.school_of_counselling %}
+                        <p style="color: black;"><strong>Expected Qualification </strong>: {{student.school_of_counselling}}</p>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Anticipated Study Duration</strong>: {{student.anticipated_program_duration}}</p>
+                        <p style="color: black;"><strong>Ever Studied At CIU </strong>: {{student.ever_studied_at_ciu}}</p>
+                        {% if student.ever_studied_at_ciu == 'Yes' %}
+                        <p style="color: black;"><strong>Previous Student ID</strong>: {{student.previous_stud_id}}</p>
+                        <p style="color: black;"><strong>Previous CIU School</strong>: {{student.previous_ciu_school}}</p>
+                        <p style="color: black;"><strong>Year Of Enrollment(From)</strong>: {{student.previous_from_year}}</p>
+                        <p style="color: black;"><strong>Year Of Enrollment(TOM)</strong>: {{student.prev_to_year}}</p>
+                        {% endif %}
+                        <p style="color: black;"><strong>Name Of Recomending Authority </strong>: {{student.recommending_authority}}</p>
+                        <p style="color: black;"><strong>Recomending Congregation/Diocese</strong>: {{student.recommending_congregation}}</p>
+                        <p style="color: black;"><strong>Recommending Address </strong>: {{student.recomendation_address}}</p>
+                        <p style="color: black;"><strong>Recommending Telephone Number </strong>: {{student.recomendation_phone}}</p>
+                        <p style="color: black;"><strong>Recommending Email </strong>: {{student.recomendation_email}}</p>
+                        
+                    </div>
+                    <div class="col-6">
+                        <p style="color: black;"><strong>University/Colleges Attended</strong>: {{student.colleges_attended}}</p>
+                        <p style="color: black;"><strong>High School/Secondary School Attended</strong>: {{student.high_school_attended}}</p>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Congregation House if more than One</strong>: {{student.sponsorship_community}}</p>
+                        <p style="color: black;"><strong>How You Came To Know Of CIU </strong>: {{student.how_you_knew_consolata}}</p>
+                        <p style="color: black;"><strong>Do You Have Any Disability</strong>: {{student.disability}}</p>
+                        {% if student.disability == 'Yes' %}
+                        <p style="color: black;"><strong>What Is The Nature Of Disability</strong>: {{student.disability_nature}}</p>
+                        {% endif %}
+                        <p style="color: black;"><strong>Consent</strong>: {{student.confirm_information}}</p>
+                        
+                        
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="card shadow mb-4">
+          <div class="card-body">
+            <h5>CHECKLIST/DOCUMENTS TO SUBMIT WITH THIS APPLICATION</h5>
+              <div class="row">
+                  <div class="col-6">
+                    {% if student.non_refundable_fee %}
+                        <p style="color: black;">
+                          <strong>Non Refundable Fee </strong>: 
+                          <a href="{{ student.non_refundable_fee.url }}" target="_blank">Download</a>
+                        </p>
+                      {% else %}
+                        <p><strong>Non Refundable Fee</strong>: Not uploaded</p>
+                      {% endif %}
+                      {% if student.copy_of_id %}
+                      <p style="color: black;">
+                        <strong>Coppy of ID </strong>: 
+                        <a href="{{ student.copy_of_id.url }}" target="_blank">Download</a>
+                      </p>
+                    {% else %}
+                      <p><strong>Coppy of ID</strong>: Not uploaded</p>
+                    {% endif %}
+                    {% if student.passport_photo %}
+                      <p style="color: black;">
+                        <strong>Passport Photo </strong>: 
+                        <a href="{{ student.passport_photo.url }}" target="_blank">Download</a>
+                      </p>
+                    {% else %}
+                      <p><strong>Passport Photo</strong>: Not uploaded</p>
+                    {% endif %}
+                    {% if student.coppy_of_transcripts %}
+                    <p style="color: black;">
+                      <strong>Coppy Of Transcripts </strong>: 
+                      <a href="{{ student.coppy_of_transcripts.url }}" target="_blank">Download</a>
+                    </p>
+                  {% else %}
+                    <p><strong>Coppy Of Transcripts</strong>: Not uploaded</p>
+                  {% endif %}
+                     
+                      
+                  </div>
+                  <div class="col-6">
+                    {% if student.coppy_of_all_degrees %}
+                    <p style="color: black;">
+                      <strong>Coppy Of All Degrees </strong>: 
+                      <a href="{{ student.coppy_of_all_degrees.url }}" target="_blank">Download</a>
+                    </p>
+                  {% else %}
+                    <p><strong>Coppy Of All Degrees</strong>: Not uploaded</p>
+                  {% endif %}
+                  {% if student.copies_of_diplomas %}
+                    <p style="color: black;">
+                      <strong>Coppy Of Diplomas </strong>: 
+                      <a href="{{ student.copies_of_diplomas.url }}" target="_blank">Download</a>
+                    </p>
+                  {% else %}
+                    <p><strong>Coppy Of Diplomas</strong>: Not uploaded</p>
+                  {% endif %}
+                  {% if student.coppy_of_qualifications %}
+                    <p style="color: black;">
+                      <strong>Coppy Of Qualifications </strong>: 
+                      <a href="{{ student.coppy_of_qualifications.url }}" target="_blank">Download</a>
+                    </p>
+                  {% else %}
+                    <p><strong>Coppy Of Qualifications</strong>: Not uploaded</p>
+                  {% endif %}
+                  
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
+        
+    </div>
+</div>
+<div class="modal fade mt-10" id="studentModal" data-backdrop="static" data-keyboard="false" style="width:100%">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        
+        <form method="post" id="submitForm" action="{% url 'consolata_admin:update-student' student.studentid %}"  enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="mb-5">
+                  <center><h5 class="card-title align-items-center">Assign Registration Number ID</h5></center>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group row">
+                    <label for="ticketFunction" class="col-sm-4 col-form-label">Registration no.:</label>
+                    <div class="col-sm-8  py-2">
+                      <input type="text" class="form-control" id="reg-no" name="reg-no" value="{{student.registration_number}}" placeholder="{{student.registration_number}}">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <div class="submit-spinner" id="spinner"></div>
+                <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+            </div>
+            </div>
+          </div>
+                                      
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade mt-10" id="sendIndividualEmailModal" data-backdrop="static" data-keyboard="false" style="width:100%">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        
+        <form method="post" id="submitForm" action="{% url 'consolata_admin:send-individual-email' student.studentid %}" >
+          {% csrf_token %}
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="mb-5">
+                  <center><h5 class="card-title align-items-center">Send Individual Email</h5></center>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="ticketFunction" class="col-sm-4 col-form-label">Subject:</label>
+                  <div class="form-group row">
+                    
+                    <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                    <div class="col-sm-8  py-2">
+                      <input type="text" class="form-control" id="subject" name="subject" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="ticketFunction" class="col-sm-4 col-form-label">Message:</label>
+                  <div class="form-group row">
+                    
+                    <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                    <div class="col-sm-8  py-2">
+                      <textarea name="message" id="message" rows="5" class="form-control" cols="85"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="ticketFunction" class="col-sm-4 col-form-label">Attachment:</label>
+                  <div class="form-group row">
+                    
+                    <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
+                    <div class="col-sm-8  py-2">
+                      <input type="file" class="form-control" id="attachment" name="attachment" required>
+                    </div>
+                  </div>
+                </div>
+              
+              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <div class="submit-spinner" id="spinner"></div>
+                <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+            </div>
+            </div>
+          </div>
+                                      
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatable-basic.init.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#biannual_appraisals').DataTable({
+            "order": [[ 1, "desc" ]]  // Order by the Period column (4th column)
+        });
+    });
+</script>
+
+{% endblock %}

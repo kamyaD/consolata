@@ -179,7 +179,7 @@ class TblStudentsAdmissions(models.Model):
     gender = models.CharField(max_length=20, choices=GENDER_CHOICES,null=True, blank=True)
     image = models.FileField(upload_to='consolata_admin/student', null=True, blank=True)
     nationality = models.CharField(max_length=20, null=True, blank=True)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True, blank=True)
     id_passport = models.CharField(max_length=50, null=True, blank=True)
     contact = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
@@ -240,10 +240,14 @@ class TblStudentsAdmissions(models.Model):
     recomendation_phone = models.CharField(max_length=250, null=True, blank=True)
     coppy_of_qualifications = models.FileField(upload_to='online-application/', null=True, blank=True)
     coppy_of_transcripts = models.FileField(upload_to='online-application/', null=True, blank=True)
+    religion = models.CharField(max_length=100, null=True, blank=True)
     
     class Meta:
         managed = True
         db_table = 'tbl_students_admissions'
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 
     
 
@@ -262,6 +266,8 @@ class StudentClassSignIN(models.Model):
     mcf = models.CharField(max_length=250, null=True, blank=True)
     cmm = models.CharField(max_length=250, null=True, blank=True)
     cssr = models.CharField(max_length=250, null=True, blank=True)
+
+
 
 
 

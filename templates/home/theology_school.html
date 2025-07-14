@@ -71,184 +71,196 @@
 </div>
 
 
-  <header id="header" class="header sticky-top bg-white shadow-sm" >
-    <div class="container-fluid d-flex align-items-center justify-content-between px-3 ml-20" >
-      <a href="{% url 'home:home' %}" class="logo d-flex align-items-center me-auto">
-        <img src="{% static 'img/new_logo.png' %}" alt="Logo" style="height: 200px; width: auto;"/>
-        <h2 class="sitename ms-2" style="color: #ae1f23;">Consolata International <center>University</center></h2>
+<header id="header" class="header sticky-top bg-white shadow-sm" >
+  <div class="container-fluid d-flex align-items-center justify-content-between px-3 ml-20" >
+    <a href="{% url 'home:home' %}" class="logo d-flex align-items-center me-auto">
+      <img src="{% static 'img/new_logo.png' %}" alt="Logo" style="height: 200px; width: auto;"/>
+      <h2 class="sitename ms-2" style="color: #ae1f23;">Consolata International <center>University</center></h2>
 
-      </a>
+    </a>
+    
+
+    <!-- Responsive Navbar using Bootstrap 5 -->
+
+<nav class="d-none d-lg-block navmenu" id="navmenu">
       
-
-      <nav id="navmenu" class="navmenu">
+      <ul>
+        {% if user.is_authenticated and request.user.role == "Student" %}
+        <li><a href="{% url 'userauth:profile' %}">Profile</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Results</a></li>
+        <li><a href="#">Fee Payment</a></li>
+        <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
+        {% elif user.is_authenticated and request.user.role == "Lecturer" %}
+        <li><a href="{% url 'userauth:profile' %}">Profile</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Results</a></li>
+        <li><a href="#">Payslip</a></li>
+        <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
+        {% else %}
         
-        <ul>
-          {% if user.is_authenticated and request.user.role == "Student" %}
-          <li><a href="{% url 'userauth:profile' %}">Profile</a></li>
-          <li><a href="#">Courses</a></li>
-          <li><a href="#">Results</a></li>
-          <li><a href="#">Fee Payment</a></li>
-          <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
-          {% elif user.is_authenticated and request.user.role == "Lecturer" %}
-          <li><a href="{% url 'userauth:profile' %}">Profile</a></li>
-          <li><a href="#">Courses</a></li>
-          <li><a href="#">Results</a></li>
-          <li><a href="#">Payslip</a></li>
-          <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
-          {% else %}
-          
-           <!-- ABOUT TU Dropdown -->
-           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle " href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
-              ABOUT CIU
-            </a>
-            <ul class="dropdown-menu">
-              <!-- Submenu: About Tangaza -->
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle custom-top-bar " href="#">About CIU University</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#" style="color: #d2a749;">Mission, Vision & Philosophy</a></li>
-                  <li><a class="dropdown-item" href="#" style="color: #d2a749;">History</a></li>
-                  <li><a class="dropdown-item" href="#">Partners</a></li>
-                  <li><a class="dropdown-item" href="#">Virtual Tour</a></li>
-                  <li><a class="dropdown-item" href="#">Vacancies</a></li>
-                  <li><a class="dropdown-item" href="#">Tenders</a></li>
-                </ul>
-              </li>
+        <a class="e-n-menu-title-text" href="{% url 'home:home' %}" id="aboutDropdown" role="button" style="color: #163650;">
+          HOME
+        </a>
 
-              <!-- Submenu: Governance -->
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#" >Governance</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Board of Trustees</a></li>
-                  <li><a class="dropdown-item" href="#">University Council</a></li>
-                  <li><a class="dropdown-item" href="#">Chancellor</a></li>
-                  <li><a class="dropdown-item" href="#">Vice Chancellor</a></li>
-                  <li><a class="dropdown-item" href="#">Management Board</a></li>
-                  <li><a class="dropdown-item" href="#">Faculty</a></li>
-                </ul>
-              </li>
-
-              <!-- Submenu: Departments -->
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#" >Departments</a>
-                <ul class="dropdown-submenu">
-                  <li><a class="dropdown-item" href="#">Leaders Guild</a></li>
-                  <li><a class="dropdown-item" href="#">Alumni</a></li>
-                  <li><a class="dropdown-item" href="#">HR</a></li>
-                  <li><a class="dropdown-item" href="#">ICT</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-
-          <!-- ACADEMICS Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
-              ACADEMICS
-            </a>
-            <ul class="dropdown-menu">
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="{% url 'home:philosophy-school' %}">School of Philosophy</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Postgraduate</a></li>
-                  <li><a class="dropdown-item" href="#">Undergraduate</a></li>
-                  <li><a class="dropdown-item" href="#">Diploma</a></li>
-                  <li><a class="dropdown-item" href="#">Certificate</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="{% url 'home:theology-school'%}">School of Theology</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Theology</a></li>
-                  <li><a class="dropdown-item" href="#">Arts & Social Sciences</a></li>
-                  <li><a class="dropdown-item" href="#">Education</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="{% url 'home:psychology-school'%}">School Of Psychology</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">IOP</a></li>
-                  <li><a class="dropdown-item" href="#">IYS</a></li>
-                  <li><a class="dropdown-item" href="#">CLM</a></li>
-                  <li><a class="dropdown-item" href="#">ISC</a></li>
-                  <li><a class="dropdown-item" href="#">IST</a></li>
-                  <li><a class="dropdown-item" href="#">TEFLAP</a></li>
-                </ul>
-              </li>
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="{% url 'home:language-center' %}">Language Center</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">IOP</a></li>
-                  <li><a class="dropdown-item" href="#">IYS</a></li>
-                  <li><a class="dropdown-item" href="#">CLM</a></li>
-                  <li><a class="dropdown-item" href="#">ISC</a></li>
-                  <li><a class="dropdown-item" href="#">IST</a></li>
-                  <li><a class="dropdown-item" href="#">TEFLAP</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-
-          <li class="nav-item"><a class="nav-link" href="#" style="color: #163650;">RESEARCH</a></li>
-
-          <!-- CICE -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="ciceDropdown" data-bs-toggle="dropdown">
-            LIBRARY
-            </a>
-            <!-- <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Chaplaincy</a></li>
-              <li><a class="dropdown-item" href="#">Service Learning</a></li>
-              <li><a class="dropdown-item" href="#">Inclusion Office</a></li>
-              <li><a class="dropdown-item" href="#">Safeguarding</a></li>
-            </ul> -->
-          </li>
-          
-
-          <!-- <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li> -->
-
-          <!-- LOGIN & REGISTER -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
-              LOGIN & REGISTER
-            </a>
-            <ul class="dropdown-menu">
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="{% url 'userauth:login' %}">Login</a>
-              
-              </li>
-              <li class="dropdown-submenu">
-              <a class="dropdown-item dropdown-toggle" href="{% url 'userauth:register' %}">Register</a>
-              </li>
+        <!-- ACADEMICS Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
+            ACADEMICS
+          </a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+              <a class="dropdown-item " href="{% url 'home:philosophy-school' %}">School of Philosophy</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Postgraduate</a></li>
+                <li><a class="dropdown-item" href="#">Undergraduate</a></li>
+                <li><a class="dropdown-item" href="#">Diploma</a></li>
+                <li><a class="dropdown-item" href="#">Certificate</a></li>
+              </ul>
             </li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item " href="{% url 'home:theology-school' %}">School of Theology</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Theology</a></li>
+                <li><a class="dropdown-item" href="#">Arts & Social Sciences</a></li>
+                <li><a class="dropdown-item" href="#">Education</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item " href="{% url 'home:psychology-school' %}">School Of Psychology</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">IOP</a></li>
+                <li><a class="dropdown-item" href="#">IYS</a></li>
+                <li><a class="dropdown-item" href="#">CLM</a></li>
+                <li><a class="dropdown-item" href="#">ISC</a></li>
+                <li><a class="dropdown-item" href="#">IST</a></li>
+                <li><a class="dropdown-item" href="#">TEFLAP</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="dropdown-item " href="{% url 'home:language-center' %}">Language Center</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">IOP</a></li>
+                <li><a class="dropdown-item" href="#">IYS</a></li>
+                <li><a class="dropdown-item" href="#">CLM</a></li>
+                <li><a class="dropdown-item" href="#">ISC</a></li>
+                <li><a class="dropdown-item" href="#">IST</a></li>
+                <li><a class="dropdown-item" href="#">TEFLAP</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item"><a class="nav-link" href="#" style="color: #163650;">RESEARCH</a></li>
+
+        <!-- CICE -->
+        <a class="e-n-menu-title-text" href="https://library.consolatainstituteofphilosophy.com/" id="aboutDropdown" role="button" style="color: #163650;">
+          LIBRARY
+        </a>
+        
+        
+
+        <!-- <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li> -->
+
+        <!-- LOGIN & REGISTER -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
+            LOGIN & REGISTER
+          </a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+              <a class="dropdown-item" href="{% url 'userauth:login' %}">Login</a>
+            
+            </li>
+            <li class="dropdown-submenu">
+            <a class="dropdown-item" href="{% url 'userauth:register' %}">Register</a>
+            </li>
+          </li>
+          </ul>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link " href="#" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); return false;" id="ciceDropdown" data-bs-toggle="dropdown" style="color: #163650;">
+          CONTACTS
+          </a>
+          <!-- <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Chaplaincy</a></li>
+            <li><a class="dropdown-item" href="#">Service Learning</a></li>
+            <li><a class="dropdown-item" href="#">Inclusion Office</a></li>
+            <li><a class="dropdown-item" href="#">Safeguarding</a></li>
+          </ul> -->
+        </li>
+        {% endif %}
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+    <nav class="d-lg-none position-absolute top-0 end-0 p-3" style="z-index: 1050;">
+      <button class="btn btn-outline-dark w-100 mb-2" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+        Menu
+      </button>
+      <div id="mobileMenu" class="collapse">
+        <ul class="list-group">
+          {% if user.is_authenticated and request.user.role == "Student" %}
+          <li class="list-group-item"><a href="{% url 'userauth:profile' %}">Profile</a></li>
+          <li class="list-group-item"><a href="#">Courses</a></li>
+          <li class="list-group-item"><a href="#">Results</a></li>
+          <li class="list-group-item"><a href="#">Fee Payment</a></li>
+          <li class="list-group-item"><a href="{% url 'userauth:logout'%}">Logout</a></li>
+          {% elif user.is_authenticated and request.user.role == "Lecturer" %}
+          <li class="list-group-item"><a href="{% url 'userauth:profile' %}">Profile</a></li>
+          <li class="list-group-item"><a href="#">Courses</a></li>
+          <li class="list-group-item"><a href="#">Results</a></li>
+          <li class="list-group-item"><a href="#">Payslip</a></li>
+          <li class="list-group-item"><a href="{% url 'userauth:logout'%}">Logout</a></li>
+          {% else %}
+    
+          <li class="list-group-item">
+            <a href="#">ABOUT CIU</a>
+            <ul class="ps-3 mt-2">
+              <li><a href="#">About CIU University</a></li>
+              <li><a href="#">Mission, Vision & Philosophy</a></li>
+              <li><a href="#">History</a></li>
+              <li><a href="#">Partners</a></li>
+              <li><a href="#">Virtual Tour</a></li>
+              <li><a href="#">Vacancies</a></li>
+              <li><a href="#">Tenders</a></li>
             </ul>
           </li>
-          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="ciceDropdown" data-bs-toggle="dropdown" style="color: #163650;">
-            CONTACTS
-            </a>
-            <!-- <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Chaplaincy</a></li>
-              <li><a class="dropdown-item" href="#">Service Learning</a></li>
-              <li><a class="dropdown-item" href="#">Inclusion Office</a></li>
-              <li><a class="dropdown-item" href="#">Safeguarding</a></li>
-            </ul> -->
+         
+          <li class="list-group-item">
+            <a href="#">Departments</a>
+            <ul class="ps-3 mt-2">
+              <li><a href="#">Leaders Guild</a></li>
+              <li><a href="#">Alumni</a></li>
+              <li><a href="#">HR</a></li>
+              <li><a href="#">ICT</a></li>
+            </ul>
+          </li>
+          <li class="list-group-item">
+            <a href="#">ACADEMICS</a>
+            <ul class="ps-3 mt-2">
+              <li><a href="{% url 'home:philosophy-school' %}">School of Philosophy</a></li>
+              <li><a href="{% url 'home:theology-school' %}">School of Theology</a></li>
+              <li><a href="{% url 'home:psychology-school' %}">School of Psychology</a></li>
+              <li><a href="{% url 'home:language-center' %}">Language Center</a></li>
+            </ul>
+          </li>
+          <li class="list-group-item">
+            <a href="https://library.consolatainstituteofphilosophy.com/">Library</a>
+          </li>
+          <li class="list-group-item">
+            <a href="{% url 'userauth:login' %}">Login</a> / <a href="{% url 'userauth:register' %}">Register</a>
+          </li>
+          <li class="list-group-item">
+            <a href="#" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); return false;">CONTACTS</a>
           </li>
           {% endif %}
-       
-          
-
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
+      </div>
+    </nav>
 
-   
-
-
-    </div>
-  </header>
+  </div>
+</header>
   <main class="main" >
 
     <!-- Hero Section -->

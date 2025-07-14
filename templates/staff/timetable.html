@@ -15,38 +15,124 @@
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="card-title"> CONSOLATA INTERNATIONAL UNIVERSITY (CIU) SEMESTER I 2025-2026 TEACHING TIMETABLE</h5>
-                        <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#createTimetableModal">Create Timetable</a>
+                        <h5 class="card-title"> CONSOLATA INTERNATIONAL UNIVERSITY (CIU)  TEACHING TIMETABLE</h5>
+                        <div class="d-flex gap-2">
+                          {% if request.user.role == 'Registrar' %}
+                          <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#createTimetableModal">Create Timetable</a>
+                          {% else%}
+                          {% endif %}
+                          <a href="{% url 'staff_teachers:timetable-pdf' %}" type="button" class="btn btn-primary text-nowrap" >Generate PDF</a>
+                        </div>
                     </div>
                     <table id="biannual_appraisals" class="table table-striped table-bordered display text-nowrap">
                         <thead>
+                            
                             <tr>
-                                <th>ID</th>
+                                <!-- <th>ID</th> -->
                                 <th>Day</th>
                                 <th>Class</th>
-                                <th>Course</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Lecturer</th> 
-                                <th>Room</th>
-                                <th></th>
-                                <th></th>   
+                                <th>
+                                  <div style="display: flex; justify-content: space-between; gap: 2rem; align-items: center;">
+                                    <span>08:30–09:20</span>
+                                    <div style="width: 1px; height: 20px; background-color: #333;"></div>
+                                    <span>09:25–10:15</span>
+                                  </div>
+                                </th>
+                                <!-- <th>From</th>-->
+                                <th>Break</th>
+                                <th>
+                                  <div style="display: flex; justify-content: space-between; gap: 2rem; align-items: center;">
+                                    <span>10:30–11:20</span>
+                                    <div style="width: 1px; height: 20px; background-color: #333;"></div>
+                                    <span>11:25–12:15</span>
+                                  </div>
+                                </th> 
+                                <th>Lunch</th>
+                                <th>
+                                  <div style="display: flex; justify-content: space-between; gap: 2rem; align-items: center;">
+                                    <span>14:30–15:30</span>
+                                    <div style="width: 1px; height: 20px; background-color: #333;"></div>
+                                    <span>15:30–16:30</span>
+                                  </div>
+                                </th>
+                                <!-- <th></th>
+                                <th></th>    -->
                             </tr>
                         </thead>
                         <tbody>
                             {% for table in tables %}
                             
                             <tr>
-                                <td>{{table.id}}</td>
+                                <!-- <td>{{table.id}}</td> -->
                                 <td>{{table.day}}</td>
-                                <td>{{table.class_no}}</td>
-                                <td>{{table.courses}}</td>
-                                <td>{{table.from_time}}</td>
-                                <td>{{table.to_time}}</td>
-                                <td>{{table.lecturer}}</td>
-                                <td>{{table.room}}</td>
-                                <td><a href="{% url 'staff_teachers:edit-table' table.id %}" type="button" class="btn btn-outline-primary text-nowrap" >Edit</a></td>
-                                <td><a href="{% url 'staff_teachers:delete-table' table.id %}" type="button" class="btn btn-outline-danger text-nowrap" >Delete</a></td>
+                                <td>{{table.class_level}}</td>
+                                <td>
+                                  <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                                    <!-- Top Half -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ table.course_code_first }}</span>
+                                      <span>{{ table.course_title_first }}</span>
+                                      <span>{{ table.lecturer_first }}</span>
+                                      <span>{{ table.first_room }}</span>
+                                    </div>
+                                    <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
+                                    <!-- Bottom Half (same content) -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ table.course_code_second }}</span>
+                                      <span>{{ table.course_title_second }}</span>
+                                      <span>{{ table.lecturer_second }}</span>
+                                      <span>{{ table.second_room }}</span>
+                                    </div>
+                                  </div>
+                                </td>
+                                
+                                <!-- <td>{{table.from_time}}</td>-->
+                                <td></td>
+                                <td>
+                                  <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                                    <!-- Top Half -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ table.after_break_course_code_first }}</span>
+                                      <span>{{ table.after_break_course_title_first }}</span>
+                                      <span>{{ table.after_break_lecturer_first }}</span>
+                                      <span>{{ table.after_break_room }}</span>
+                                    </div>
+                                    <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
+                                    <!-- Bottom Half (same content) -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ table.after_break_course_code_second }}</span>
+                                      <span>{{ table.after_break_course_title_second }}</span>
+                                      <span>{{ table.after_break_lecturer_second }}</span>
+                                      <span>{{ table.after_break_room }}</span>
+                                    </div>
+                                  </div>
+                                </td>
+                                
+                                <td></td>
+                                <td>
+                                  <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
+                                    <!-- Top Half -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ table.after_lunch_course_code_first }}</span>
+                                      <span>{{ table.after_lunch_course_title_first }}</span>
+                                      <span>{{ table.after_lunch_lecturer_first }}</span>
+                                      <span>{{ table.after_lunch_room }}</span>
+                                    </div>
+                                    <hr style="margin: 4px 0; border: none; border-top: 1px solid #ccc;">
+                                    <!-- Bottom Half (same content) -->
+                                    <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ table.after_lunch_course_code_second }}</span>
+                                      <span>{{ table.after_lunch_course_title_second }}</span>
+                                      <span>{{ table.after_lunch_lecturer_second }}</span>
+                                      <span>{{ table.after_lunch_room }}</span>
+                                    </div>
+                                  </div>
+                                </td>
+                                
+
+                                <!-- <td></td> -->
+                                <!-- <td><a href="{% url 'staff_teachers:edit-table' table.id %}" type="button" class="btn btn-outline-primary text-nowrap" >Edit</a></td>
+                                <td><a href="{% url 'staff_teachers:delete-table' table.id %}" type="button" class="btn btn-outline-danger text-nowrap" >Delete</a></td> -->
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -61,102 +147,157 @@
       <div class="modal-content">
         <div class="modal-body">
           
-          <form method="post" id="submitForm" action=""  enctype="multipart/form-data">
+          <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="card shadow mb-4">
+          
+            <!-- 🔷 General Info -->
+            <div class="card mb-4 shadow">
+              <div class="card-header bg-primary text-white">General Info</div>
               <div class="card-body">
-                <div class="mb-5">
-                    <center><h5 class="card-title align-items-center">Create Timetable</h5></center>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.day.label_tag }} {{ form.day }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.class_level.label_tag }} {{ form.class_level }}
+                  </div>
                 </div>
-                
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Day:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <select name="day" id="day" class="form-control" required>
-                          {% for choice in form.day.field.choices %}
-                            <option value="{{ choice.0 }}" {% if choice.0 == form.day.value %}selected{% endif %}>
-                              {{ choice.1 }}
-                            </option>
-                          {% endfor %}
-                      </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Class:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="class" name="class">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">From:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="from_time" name="from_time" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">To:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="to_time" name="to_time" >
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Course:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="courses" name="courses" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Lecturer:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="lecturer" name="lecturer" >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Room:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="room" name="room" >
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <div class="submit-spinner" id="spinner"></div>
-                  <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-              </div>
               </div>
             </div>
-                                        
+          
+            <!-- ⏰ Before Break -->
+            <div class="card mb-4 shadow">
+              <div class="card-header bg-info text-white">Before Break</div>
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.course_code_first.label_tag }} {{ form.course_code_first }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.course_title_first.label_tag }} {{ form.course_title_first }}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.lecturer_first.label_tag }} {{ form.lecturer_first }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.first_room.label_tag }} {{ form.first_room }}
+                  </div>
+                </div>
+                <hr/>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.course_code_second.label_tag }} {{ form.course_code_second }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.course_title_second.label_tag }} {{ form.course_title_second }}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.lecturer_second.label_tag }} {{ form.lecturer_second }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.second_room.label_tag }} {{ form.second_room }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- 🍵 After Break -->
+            <div class="card mb-4 shadow">
+              <div class="card-header bg-warning text-dark">After Break</div>
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_break_course_code_first.label_tag }} {{ form.after_break_course_code_first }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_break_course_title_first.label_tag }} {{ form.after_break_course_title_first }}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_break_lecturer_first.label_tag }} {{ form.after_break_lecturer_first }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_break_first_room.label_tag }} {{ form.after_break_first_room }}
+                  </div>
+                </div>
+                <hr/>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_break_course_code_second.label_tag }} {{ form.after_break_course_code_second }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_break_course_title_second.label_tag }} {{ form.after_break_course_title_second }}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_break_lecturer_second.label_tag }} {{ form.after_break_lecturer_second }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_break_second_room.label_tag }} {{ form.after_break_second_room }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- 🍽️ After Lunch -->
+            <div class="card mb-4 shadow">
+              <div class="card-header bg-success text-white">After Lunch</div>
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_lunch_course_code_first.label_tag }} {{ form.after_lunch_course_code_first }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_lunch_course_title_first.label_tag }} {{ form.after_lunch_course_title_first }}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_lunch_lecturer_first.label_tag }} {{ form.after_lunch_lecturer_first }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_lunch_first_room.label_tag }} {{ form.after_lunch_first_room }}
+                  </div>
+                </div>
+                <hr/>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_lunch_course_code_second.label_tag }} {{ form.after_lunch_course_code_second }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_lunch_course_title_second.label_tag }} {{ form.after_lunch_course_title_second }}
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    {{ form.after_lunch_lecturer_second.label_tag }} {{ form.after_lunch_lecturer_second }}
+                  </div>
+                  <div class="col-md-6">
+                    {{ form.after_lunch_second_room.label_tag }} {{ form.after_lunch_second_room }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Hidden or additional fields -->
+            <div style="display: none;">
+              {{ form.lecturer }}
+              {{ form.time_slot }}
+              {{ form.room }}
+            </div>
+          
+            <!-- Submit -->
+            <div class="text-end mt-3">
+              <button type="submit" class="btn btn-primary">Submit Timetable</button>
+            </div>
           </form>
+          
         </div>
       </div>
     </div>

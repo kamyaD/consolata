@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Timetable PDF</title>
+</head>
+<body>
+    <h3 style="text-align:center;">CONSOLATA INTERNATIONAL UNIVERSITY (CIU)<br>TEACHING TIMETABLE</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Class</th>
+                <th>08:30–10:15</th>
+                <th>Break</th>
+                <th>10:30–12:15</th>
+                <th>Lunch</th>
+                <th>14:30–16:30</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table in tables %}
+            <tr>
+                <td>{{ table.day }}</td>
+                <td>{{ table.class_level }}</td>
+
+                <!-- Before Break -->
+                <td>
+                    <div class="flex">
+                        <span>{{ table.course_code_first }}</span>
+                        <span>{{ table.course_title_first }}</span>
+                        <span>{{ table.lecturer_first }}</span>
+                        <span>{{ table.first_room }}</span>
+                    </div>
+                    <hr>
+                    <div class="flex">
+                        <span>{{ table.course_code_second }}</span>
+                        <span>{{ table.course_title_second }}</span>
+                        <span>{{ table.lecturer_second }}</span>
+                        <span>{{ table.second_room }}</span>
+                    </div>
+                </td>
+
+                <td></td>
+
+                <!-- After Break -->
+                <td>
+                    <div class="flex">
+                        <span>{{ table.after_break_course_code_first }}</span>
+                        <span>{{ table.after_break_course_title_first }}</span>
+                        <span>{{ table.after_break_lecturer_first }}</span>
+                        <span>{{ table.after_break_first_room }}</span>
+                    </div>
+                    <hr>
+                    <div class="flex">
+                        <span>{{ table.after_break_course_code_second }}</span>
+                        <span>{{ table.after_break_course_title_second }}</span>
+                        <span>{{ table.after_break_lecturer_second }}</span>
+                        <span>{{ table.after_break_second_room }}</span>
+                    </div>
+                    
+                </td>
+
+                <td></td>
+
+                <!-- After Lunch -->
+                <td>
+                    <div class="flex">
+                        <span>{{ table.after_lunch_course_code_first }}</span>
+                        <span>{{ table.after_lunch_course_title_first }}</span>
+                        <span>{{ table.after_lunch_lecturer_first }}</span>
+                        <span>{{ table.after_lunch_first_room }}</span>
+                    </div>
+                    <hr>
+                    <div class="flex">
+                        <span>{{ table.after_lunch_course_code_second }}</span>
+                        <span>{{ table.after_lunch_course_title_second }}</span>
+                        <span>{{ table.after_lunch_lecturer_second }}</span>
+                        <span>{{ table.after_lunch_second_room }}</span>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

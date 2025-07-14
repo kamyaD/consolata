@@ -1,0 +1,9 @@
+{% extends 'staff/base.html' %}
+{% block title %}{{ object.full_name }}{% endblock %}
+{% block content %}
+<h2>{{ object.first_name }} {{object.last_name}}</h2>
+<p>Matric No: {{ object.matriculation_no }}</p>
+<p>Program: {{ object.program }}</p>
+<a href="{% url 'staff_teachers:student-transcript' object.pk %}" class="btn btn-primary mt-2">View Transcript</a>
+<a href="{% url 'staff_teachers:transcriptentry-add' %}" class="btn btn-secondary mt-2">Add Transcript</a>
+{% endblock %}

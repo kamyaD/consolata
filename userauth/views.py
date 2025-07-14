@@ -39,13 +39,25 @@ def login_view(request):
                 next_url = request.POST.get('next')
                 return redirect(next_url or 'student:online-application')
 
+            if user.role == 'Registrar':
+                login(request, user)
+                next_url = request.POST.get('next')
+                return redirect(next_url or 'staff_teachers:timetable')
+            
+            if user.role == 'DVC Finance' or user.role == 'Finance Controller':
+                login(request, user)
+                next_url = request.POST.get('next')
+                return redirect(next_url or 'staff_teachers:all-claims')
+            
             else:
+                
                 login(request, user)
                 next_url = request.POST.get('next')
                 return redirect(next_url or 'userauth:profile')
             
             
-
+            
+            
             # Add more role checks here if needed (e.g., Admin, Staff, etc.)
 
         return render(request, 'userauth/login.html', {'error': 'Invalid credentials'})

@@ -1,0 +1,33 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h2>Transcript Summaries</h2>
+<a href="{% url 'staff_teachers:transcript-add' %}" class="btn btn-success mb-3">Add Transcript</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Average</th>
+            <th>Credits</th>
+            <th>Class</th>
+            <th>Award Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transcript in transcripts %}
+        <tr>
+            <td>{{ transcript.student.first_name }}</td>
+            <td>{{ transcript.overall_average }}</td>
+            <td>{{ transcript.accumulated_credits }}</td>
+            <td>{{ transcript.class_awarded }}</td>
+            <td>{{ transcript.award_date }}</td>
+            <td>
+                <a href="{% url 'staff_teachers:transcript-summary' transcript.pk %}" class="btn btn-info btn-sm">View</a>
+                <a href="{% url 'staff_teachers:transcript-edit' transcript.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'staff_teachers:transcript-delete' transcript.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

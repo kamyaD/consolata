@@ -1,44 +1,68 @@
 # student/views.py
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import TblStudentsAdmissions
 from .forms import StudentCreationForm
-from staff_teachers.models import studentsResults, Timetable
+from staff_teachers.models import PhilosophystudentsResults, Timetable
 from .utils import render_to_pdf
+
 
 def student_list(request):
     return HttpResponse("This is the student list page.")
 
+
 def student_result(request):
     template = 'student/student_result.html'
-    result = studentsResults.objects.get(reg_no=3003)
-    
+
+    student = TblStudentsAdmissions.objects.filter(email=request.user.email).first()
+    if not student:
+        messages.error(request, "Student record not found.")
+        return redirect('student:get-student-record')
+
+    result = PhilosophystudentsResults.objects.filter(student__registration_number=student.registration_number).first()
+    if not result:
+        messages.error(request, "You do not have any result.")
+        return redirect('student:get-student-record')
+
     context = {
         "result": result
     }
+    return render(request, template, context)
 
-    return render(request,template, context)
+
+
 
 def generate_results_pdf(request):
     template = 'student/student_result_pdf.html'
-    result = studentsResults.objects.get(reg_no=3003)
+    
+    try:
+        student = TblStudentsAdmissions.objects.get(email=request.user.email)
+    except TblStudentsAdmissions.DoesNotExist:
+        messages.error(request, "Student record not found.")
+        return redirect('student:results')
+
+    result = PhilosophystudentsResults.objects.filter(reg_no=3003).first()
+    if not result:
+        messages.error(request, "You do not have any result.")
+        return redirect('student:results')
 
     data = {
         'congregation': result.congregation,
         's_no': result.s_no,
         'reg_no': result.reg_no,
         'name': result.name,
-        'plato_republic':result.plato_republic,
+        'plato_republic': result.plato_republic,
         'modern_world_history': result.modern_world_history,
         'special_ethicks': result.special_ethicks,
         'logic': result.logic,
         'emmanuel_kant': result.emmanuel_kant,
         'edith_stein': result.edith_stein,
         'philosophical_latin': result.philosophical_latin,
-        'christianity_philosophy':result.christianity_philosophy,
+        'christianity_philosophy': result.christianity_philosophy,
         'ancient_thought': result.ancient_thought,
         'comprehensive_written': result.comprehensive_written,
         'comprehensive_oral': result.comprehensives_oral
@@ -72,6 +96,7 @@ def submit_online_application(request):
             date_of_birth = post.get('birth-date'),
             birth_place = post.get('place-of-birth'),
             marital_status = post.get('marital-status'),
+            religion = post.get('religion'),
             diocese = post.get('diocese'),
             id_passport = post.get('passport'),
             congregation = post.get('congregation'),
@@ -133,6 +158,26 @@ def fetch_timetable(request):
     }
 
     return render(request,template, context)
+
+@login_required
+def view_individual_sudent(request):
+    template = 'admin/individual_stident.html'
+    
+    try:
+        student = TblStudentsAdmissions.objects.get(email=request.user.email)
+        if student:
+            form = StudentCreationForm()
+
+            context = {
+                'student': student,
+                'form': form
+            }
+
+            return render(request,template,context)
+    except Exception as e:
+         messages.error(request, "Requested student record does not exist.Please apply here")
+         return redirect('student:online-application')
+
 
 
     

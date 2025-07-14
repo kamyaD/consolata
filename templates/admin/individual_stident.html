@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="card-title">{{student.first_name}}  {{student.sir_name}}</h5>
-                        <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#studentModal">Edit Student</a>
+                        <!-- <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#studentModal">Assign Registration</a> -->
                     </div>
                 </div>
             </div>
@@ -37,16 +37,16 @@
                   </div>
                     <div class="col-6">
                       
-                        <p style="color: black;"><strong>Nationality </strong>: {{student.nationality}}</p>
-                        <p style="color: black;"><strong>Date Of Birth </strong>: {{student.date_of_birth}}</p>
-                        <p style="color: black;"><strong>ID/Passport</strong>: {{student.id_passport}}</p>
+                        <p style="color: black;"><strong>Other Names </strong>: {{student.other_names}}</p>
+                        <p style="color: black;"><strong>Gender </strong>: {{student.gender}}</p>
+                        <p style="color: black;"><strong>Citizenship</strong>: {{student.nationality}}</p>
                         
                         
                     </div>
                     <div class="col-6">
-                        <p style="color: black;"><strong>Contact</strong>: {{student.contact}}</p>
-                        <p style="color: black;"><strong>Email </strong>: {{student.email}}</p>
-                        <p style="color: black;"><strong>Registration Number</strong>: {{student.registration_number}}</p>
+                        <p style="color: black;"><strong>Passport/ID</strong>: {{student.id_passport}}</p>
+                        <p style="color: black;"><strong>Date Of Birth </strong>: {{student.date_of_birth}}</p>
+                        <p style="color: black;"><strong>Marital Status</strong>: {{student.marital_status}}</p>
                         
                     </div>
                     <!-- <hr> -->
@@ -57,16 +57,17 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <!-- <p style="color: black;"><strong>Occupation </strong>: {{student.occupation}}</p> -->
-                        <p style="color: black;"><strong>Admission Year </strong>: {{student.admission_year}}</p>
-                        <p style="color: black;"><strong>Responsible</strong>: {{student.responsible}}</p>
+                        <p style="color: black;"><strong>Diocese </strong>: {{student.diocese}}</p>
+                        <p style="color: black;"><strong>Religious Affiliation </strong>: {{student.religion}}</p>
+                        <p style="color: black;"><strong>Congregation</strong>: {{student.congregation}}</p>
                     </div>
                     <div class="col-6">
-                        <!-- <p style="color: black;"><strong>Self</strong>: {{student.billing_self}}</p> -->
+                        <p style="color: black;"><strong>Permanent Address</strong>: {{student.permanent_address}}</p>
+                        <p style="color: black;"><strong>Email Address</strong>: {{student.email}}</p>
                         <!-- <p style="color: black;"><strong>Organization </strong>: {{student.email}}</p> -->
-                         <p style="color: black;"><strong>Month</strong>: {{student.month}}</p>
                         
-                        <p style="color: black;"><strong>Telephone </strong>: {{student.telephone}}</p>
+                        
+                        <p style="color: black;"><strong>Phone Number </strong>: {{student.telephone}}</p>
                     </div>
                     
                 </div>
@@ -76,24 +77,77 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <p style="color: black;"><strong>Language Spoken </strong>: {{student.language_spoken}}</p>
-                        <p style="color: black;"><strong>Language To Learn </strong>: {{student.language_to_learn}}</p>
-                        <p style="color: black;"><strong>Course Type</strong>: {{student.course_type}}</p>
+                        <p style="color: black;"><strong>Next Of Kin Address </strong>: {{student.next_of_kin_address}}</p>
+                        <p style="color: black;"><strong>Next Of Kin Email Address </strong>: {{student.next_of_kin_email}}</p>
+                        <p style="color: black;"><strong>Next Of Kin Phone Number</strong>: {{student.next_of_kin_phone}}</p>
                         
                     </div>
                     <div class="col-6">
-                        <p style="color: black;"><strong>Duration</strong>: {{student.duration}}</p>
-                        <!-- <p style="color: black;"><strong>Organization </strong>: {{student.email}}</p> -->
-                        <p style="color: black;"><strong>Start Date</strong>: {{student.start_date}}</p>
-                        <p style="color: black;"><strong>Other Courses </strong>: {{student.other_courses}}</p>
-                        <p style="color: black;"><strong>Modality </strong>: {{student.modality}}</p>
+                        <p style="color: black;"><strong>Registration/Student Status</strong>: {{student.registration_status}}</p>
+                        <p style="color: black;"><strong>School</strong>: {{student.school}}</p>
+                        {% if student.school_of_philosophy %}
+                        <p style="color: black;"><strong>Expected Qualification</strong>: {{student.school_of_philosophy}}</p>
+                        {% elif student.school_of_theology %}
+                        <p style="color: black;"><strong>Expected Qualification </strong>: {{student.school_of_theology}}</p>
+                        {% elif student.school_of_counselling %}
+                        <p style="color: black;"><strong>Expected Qualification </strong>: {{student.school_of_counselling}}</p>
+                        {% endif %}
                     </div>
                     
                 </div>
             </div>
         </div>
         <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Anticipated Study Duration</strong>: {{student.anticipated_program_duration}}</p>
+                        <p style="color: black;"><strong>Ever Studied At CIU </strong>: {{student.ever_studied_at_ciu}}</p>
+                        {% if student.ever_studied_at_ciu == 'Yes' %}
+                        <p style="color: black;"><strong>Previous Student ID</strong>: {{student.previous_stud_id}}</p>
+                        <p style="color: black;"><strong>Previous CIU School</strong>: {{student.previous_ciu_school}}</p>
+                        <p style="color: black;"><strong>Year Of Enrollment(From)</strong>: {{student.previous_from_year}}</p>
+                        <p style="color: black;"><strong>Year Of Enrollment(TOM)</strong>: {{student.prev_to_year}}</p>
+                        {% endif %}
+                        <p style="color: black;"><strong>Name Of Recomending Authority </strong>: {{student.recommending_authority}}</p>
+                        <p style="color: black;"><strong>Recomending Congregation/Diocese</strong>: {{student.recommending_congregation}}</p>
+                        <p style="color: black;"><strong>Recommending Address </strong>: {{student.recomendation_address}}</p>
+                        <p style="color: black;"><strong>Recommending Telephone Number </strong>: {{student.recomendation_phone}}</p>
+                        <p style="color: black;"><strong>Recommending Email </strong>: {{student.recomendation_email}}</p>
+                        
+                    </div>
+                    <div class="col-6">
+                        <p style="color: black;"><strong>University/Colleges Attended</strong>: {{student.colleges_attended}}</p>
+                        <p style="color: black;"><strong>High School/Secondary School Attended</strong>: {{student.high_school_attended}}</p>
+                        
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <p style="color: black;"><strong>Congregation House if more than One</strong>: {{student.sponsorship_community}}</p>
+                        <p style="color: black;"><strong>How You Came To Know Of CIU </strong>: {{student.how_you_knew_consolata}}</p>
+                        <p style="color: black;"><strong>Do You Have Any Disability</strong>: {{student.disability}}</p>
+                        <p style="color: black;"><strong>What Is The Nature Of Disability</strong>: {{student.disability_nature}}</p>
+                        <p style="color: black;"><strong>Consent</strong>: {{student.confirm_information}}</p>
+                        
+                        
+                    </div>
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="card shadow mb-4">
           <div class="card-body">
+            <h5>CHECKLIST/DOCUMENTS TO SUBMIT WITH THIS APPLICATION</h5>
               <div class="row">
                   <div class="col-6">
                     {% if student.non_refundable_fee %}
@@ -175,19 +229,10 @@
             <div class="card shadow mb-4">
               <div class="card-body">
                 <div class="mb-5">
-                    <center><h5 class="card-title align-items-center">Edit Student Details</h5></center>
+                    <center><h5 class="card-title align-items-center">Assign Registration Number ID</h5></center>
                 </div>
                 
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Photo:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="file" class="form-control" id="photo" name="photo" required>
-                      </div>
-                    </div>
-                  </div>
                   <div class="col-md-6">
                     <div class="form-group row">
                       <label for="ticketFunction" class="col-sm-4 col-form-label">Registration no.:</label>
@@ -197,279 +242,6 @@
                     </div>
                   </div>
 
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">First Name:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="first-name" name="first-name" value="{{student.first_name}}" placeholder="{{student.first_name}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Last Name:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="last-name" name="last-name" value="{{student.last_name}}" placeholder="{{student.last_name}}">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Nationality:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="nationality" name="nationality" value="{{student.nationality}}" placeholder="{{student.nationality}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">ID/Passport:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="id-passport" name="id-passport" value="{{student.id_passport}}" placeholder="{{student.id_passport}}">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Date Of Birth:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="date" class="form-control" id="birth-date" name="birth-date" value="{{student.date_of_birth}}" placeholder="{{student.date_of_birth}}" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Contact:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="contact" name="contact" value="{{student.contact}}" placeholder="{{student.contact}}">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Email:</label>
-                      <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                      <div class="col-sm-8  py-2">
-                        <input type="email" class="form-control" id="email" name="email" value="{{student.email}}" placeholder="{{student.email}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Occupation:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="occupation" name="occupation" value="{{student.occupation}}" placeholder="{{student.occupation}}">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Address:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="address" name="address" value="{{student.address}}" placeholder="{{student.address}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Sponsor:</label>
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="sponsor" name="sponsor" value="{{student.sponsor}}" placeholder="{{student.sponsor}}">
-                        </div>
-                      </div>
-                    </div>
-  
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Year of Admission:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                            <select name="year-of-admission" id="year-of-admission" class="form-control" required>
-                                {% for choice in form.admission_year.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.admission_year.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Month:</label>
-                        <div class="col-sm-8  py-2">
-                            <select name="month-of-admission" id="month-of-admission" class="form-control" required>
-                                {% for choice in form.month.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.month.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                        </div>
-                      </div>
-                    </div>
-  
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Name of Responsible:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="responsible" name="responsible" value="{{student.responsible}}" placeholder="{{student.responsible}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Telephone:</label>
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="telephone" name="telephone" value="{{student.telephone}}" placeholder="{{student.telephone}}">
-                        </div>
-                      </div>
-                    </div>
-  
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Type Of Sponsorship:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="spoken-language" name="type_of_sponsorship" value="{{student.type_of_sponsorship}}" placeholder="{{student.type_of_sponsorship}}">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Language Spoken:</label>
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="spoken-language" name="spoken-language" value="{{student.language_spoken}}" placeholder="{{student.language_spoken}}">
-                        </div>
-                      </div>
-                    </div>
-  
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Language To Be Learnt:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                            <select name="language-to-learn" id="language-to-learn" class="form-control" required>
-                                {% for choice in form.language_to_learn.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.language_to_learn.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Type of language course:</label>
-                        <div class="col-sm-8  py-2">
-                            <select name="type-of-course" id="type-of-course" class="form-control" required>
-                                {% for choice in form.course_type.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.course_type.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Duration:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                            <select name="duration" id="duration" class="form-control" required>
-                                {% for choice in form.duration.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.duration.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Beginning Date:</label>
-                        <div class="col-sm-8  py-2">
-                          <input type="date" class="form-control" id="biggining-date" name="biggining-date" value="{{student.beginning_date}}" placeholder="{{student.beginning_date}}" required>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Self:</label>
-                        <div class="col-sm-8  py-2">
-                          <input type="text" class="form-control" id="self" name="self" value="{{student.self}}" placeholder="{{student.self}}">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                <!-- </div> -->
-               
-                <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Other Courses:</label>
-                        <!-- <label for="relatedRecord"><strong>Location</strong></label> -->
-                        <div class="col-sm-8  py-2">
-                            <select name="other-courses" id="other-courses" class="form-control" required>
-                                {% for choice in form.other_courses.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.other_courses.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label for="ticketFunction" class="col-sm-4 col-form-label">Modality Of Study:</label>
-                        <div class="col-sm-8  py-2">
-                            <select name="modality_of_study" id="modality_of_study" class="form-control" required>
-                                {% for choice in form.modality.field.choices %}
-                                  <option value="{{ choice.0 }}" {% if choice.0 == form.modality.value %}selected{% endif %}>
-                                    {{ choice.1 }}
-                                  </option>
-                                {% endfor %}
-                              </select>
-                        </div>
-                      </div>
-                    </div>
-                    
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

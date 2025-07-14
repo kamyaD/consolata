@@ -1,0 +1,12 @@
+{% extends 'staff/base.html' %}
+{% block title %}Students{% endblock %}
+{% block content %}
+<h2>All Students</h2>
+<ul class="list-group">
+    {% for student in object_list %}
+        <li class="list-group-item">
+            <a href="{% url 'staff_teachers:student-detail' student.pk %}">{{ student.first_name }} {{ student.last_name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

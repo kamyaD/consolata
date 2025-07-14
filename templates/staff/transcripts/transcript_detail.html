@@ -1,0 +1,12 @@
+{% extends "staff/base.html" %}
+{% block content %}
+<h2>Transcript for {{ transcript.student }}</h2>
+<ul class="list-group">
+    <li class="list-group-item">Overall Average: {{ transcript.overall_average }}</li>
+    <li class="list-group-item">Credits: {{ transcript.accumulated_credits }}</li>
+    <li class="list-group-item">Class: {{ transcript.class_awarded }}</li>
+    <li class="list-group-item">Award Date: {{ transcript.award_date }}</li>
+</ul>
+<a href="{% url 'staff_teachers:transcript-edit' transcript.pk %}" class="btn btn-warning mt-3">Edit</a>
+<a href="{% url 'staff_teachers:transcript-list' %}" class="btn btn-secondary mt-3">Back</a>
+{% endblock %}

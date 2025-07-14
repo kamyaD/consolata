@@ -1,0 +1,11 @@
+{% extends 'staff/base.html' %}
+{% block title %}Transcript Summary{% endblock %}
+{% block content %}
+<h2>Transcript Summary for {{ object.student.first_name }}</h2>
+<ul>
+    <li>Overall Average: {{ object.overall_average }}</li>
+    <li>Credits Accumulated: {{ object.accumulated_credits }}</li>
+    <li>Class Awarded: {{ object.class_awarded }}</li>
+    <li>Award Date: {{ object.award_date }}</li>
+</ul>
+{% endblock %}

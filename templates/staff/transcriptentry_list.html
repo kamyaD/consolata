@@ -1,0 +1,35 @@
+{% extends 'staff/base.html' %}
+{% block title %}Transcript Entries{% endblock %}
+{% block content %}
+<h2>Transcript Entries</h2>
+<a href="{% url 'staff_teachers:transcriptentry-add' %}" class="btn btn-success mb-2">Add New Entry</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Score</th>
+            <th>Period</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entry in object_list %}
+        <tr>
+            <td>
+                {% if entry.student.transcriptsummary %}
+                  <a href="{% url 'staff_teachers:transcript-summary' entry.student.transcriptsummary.id %}">
+                    {{ entry.student.first_name }} {{ entry.student.last_name }}
+                  </a>
+                {% else %}
+                  {{ entry.student.first_name }} {{ entry.student.last_name }} (No Summary)
+                {% endif %}
+              </td>              
+              
+            <td>{{ entry.course.code }}</td>
+            <td>{{ entry.score }}</td>
+            <td>{{ entry.period.academic_year }} S{{ entry.period.semester }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

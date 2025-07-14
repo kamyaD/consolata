@@ -28,7 +28,10 @@ class CustomUser(AbstractUser):
         ('Lecturer', 'Lecturer'),
         ('Formator', 'Formator'),
         ('Registrar', 'Registrar'),
-        ('Admin', 'Admin')
+        ('DVC Finance', 'DVC Finance'),
+        ('Finance Controller', 'Finance Controller'),
+        ('Secretary', 'Secretary'),
+    
     )
     DEPARTMENT_CHOICES = (
         ('Philosophy', 'Philosophy'),   

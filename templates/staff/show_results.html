@@ -15,7 +15,7 @@
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="card-title">Class Results</h2>
+                        <h2 class="card-title">Results</h2>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             
                             <form method="post" enctype="multipart/form-data" action="{% url 'staff_teachers:upload-csv' %}">
@@ -31,44 +31,32 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
                                 <th>Congregation</th>
-                                <th>S/No</th> 
-                                <th>Reg.No</th>
-                                <th>Student Name</th>
-                                <th>Plato Republic</th>
-                                <th>Modern World History</th>
-                                <th>Special Ethics</th>
-                                <th>Logic</th>
-                                <th>Philosophy Of Emanuel Kant</th>
-                                <th>Edith Stein Phenomenology</th>
-                                <th>Philosophical Latin</th>
-                                <th>Christian & Philosophy</th>
-                                <th>Philosophy & Know the Ancient Thought</th>
-                                <th>Comprehensives Written</th>
-                                <th>Comprehensives Oral</th>
-
+                                <th>Registration Number</th>
+                                <th>School</th>
+                                <th>Year</th>
+                                <th>Semester</th>
+                                <th>Course</th>
+                                <th>Marks</th>
                             </tr>
-                        </thead>
+                        </thead>    
                         <tbody>
                             {% for result in results %}
                             
+                            
                             <tr>
                                 <td>{{result.id}}</td>
+                                <td><a href="{% url 'staff_teachers:student-transcript' result.student.registration_number %}">{{result.student.first_name}}</a></td>
+                                <td>{{result.student.last_name}}</td>
                                 <td>{{result.congregation}}</td>
-                                <td>{{result.s_no}}</td>
-                                <td>{{result.reg_no}}</td>
-                                <td>{{result.name}}</td>
-                                <td>{{result.plato_republic}}</td>
-                                <td>{{result.modern_world_history}}</td>
-                                <td>{{result.special_ethicks}}</td>
-                                <td>{{result.logic}}</td>
-                                <td>{{result.emmanuel_kant}}</td>
-                                <td>{{result.edith_stein}}</td>
-                                <td>{{result.philosophical_latin}}</td>
-                                <td>{{result.christianity_philosophy}}</td>
-                                <td>{{result.ancient_thought}}</td>
-                                <td>{{result.comprehensive_written}}</td>
-                                <td>{{result.comprehensives_oral}}</td>
+                                <td>{{result.student.registration_number}}</td>
+                                <td>{{result.course.school}}</td>
+                                <td>{{result.course.year}}</td>
+                                <td>{{result.course.semester}}</td>
+                                <td>{{result.course.title}}</td> 
+                                <td>{{result.course.marks}}</td>  
                             </tr>
                             {% endfor %}
                         </tbody>

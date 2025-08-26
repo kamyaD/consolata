@@ -46,7 +46,57 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
+    #mobileMenu .list-group-item a {
+    display: block;
+    color: #212529;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+  }
 
+  #mobileMenu .list-group-item a:hover {
+    color: #0d6efd;
+  }
+
+  #mobileMenu .list-group-item {
+    background-color: #f8f9fa;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  #mobileMenu ul li ul {
+    list-style: none;
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  #mobileMenu ul li ul li a {
+    font-size: 0.9rem;
+    color: #495057;
+  }
+
+  #mobileMenu ul li ul li a:hover {
+    color: #0d6efd;
+  }
+
+  #mobileMenu {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+  }
+
+  .btn-mobile-toggle {
+    background-color: #0d6efd;
+    color: white;
+    font-weight: 600;
+  }
+
+  .btn-mobile-toggle:hover {
+    background-color: #0b5ed7;
+    color: white;
+  }
 
 
   </style>
@@ -55,28 +105,36 @@
 <body class="index-page">
   <!-- 🔝 TOP BAR -->
   <div class="top-bar custom-top-bar" style="background-color: #ae1f23; color: white;">
-
   <div class="container-fluid d-flex justify-content-between align-items-center small px-3">
-    <div>
-      <a href="{% url 'home:language-center' %}" class="me-3 text-white text-decoration-none">Language Center</a>
-      <a href="#" class="me-3 text-white text-decoration-none">Student Corner</a>
+    
+    <!-- Left Links -->
+    <div class="d-flex flex-wrap gap-4">
+      <a href="{% url 'home:language-center' %}" class="text-white text-decoration-none">Language Center</a>
+      <a href="#" class="text-white text-decoration-none">Student Corner</a>
       <a href="#" class="text-white text-decoration-none">Staff Corner</a>
+      <a href="https://ciu.ac.ke:2096/" class="text-white text-decoration-none">Email Login</a>
     </div>
-    <div>
-      <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+
+    <!-- Right Social Icons -->
+    <div class="d-flex gap-3">
+      <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="text-white"><i class="bi bi-twitter"></i></a>
       <a href="#" class="text-white"><i class="bi bi-envelope"></i></a>
     </div>
+
   </div>
 </div>
+
 
 
 <header id="header" class="header sticky-top bg-white shadow-sm" >
   <div class="container-fluid d-flex align-items-center justify-content-between px-3 ml-20" >
     <a href="{% url 'home:home' %}" class="logo d-flex align-items-center me-auto">
-      <img src="{% static 'img/new_logo.png' %}" alt="Logo" style="height: 200px; width: auto;"/>
-      <h2 class="sitename ms-2" style="color: #ae1f23;">Consolata International <center>University</center></h2>
-
+      <img src="{% static 'img/consolata.png' %}" 
+             alt="Logo" 
+             class="ciu-logo img-fluid mb-5" 
+             style="width: 450px; height: auto;" />
+      
     </a>
     
 
@@ -99,12 +157,10 @@
         <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
         {% else %}
         
-        
-          <a class="e-n-menu-title-text" href="{% url 'home:home' %}" id="aboutDropdown" role="button" style="color: #163650;">
-            HOME
-          </a>
-          
-          <!-- </li> -->
+        <a class="e-n-menu-title-text" href="{% url 'home:home' %}" id="aboutDropdown" role="button" style="color: #163650;">
+          HOME
+        </a>
+
         <!-- ACADEMICS Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
@@ -112,7 +168,7 @@
           </a>
           <ul class="dropdown-menu">
             <li class="dropdown-submenu">
-              <a class="dropdown-item" href="{% url 'home:philosophy-school' %}">School of Philosophy</a>
+              <a class="dropdown-item " href="{% url 'home:philosophy-school' %}">School of Philosophy</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Postgraduate</a></li>
                 <li><a class="dropdown-item" href="#">Undergraduate</a></li>
@@ -121,7 +177,7 @@
               </ul>
             </li>
             <li class="dropdown-submenu">
-              <a class="dropdown-item" href="{% url 'home:theology-school' %}">School of Theology</a>
+              <a class="dropdown-item " href="{% url 'home:theology-school' %}">School of Theology</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Theology</a></li>
                 <li><a class="dropdown-item" href="#">Arts & Social Sciences</a></li>
@@ -129,7 +185,7 @@
               </ul>
             </li>
             <li class="dropdown-submenu">
-              <a class="dropdown-item" href="{% url 'home:psychology-school' %}">School Of Psychology</a>
+              <a class="dropdown-item " href="{% url 'home:psychology-school' %}">School Of Psychology</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">IOP</a></li>
                 <li><a class="dropdown-item" href="#">IYS</a></li>
@@ -140,7 +196,7 @@
               </ul>
             </li>
             <li class="dropdown-submenu">
-              <a class="dropdown-item" href="{% url 'home:language-center' %}">Language Center</a>
+              <a class="dropdown-item " href="{% url 'home:language-center' %}">Language Center</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">IOP</a></li>
                 <li><a class="dropdown-item" href="#">IYS</a></li>
@@ -155,7 +211,6 @@
 
         <li class="nav-item"><a class="nav-link" href="#" style="color: #163650;">RESEARCH</a></li>
 
-        <!-- CICE -->
         <a class="e-n-menu-title-text" href="https://library.consolatainstituteofphilosophy.com/" id="aboutDropdown" role="button" style="color: #163650;">
           LIBRARY
         </a>
@@ -196,73 +251,48 @@
       <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
     </nav>
     <nav class="d-lg-none position-absolute top-0 end-0 p-3" style="z-index: 1050;">
-      <button class="btn btn-outline-dark w-100 mb-2" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
-        Menu
+      <button class="btn btn-mobile-toggle w-100 mb-2" data-bs-toggle="collapse" data-bs-target="#mobileMenu">
+        ☰ Menu
       </button>
       <div id="mobileMenu" class="collapse">
         <ul class="list-group">
           {% if user.is_authenticated and request.user.role == "Student" %}
-          <li class="list-group-item"><a href="{% url 'userauth:profile' %}">Profile</a></li>
-          <li class="list-group-item"><a href="#">Courses</a></li>
-          <li class="list-group-item"><a href="#">Results</a></li>
-          <li class="list-group-item"><a href="#">Fee Payment</a></li>
-          <li class="list-group-item"><a href="{% url 'userauth:logout'%}">Logout</a></li>
+            <li class="list-group-item"><a href="{% url 'userauth:profile' %}">👤 Profile</a></li>
+            <li class="list-group-item"><a href="#">📚 Courses</a></li>
+            <li class="list-group-item"><a href="#">📈 Results</a></li>
+            <li class="list-group-item"><a href="#">💳 Fee Payment</a></li>
+            <li class="list-group-item"><a href="{% url 'userauth:logout'%}">🚪 Logout</a></li>
           {% elif user.is_authenticated and request.user.role == "Lecturer" %}
-          <li class="list-group-item"><a href="{% url 'userauth:profile' %}">Profile</a></li>
-          <li class="list-group-item"><a href="#">Courses</a></li>
-          <li class="list-group-item"><a href="#">Results</a></li>
-          <li class="list-group-item"><a href="#">Payslip</a></li>
-          <li class="list-group-item"><a href="{% url 'userauth:logout'%}">Logout</a></li>
+            <li class="list-group-item"><a href="{% url 'userauth:profile' %}">👤 Profile</a></li>
+            <li class="list-group-item"><a href="#">📚 Courses</a></li>
+            <li class="list-group-item"><a href="#">📝 Results</a></li>
+            <li class="list-group-item"><a href="#">💼 Payslip</a></li>
+            <li class="list-group-item"><a href="{% url 'userauth:logout'%}">🚪 Logout</a></li>
           {% else %}
-    
-          <li class="list-group-item">
-            <a href="#">ABOUT CIU</a>
-            <ul class="ps-3 mt-2">
-              <li><a href="#">About CIU University</a></li>
-              <li><a href="#">Mission, Vision & Philosophy</a></li>
-              <li><a href="#">History</a></li>
-              <li><a href="#">Partners</a></li>
-              <li><a href="#">Virtual Tour</a></li>
-              <li><a href="#">Vacancies</a></li>
-              <li><a href="#">Tenders</a></li>
-            </ul>
-          </li>
-         
-          <li class="list-group-item">
-            <a href="#">Departments</a>
-            <ul class="ps-3 mt-2">
-              <li><a href="#">Leaders Guild</a></li>
-              <li><a href="#">Alumni</a></li>
-              <li><a href="#">HR</a></li>
-              <li><a href="#">ICT</a></li>
-            </ul>
-          </li>
-          <li class="list-group-item">
-            <a href="#">ACADEMICS</a>
-            <ul class="ps-3 mt-2">
-              <li><a href="{% url 'home:philosophy-school' %}">School of Philosophy</a></li>
-              <li><a href="{% url 'home:theology-school' %}">School of Theology</a></li>
-              <li><a href="{% url 'home:psychology-school' %}">School of Psychology</a></li>
-              <li><a href="{% url 'home:language-center' %}">Language Center</a></li>
-            </ul>
-          </li>
-          <li class="list-group-item">
-            <a href="https://library.consolatainstituteofphilosophy.com/">Library</a>
-          </li>
-          <li class="list-group-item">
-            <a href="{% url 'userauth:login' %}">Login</a> / <a href="{% url 'userauth:register' %}">Register</a>
-          </li>
-          <li class="list-group-item">
-            <a href="#" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); return false;">CONTACTS</a>
-          </li>
+            <li class="list-group-item"><a href="#">🏫 ABOUT CIU</a></li>
+            <li class="list-group-item"><a href="#">🏢 Departments</a></li>
+            <li class="list-group-item">
+              <a href="#">🎓 ACADEMICS</a>
+              <ul>
+                <li><a href="{% url 'home:philosophy-school' %}">School of Philosophy</a></li>
+                <li><a href="{% url 'home:theology-school' %}">School of Theology</a></li>
+                <li><a href="{% url 'home:psychology-school' %}">School of Psychology</a></li>
+                <li><a href="{% url 'home:language-center' %}">Language Center</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item"><a href="https://library.consolatainstituteofphilosophy.com/">📖 Library</a></li>
+            <li class="list-group-item"><a href="{% url 'userauth:login' %}">🔐 Login</a></li>
+            <li class="list-group-item"><a href="{% url 'userauth:register' %}">📝 Register</a></li>
+            <li class="list-group-item">
+              <a href="#" onclick="window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); return false;">📞 CONTACTS</a>
+            </li>
           {% endif %}
         </ul>
       </div>
     </nav>
-
-  </div>
+    </div>
 </header>
-  <main class="main" >
+<main class="main" >
 
     <!-- Hero Section -->
     
@@ -411,9 +441,10 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Our Programs:</h4>
           <ul>
-            <li><a href="#">Religious Studie</a></li>
+            <li><a href="#">Religious Studies</a></li>
             <li><a href="#">Philosophy Studies</a></li>
             <li><a href="#">Language Studies</a></li>
+            <li><a href="#">Psychology Studies</a></li>
           </ul>
         </div>
 

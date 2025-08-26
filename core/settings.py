@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-vvccg6^@(asd7g(kwtw298^7@f0p09n^)o3eji)%!#&$c8te#a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ciu.ac.ke']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,22 +89,22 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'okbxihov_cipporta_students_results',
-#         'USER': 'okbxihov_consolata',
-#         'PASSWORD': 'consolata123',  # Not the SFTP one
-#         'HOST': '94.23.160.111',
-#         'PORT': '',
-#         'OPTIONS': {
-#             # 'charset': 'utf8mb4',
-#         },
+#         'USER': 'okbxihov_dommy',
+#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',  # Not the SFTP one
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#         # 'OPTIONS': {
+#         #     # 'charset': 'utf8mb4',
+#         # },
 #     }
 # }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'consolata_local',
-        'USER': 'dommy',
-        'PASSWORD': 'dommy123',
+        'NAME': 'otijeuil_consolata_local',
+        'USER': 'otijeuil_admin',
+        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -159,16 +160,17 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR.joinpath('static')]
-STATIC_ROOT = BASE_DIR.joinpath('static_files')
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_URL = '/consolata/static/'  # because your app runs under /consolata/
+STATIC_ROOT = Path('/home/otijeuil/public_html/consolata/static/')  # adjust to your cPanel user
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Default primary key field type

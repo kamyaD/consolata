@@ -270,7 +270,28 @@ class StudentClassSignIN(models.Model):
 
 
 
+    
+class CourseCodes(models.Model):
+    course_code = models.CharField(max_length=100, unique=True)
+    course_title = models.CharField(max_length=250)
 
+    class Meta:
+        managed = True
+        db_table = 'tbl_course_codes'
 
-        
-   
+    def __str__(self):
+        return f"{self.course_code} - {self.course_title}"
+    
+class CourseLists(models.Model):
+    course_code = models.CharField(max_length=250, unique=True)
+    course_title = models.CharField(max_length=250, null=True, blank=True)
+    year = models.CharField(max_length=250, null=True, blank=True)
+    semester = models.CharField(max_length=250, null=True, blank=True)
+    credit = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        managed = True
+        db_table = 'tbl_course_lists'
+
+    def __str__(self):
+        return f"{self.course_code} - {self.semester} {self.year}"

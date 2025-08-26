@@ -61,7 +61,7 @@
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-outline-secondary">DVC Approve</button>
                                     </form>
-                                    {% elif claim.state == 'Payment' and request.user.role == 'Finance Controller' %}
+                                    {% elif claim.state == 'Payment' and request.user.role == 'Finance Administrator' %}
                                     <form method="post" action="{% url 'staff_teachers:approve-claim' claim.id %}">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-outline-secondary">Pay</button>

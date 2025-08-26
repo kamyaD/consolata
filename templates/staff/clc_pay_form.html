@@ -1,0 +1,245 @@
+{% extends 'home/base2.html' %}
+{% load static %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
+<style>
+    table.input-table th,
+    table.input-table td {
+        padding: 6px;
+        vertical-align: middle;
+    }
+
+    table.input-table input {
+        width: 100%;
+        padding: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <!-- <h2 class="card-title">Teacher Payment Form</h2> -->
+                <form method="post">
+                    {% csrf_token %}
+                    <h2 class="card-title">Teachers Details</h2>
+                    <!-- Teacher Info -->
+                    <table class="table table-bordered table-striped mb-4">
+                        <tbody>
+                            <!-- Row 1 -->
+                            <tr>
+                                <th>First Name</th>
+                                <td><input name="f-name" class="form-control" /></td>
+                                <th>Last Name</th>
+                                <td><input name="l-name" class="form-control" /></td>
+                                <th>Month</th>
+                                <td><select id="month" name="month" class="form-control" required>
+                                    <option value="">-- Select Month --</option>
+                                    <option value="January">January</option>
+                                    <option value="February">February</option>
+                                    <option value="March">March</option>
+                                    <option value="April">April</option>
+                                    <option value="May">May</option>
+                                    <option value="June">June</option>
+                                    <option value="July">July</option>
+                                    <option value="August">August</option>
+                                    <option value="September">September</option>
+                                    <option value="October">October</option>
+                                    <option value="November">November</option>
+                                    <option value="December">December</option>
+                                </select></td>
+                            </tr>
+                    
+                            <!-- Row 2 -->
+                            <tr>
+                                <th>Education</th>
+                                <td><input name="education" class="form-control" /></td>
+                                <th>Course</th>
+                                <td><select id="course" name="course" class="form-control" required>
+                                    <option value="">-- Select Course --</option>
+                                    <option value="English">English</option>
+                                    <option value="Kiswahili">Kiswahili</option>
+                                    <option value="French">French</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="Portuguese">Portuguese</option>
+                                    <option value="Italian">Italian</option>
+                                    <option value="Hebrew">Hebrew</option>
+                                    <option value="German">German</option>
+                                    <option value="Pitman I">Pitman I</option>
+                                    <option value="Pitman II">Pitman II</option>
+                                    <option value="Pitman III">Pitman III</option>
+                                    <option value="ILS I">ILS I</option>
+                                    <option value="ILS II">ILS II</option>
+                                    <option value="TOEFL">TOEFL</option>
+                                    <option value="ELTS">ELTS</option>
+                                    <option value="Others">Others</option>
+                                    <option value="N/A">N/A</option>
+                                </select></td>
+                                <th>Level</th>
+                                <td><input name="level" class="form-control" /></td>
+                            </tr>
+                    
+                            <!-- Row 3 -->
+                            <tr>
+                                <th>Normal Class I</th>
+                                <td><input name="normal-class-I" class="form-control" /></td>
+                                <th>Normal Class II</th>
+                                <td><input name="normal-class-II" class="form-control" /></td>
+                                <th></th>
+                                <td></td>
+                            </tr>
+                    
+                            <!-- Row 4 -->
+                            <tr>
+                                <th>Special Class</th>
+                                <td><input name="special-class" class="form-control" /></td>
+                                <th>No. of Students</th>
+                                <td><input name="special-class-students" class="form-control" /></td>
+                                <th>On Site Class</th>
+                                <td><input name="on-site-class" class="form-control" /></td>
+                            </tr>
+                    
+                            <!-- Row 5 -->
+                            <tr>
+                                <th>No. of On Site Students</th>
+                                <td><input name="on-site-students" class="form-control" /></td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Payment Rows -->
+                    <h2 class="card-title">Tutor's Pay Form Sheet</h2>
+                    <table class="table table-bordered input-table">
+                        <thead>
+
+                            <tr>
+                                <th>RATES</th>
+                                <th>ITEM</th>
+                                <th>DESCRIPTION</th>
+                                <th>HOURS / QUANTITY</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input name="normal-class-I" class="form-control"/></td>
+                                <td>Normal class I</td>
+                                <td>Week days (Morning/Afternoons)</td>
+                                <td>{{ form.normal_class_hours }}</td>
+                                <td>{{ form.normal_class_total }}</td>
+                            </tr>
+                            <tr>
+                                <td><input name="afternoon-activities" class="form-control"/></td>
+                                <td>Afternoon activities</td>
+                                <td>Monday to Friday</td>
+                                <td>{{ form.activities_hours }}</td>
+                                <td>{{ form.activities_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.quality_work_rate }}</td>
+                                <td>Quality work</td>
+                                <td>T.O.D services</td>
+                                <td>{{ form.tod_hours }}</td>
+                                <td>{{ form.tod_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.special_class_rate }}</td>
+                                <td>Special classes</td>
+                                <td>40% of hours tutored</td>
+                                <td>{{ form.tutored_hours }}</td>
+                                <td>{{ form.tutored_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.eca_rate }}</td>
+                                <td>E.C.A</td>
+                                <td>Extra Classroom Activities</td>
+                                <td>{{ form.eca_hours }}</td>
+                                <td>{{ form.eca_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.meeting_rate }}</td>
+                                <td>Meetings</td>
+                                <td>Staff and Ad hoc</td>
+                                <td>{{ form.meeting_number }}</td>
+                                <td>{{ form.meeting_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.placement_rate }}</td>
+                                <td>Placement tests</td>
+                                <td>Done at the level of elementary</td>
+                                <td>{{ form.test_number }}</td>
+                                <td>{{ form.test_total }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>MBS of data</td>
+                                <td>Internet data bundles spent</td>
+                                <td></td>
+                                <td>{{ form.internet_total }}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>SALARY/RENUNERATION</td>
+                                <td></td>
+                                <td>0</td>
+                                <td>{{ form.salaries }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.normal_class2_rate }}</td>
+                                <td>Normal classes II</td>
+                                <td>Evenings / Weekends</td>
+                                <td>{{ form.normal2_hours }}</td>
+                                <td>{{ form.normal2_total }}</td>
+                            </tr>
+                            <tr>
+                                <td>{{ form.onsite_rate }}</td>
+                                <td>On Site Tuition</td>
+                                <td>Office & Home based classes</td>
+                                <td>{{ form.onsite_hours }}</td>
+                                <td>{{ form.onsite_total }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Summation -->
+                    <h5 class="mt-4">Summary</h5>
+                    <table class="table table-bordered input-table">
+                        <tr>
+                            <th>Summation 1</th>
+                            <td>{{ form.summation1 }}</td>
+                            <th>Advance</th>
+                            <td>{{ form.advance }}</td>
+                            <th>Advance Total</th>
+                            <td>{{ form.advance_total }}</td>
+                        </tr>
+                        <tr>
+                            <th>Charity</th>
+                            <td>{{ form.charity }}</td>
+                            <th>Charity Total</th>
+                            <td>{{ form.charity_total }}</td>
+                            <th>Others</th>
+                            <td>{{ form.others }}</td>
+                        </tr>
+                        <tr>
+                            <th>Others Total</th>
+                            <td>{{ form.others_total }}</td>
+                            <th>Summation 2</th>
+                            <td>{{ form.summation2 }}</td>
+                            <th>Gross Total</th>
+                            <td>{{ form.gross_total }}</td>
+                        </tr>
+                    </table>
+
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Submit Payment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

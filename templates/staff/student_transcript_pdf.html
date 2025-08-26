@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transcript for {{ student.first_name }}</title>
+    <style>
+        body {
+            font-family: "DejaVu Sans", sans-serif;
+            font-size: 13px;
+            margin: 30px;
+        }
+
+        .transcript-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .transcript-header h2,
+        .transcript-header h3 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .transcript-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .semester-title {
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0 10px 0;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        th, td {
+            padding: 6px;
+            text-align: left;
+        }
+
+        .summary-section {
+            margin-top: 30px;
+        }
+
+        .grade-interpretation {
+            margin-top: 40px;
+        }
+
+        .grade-interpretation table {
+            width: 70%;
+            font-size: 12px;
+        }
+
+        .signature-block {
+            margin-top: 50px;
+        }
+
+        .signature-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .signature-col {
+            width: 45%;
+        }
+
+        .footer-note {
+            font-style: italic;
+            font-size: 11px;
+            margin-top: 40px;
+            border-top: 1px dashed #000;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="transcript-header">
+        <img src="{{ logo_url }}" alt="Logo" style="max-height: 100px; border-radius: 5px;">
+        <h2>Consolata International University</h2>
+        <h3>Academic Transcript</h3>
+        <p><strong>Office of the Registrar</strong></p>
+    </div>
+
+    <div class="transcript-details">
+        <div>
+            <p><strong>Name:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+            <p><strong>Matriculation No:</strong> {{ student.registration_number }}</p>
+            {% with first_course=semester_data.0.courses.0.course.course %}
+            <p><strong>Program:</strong> {{ first_course.title }}</p>
+            {% endwith %}
+        </div>
+        <div>
+            <p><strong>Date:</strong> {{ now|date:"F j, Y" }}</p>
+        </div>
+    </div>
+
+    {% for semester in semester_data %}
+        <h4 class="semester-title transcript-details">{{ semester.semester }}</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Course Code</th>
+                    <th>Course Description</th>
+                    <th>Score</th>
+                    <th>Grade</th>
+                    <th>Credit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in semester.courses %}
+                <tr>
+                    <td>{{ entry.course.class_no }}</td>
+                    <td>{{ entry.course.course_code }}</td>
+                    <td>{{ entry.course.course_title }}</td>
+                    <td>{{ entry.course.marks }}</td>
+                    <td>{{ entry.course.grade }}</td>
+                    <td>{{ entry.course.credit }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <p><strong>Average Score:</strong> {{ semester.average }}</p>
+    {% endfor %}
+
+    {% if summary %}
+    <div class="summary-section">
+        <hr>
+        <p><strong>Overall Average:</strong> {{ summary.overall_average }}</p>
+        <p><strong>Accumulated Credits:</strong> {{ summary.accumulated_credits }}</p>
+        <p><strong>Class Awarded:</strong> {{ summary.class_awarded }}</p>
+        <p><strong>Award Date:</strong> {{ summary.award_date|date:"d M Y" }}</p>
+        <p><strong>Grade Obtained:</strong> {{ summary.class_awarded }}</p>
+    </div>
+    {% endif %}
+
+    <div class="signature-block">
+        <div class="signature-row">
+            <div class="signature-col">
+                <p><strong>DEAN OF STUDIES</strong></p>
+                <p>Date: ________________________</p>
+                <p>Signed: ______________________</p>
+            </div>
+            <div class="signature-col">
+                <p><strong>REGISTRAR</strong></p>
+                <p>Date: ________________________</p>
+                <p>Signed: ______________________</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="grade-interpretation">
+        <h4>Interpretation of Scores</h4>
+        <table>
+            <tr><td>70 - &lt;100</td><td>A</td><td>First Class Honours</td></tr>
+            <tr><td>60 - &lt;70</td><td>B</td><td>Upper Second Class Honours</td></tr>
+            <tr><td>50 - &lt;60</td><td>C</td><td>Lower Second Class Honours</td></tr>
+            <tr><td>45 - &lt;50</td><td>D</td><td>Adequate Pass</td></tr>
+            <tr><td>40 - &lt;45</td><td>E</td><td>Bare Pass</td></tr>
+            <tr><td>0 - &lt;40</td><td>F</td><td>Fail</td></tr>
+        </table>
+    </div> -->
+
+    <div class="footer-note">
+        NB: All averages on this transcript are credit-sensitive.
+        <br><p>Accredited by the Commission of Higher Education</p>
+    </div>
+
+</body>
+</html>

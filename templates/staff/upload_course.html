@@ -1,0 +1,18 @@
+{% extends 'home/base2.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Upload Course List</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary" type="submit">Upload</button>
+    </form>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-info mt-3">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

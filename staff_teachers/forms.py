@@ -1,5 +1,7 @@
 from django import forms
-from .models import TimetableEntry, TblClaimSheet, ClaimForm, TranscriptEntry, TranscriptSummary, GradeScale
+from .models import TimetableEntry, TblClaimSheet, ClaimForm
+from student.models import CourseLists
+from staff_teachers.models import TblTeachersPay
 
 class TimetableEntryForm(forms.ModelForm):
     class Meta:
@@ -63,18 +65,20 @@ class ClaimFormForm(forms.ModelForm):
         fields = [ 'month']
 
 
-class TranscriptEntryForm(forms.ModelForm):
-    class Meta:
-        model = TranscriptEntry
-        fields = ['student', 'course', 'period', 'score']
 
 
-class TranscriptSummaryForm(forms.ModelForm):
+class CourseCSVUploadForm(forms.Form):
+    file = forms.FileField()
+
+
+class CourseEditForm(forms.ModelForm):
+    
     class Meta:
-        model = TranscriptSummary
+        model = CourseLists
+        fields = ['course_code', 'course_title', 'year', 'semester', 'credit']
+
+class ClcClaimForm(forms.ModelForm):
+    class Meta:
+        model = TblTeachersPay
         fields = '__all__'
-
-class GradeScaleForm(forms.ModelForm):
-    class Meta:
-        model = GradeScale
-        fields = '__all__'
+        

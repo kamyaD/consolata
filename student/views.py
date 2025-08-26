@@ -7,70 +7,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import TblStudentsAdmissions
 from .forms import StudentCreationForm
-from staff_teachers.models import PhilosophystudentsResults, Timetable
+from staff_teachers.models import Timetable
 from .utils import render_to_pdf
+
 
 
 def student_list(request):
     return HttpResponse("This is the student list page.")
-
-
-def student_result(request):
-    template = 'student/student_result.html'
-
-    student = TblStudentsAdmissions.objects.filter(email=request.user.email).first()
-    if not student:
-        messages.error(request, "Student record not found.")
-        return redirect('student:get-student-record')
-
-    result = PhilosophystudentsResults.objects.filter(student__registration_number=student.registration_number).first()
-    if not result:
-        messages.error(request, "You do not have any result.")
-        return redirect('student:get-student-record')
-
-    context = {
-        "result": result
-    }
-    return render(request, template, context)
-
-
-
-
-def generate_results_pdf(request):
-    template = 'student/student_result_pdf.html'
-    
-    try:
-        student = TblStudentsAdmissions.objects.get(email=request.user.email)
-    except TblStudentsAdmissions.DoesNotExist:
-        messages.error(request, "Student record not found.")
-        return redirect('student:results')
-
-    result = PhilosophystudentsResults.objects.filter(reg_no=3003).first()
-    if not result:
-        messages.error(request, "You do not have any result.")
-        return redirect('student:results')
-
-    data = {
-        'congregation': result.congregation,
-        's_no': result.s_no,
-        'reg_no': result.reg_no,
-        'name': result.name,
-        'plato_republic': result.plato_republic,
-        'modern_world_history': result.modern_world_history,
-        'special_ethicks': result.special_ethicks,
-        'logic': result.logic,
-        'emmanuel_kant': result.emmanuel_kant,
-        'edith_stein': result.edith_stein,
-        'philosophical_latin': result.philosophical_latin,
-        'christianity_philosophy': result.christianity_philosophy,
-        'ancient_thought': result.ancient_thought,
-        'comprehensive_written': result.comprehensive_written,
-        'comprehensive_oral': result.comprehensives_oral
-    }
-
-    pdf = render_to_pdf(template, data)
-    return HttpResponse(pdf, content_type='application/pdf')
-
 
 
 
@@ -179,5 +122,33 @@ def view_individual_sudent(request):
          return redirect('student:online-application')
 
 
-
+@login_required  
+def fetch_student_results(request):
+    template = 'student/student_results.html'
+    results = CourseResults.objects.filter(student__email=request.user.email)
     
+    if not results:
+        messages.error(request, "No results found for this student.")
+        return redirect('student:get-student-record')
+
+    context = {
+        'results': results
+    }
+    
+    return render(request, template, context)
+
+# def upload_course_code_csv(request):
+#     if request.method == 'POST':
+#         csv_file = request.FILES.get('csv_file')
+        
+#         if not csv_file.name.endswith('.csv'):
+#             messages.error(request, "Please upload a valid CSV file.")
+#             return redirect('student:fetch-student-results')
+
+#         # Process the CSV file here
+#         # For example, you can read the file and save the course codes to the database
+
+#         messages.success(request, "CSV file uploaded successfully.")
+#         return redirect('student:fetch-student-results')
+    
+#     return render(request, 'student/upload_course_code_csv.html')

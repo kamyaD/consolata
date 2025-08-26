@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.templatetags.static import static
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import (TblTeachersPay, TblSchoolInvoice,TblRecordSlip, ClaimForm, ClaimItem,
-                    Timetable, PhilosophystudentsResults, Course, CourseLists, TblClaimSheet, TimetableEntry, TranscriptEntry)
-from student.models import StudentClassSignIN, TblStudentsAdmissions
+                    Timetable, TblClaimSheet, TimetableEntry, CourseResults)
+from student.models import StudentClassSignIN, TblStudentsAdmissions,CourseLists
 from student.utils import render_to_pdf
 from .forms import TblClaimSheetForm, ClaimFormForm, TimetableEntryForm
 import datetime
@@ -12,11 +13,17 @@ import csv
 import io
 from datetime import datetime
 
+import tempfile, os
 from django.template.loader import render_to_string
 from weasyprint import HTML, CSS
 import tempfile
 from collections import defaultdict
 from decimal import Decimal, InvalidOperation
+from .forms import CourseCSVUploadForm, CourseEditForm
+from django.utils.timezone import now
+from collections import defaultdict
+from django.conf import settings
+
 
 
 # Create your views here.
@@ -120,175 +127,6 @@ def fetch_student_class_sign(request):
     
 
 
-def normalize_header(header):
-    return header.strip().lower().replace(" ", "_")
-
-
-
-def normalize_header(header):
-    return header.lower().replace(' ', '_').replace('.', '')
-
-def upload_results_csv(request):
-    if request.method == 'POST':
-        csv_file = request.FILES.get('csv_file')
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request, "Upload a valid CSV file.")
-            return redirect('your-upload-url')
-
-        decoded_file = csv_file.read().decode('utf-8-sig')
-        io_string = io.StringIO(decoded_file)
-        reader = csv.reader(io_string)
-        headers = next(reader)
-        normalized_headers = [normalize_header(h) for h in headers]
-
-        io_string.seek(0)
-        next(reader)  # skip header row again
-
-        saved_rows = 0
-        skipped_rows = 0
-
-        for row in csv.DictReader(io_string, fieldnames=normalized_headers):
-            reg_no = row.get('regno')
-            student_name = row.get('student_name')
-            year = row.get('year')
-            school = row.get('school')
-            s_no = row.get('sno') or row.get('s_no')
-            congregation = row.get('cong')
-            credit = row.get('credit')
-            semester = row.get('semester')
-            course_code = row.get('course_code')
-
-            if not reg_no or not student_name or not year:
-                skipped_rows += 1
-                continue
-
-            # Split student name
-            name_parts = student_name.strip().split()
-            first_name = name_parts[0]
-            last_name = name_parts[-1]
-            other_names = ' '.join(name_parts[1:-1]) if len(name_parts) > 2 else ''
-
-            student, _ = TblStudentsAdmissions.objects.get_or_create(
-                registration_number=reg_no.strip(),
-                defaults={
-                    'first_name': first_name,
-                    'last_name': last_name,
-                    'other_names': other_names,
-                    'date_of_birth': '2000-01-01'
-                }
-            )
-
-            # Loop through all course title columns (from 9th column onward)
-            for course_title in normalized_headers[9:]:
-                mark = row.get(course_title, '').strip()
-                if not mark:
-                    continue
-
-                # Create or get course
-                course, _ = Course.objects.get_or_create(
-                    title=course_title.replace('_', ' ').title(),
-                    code=course_code,
-                    defaults={
-                        'credit': float(credit) if credit else None,
-                        'year': int(year),
-                        'semester': int(semester) if semester else None,
-                        'school': school,
-                        'marks': mark,
-                    }
-                )
-
-                # Link student to course with mark
-                PhilosophystudentsResults.objects.create(
-                    student=student,
-                    course=course,
-                    s_no=s_no,
-                    congregation=congregation,
-                )
-
-                saved_rows += 1
-
-        messages.success(request, f"{saved_rows} results uploaded. {skipped_rows} rows skipped.")
-        return redirect('staff_teachers:results')
-
-    return render(request, 'staff/show_results.html')
-
-
-
-def show_exam_results(request):
-    template = 'staff/show_results.html'
-    results = PhilosophystudentsResults.objects.all()
-
-    context = {
-        'results': results
-    }
-
-    return render(request, template, context)
-
-def fetch_individual_results(request, reg_no):
-    template = 'staff/individual_results.html'
-    print("reg_no===>",reg_no)
-    results = PhilosophystudentsResults.objects.all()
-    results = results.filter(student__registration_number = reg_no)
-    date_today = datetime.now().strftime("%A, %B %d, %Y")
-    
-    context = {
-        'results': results,
-        'date_today': date_today
-    }
-
-    return render(request, template, context)
-
-def upload_course_lists(request):
-    if request.method == 'POST':
-        csv_file = request.FILES.get('csv_file')
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request, "Upload a valid CSV file.")
-            return redirect('your-upload-url')
-
-        decoded_file = csv_file.read().decode('utf-8-sig')
-        io_string = io.StringIO(decoded_file)
-        reader = csv.reader(io_string)
-        headers = next(reader)
-        saved_rows = 0
-        skipped_rows = 0
-
-        normalized_headers = [normalize_header(h) for h in headers]
-
-        for row in csv.DictReader(io_string, fieldnames=normalized_headers):
-            year = row.get('year')
-            semester = row.get('semester')
-            course_code = row.get('course_code')
-            course_title = row.get('course_title')
-            credit = row.get('credits')
-            school = row.get('school')
-
-            course = CourseLists.objects.create(
-                year = year,
-                semester = semester,
-                course_code = course_code,
-                course_title = course_title,
-                credit = credit,
-                school = school       
-            )
-
-            saved_rows +=1
-
-
-        messages.success(request, f"{saved_rows} Results uploaded successfully.")
-        return redirect('staff_teachers:course-list')
-    template = 'staff/show_course_list.html'
-    return render(request, template)
-
-def show_course_list(request):
-    template = 'staff/show_course_list.html'
-    course_lists = CourseLists.objects.all()
-
-    context = {
-        'course_lists': course_lists
-    }
-
-    return render(request, template, context)
-
 
 
 
@@ -342,6 +180,60 @@ def generate_timetable_pdf(request):
         response.write(output.read())
 
     return response
+
+# def generate_timetable_pdf(request):
+#     tables = TimetableEntry.objects.all()
+#     html_string = render_to_string('staff/timetable_pdf.html', {'tables': tables})
+
+#     font_path = os.path.join(settings.BASE_DIR, 'yourapp', 'static', 'fonts', 'DejaVuSans.ttf')
+
+#     css = CSS(string=f"""
+#         @font-face {{
+#             font-family: 'CustomFont';
+#             src: url('file://{font_path}');
+#         }}
+#         @page {{
+#             size: A4 landscape;
+#             margin: 1cm;
+#         }}
+#         body {{
+#             font-family: 'CustomFont';
+#             font-size: 11px;
+#         }}
+#         table {{
+#             width: 100%;
+#             border-collapse: collapse;
+#         }}
+#         th, td {{
+#             border: 1px solid #ccc;
+#             padding: 5px;
+#             text-align: left;
+#         }}
+#         .flex {{
+#             display: flex;
+#             justify-content: space-between;
+#             gap: 0.5rem;
+#             flex-wrap: wrap;
+#         }}
+#         hr {{
+#             border: none;
+#             border-top: 1px solid #ccc;
+#             margin: 4px 0;
+#         }}
+#     """)
+
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'inline; filename="timetable.pdf"'
+
+#     with tempfile.NamedTemporaryFile(delete=True, suffix='.pdf') as output:
+#         HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf(
+#             target=output.name,
+#             stylesheets=[css]
+#         )
+#         output.seek(0)
+#         response.write(output.read())
+
+#     return response
 
 def generate_claim_form(request):
     template = 'staff/claim_sheet.html'
@@ -535,13 +427,13 @@ def claim_form_approval_view(request, id):
         
         return render(request, 'staff/all_claims.html', {'claim': claim})
     
-    if request.user.role == 'Finance Controller':
+    if request.user.role == 'Finance Administrator':
         claim = ClaimForm.objects.get(state='Payment', pk=id)
 
 
         # Prevent access if already past registrar stage
         if claim.state != 'Payment':
-            messages.warning(request, "This claim is not pending Finance Controller approval.")
+            messages.warning(request, "This claim is not pending Finance Administrator approval.")
             return redirect('staff_teachers:all-claims')  # adjust redirect
 
         if request.method == 'POST':
@@ -554,57 +446,435 @@ def claim_form_approval_view(request, id):
             return redirect('staff_teachers:all-claims')  # adjust
 
         return render(request, 'staff/all_claims.html', {'claim': claim})
+
+
+def normalize_header(header):
+    return header.lower().strip().replace(" ", "_")
+
+def find_course_code(course_title):
+    course_title = course_title.strip().title()
+    course = CourseLists.objects.filter(course_title__iexact=course_title).first()
+    return {
+        "code": course.course_code if course else None,
+        "credit": course.credit if course else None,
+        "semester": course.semester if course else None,
+        "class": course.year if course else None
+    }
+
+def compute_grade(marks):
+    if marks >= 70:
+        return 'A'
+    elif marks >= 60:
+        return 'B'
+    elif marks >= 50:
+        return 'C'
+    elif marks >= 45:
+        return 'D'
+    elif marks >= 40:
+        return 'E'
+    else:
+        return 'F'
+
+
+
+
+
+def normalize_header(header):
+    return header.strip().lower().replace(" ", "_").replace(".", "")
+
+
+def upload_results_csv(request):
+    if request.method == 'POST':
+        csv_file = request.FILES.get('csv_file')
+
+        if not csv_file or not csv_file.name.endswith('.csv'):
+            messages.error(request, "Please upload a valid CSV file.")
+            return render(request, 'upload_predictions.html')
+
+        try:
+            decoded_file = csv_file.read().decode('utf-8-sig')
+            io_string = io.StringIO(decoded_file)
+            reader = csv.reader(io_string)
+
+            headers = [normalize_header(h) for h in next(reader)]
+            print("headers===>", headers)
+            reader = csv.DictReader(io_string, fieldnames=headers)
+
+            static_fields = {'cong', 's_no', 'regno', 'student_name', 'semester', 'year', 'class'}
+            saved_rows = 0
+            skipped_rows = 0
+
+            for row in reader:
+                row = {k.strip(): v.strip() for k, v in row.items()}
+                reg_no = row.get('regno', '')
     
+                name = row.get('student_name', '')
+                
+                congregation = row.get('cong', '')
+                semester = row.get('semester', '')
+                
+                year = row.get('year', '') or '2024-25'
+                class_no = row.get('class', '')
+                
+
+                # Skip invalid reg_no or name
+                if not reg_no or not name:
+                    skipped_rows += 1
+                    continue
+
+                # Clean reg_no (e.g., from 3003.0)
+                try:
+                    reg_no = str(int(float(reg_no)))
+                except ValueError:
+                    skipped_rows += 1
+                    continue
+
+                # Parse name parts
+                name_parts = name.strip().split()
+                first_name = name_parts[0]
+                last_name = name_parts[-1] if len(name_parts) > 1 else ''
+                other_names = " ".join(name_parts[1:-1]) if len(name_parts) > 2 else ''
+
+                # Find or create student
+                student = TblStudentsAdmissions.objects.filter(registration_number__iexact=reg_no).first()
+                if not student:
+                    student = TblStudentsAdmissions.objects.create(
+                        registration_number=reg_no,
+                        first_name=first_name,
+                        last_name=last_name,
+                        other_names=other_names,
+                        congregation=congregation,
+                    )
+
+                for key, value in row.items():
+                    if key in static_fields or not value:
+                        continue
+
+                    course_title = key.replace('_', ' ').title()
+
+                    # Skip invalid marks
+                    try:
+                        marks = float(value)
+                    except ValueError:
+                        skipped_rows += 1
+                        continue
+
+                    course_data = find_course_code(course_title)
+                    course_code = course_data.get('code')
+                    credit = course_data.get('credit')
+                    
+                    if not course_code or credit is None:
+                        skipped_rows += 1
+                        continue
+
+                    # Check for existing result
+                    exists = CourseResults.objects.filter(
+                        student=student,
+                        course_code=course_code,
+                        semester=semester,
+                        year=year,
+                        class_no = class_no,
+                    ).exists()
+                    if exists:
+                        skipped_rows += 1
+                        continue
+
+                    # Save result
+                    CourseResults.objects.create(
+                        student=student,
+                        congregation=congregation,
+                        course_code=course_code,
+                        course_title=course_title,
+                        semester=semester,
+                        year=year,
+                        marks=marks,
+                        grade=compute_grade(marks),
+                        credit=credit,
+                        class_no=class_no,
+
+                    )
+                    saved_rows += 1
+
+            messages.success(
+                request,
+                f"✅ Upload complete: {saved_rows} results saved, {skipped_rows} rows skipped."
+            )
+
+        except Exception as e:
+            messages.error(request, f"❌ Error processing CSV file: {e}")
+
+        return redirect('staff_teachers:view-results')
+
+def edit_result(request, id):
+    result = get_object_or_404(CourseResults, pk=id)
+
+    if request.method == 'POST':
+        semester = request.POST.get('semester')
+        year = request.POST.get('year')
+        course_code = request.POST.get('course_code')
+        credit= request.POST.get('credit')
+        print("credit===>", credit)
+        congregation = request.POST.get('congregation') 
+        marks = request.POST.get('marks')
+        if marks:
+            try:
+                marks = float(marks)
+                result.congregation = congregation
+                result.credit = credit
+                result.course_code = course_code
+                result.year = year
+                result.semester = semester
+                result.marks = marks
+                result.grade = compute_grade(marks)
+                result.save()
+                messages.success(request, "Result updated successfully.")
+                return redirect('staff_teachers:view-results')
+            except ValueError:
+                messages.error(request, "Please enter a valid response.")
+        else:
+            messages.error(request, "Marks cannot be empty.")
+        return redirect('staff_teachers:view-results')
+
+    return render(request, 'staff/edit_result.html', {'result': result})
+
+def upload_course_list(request):
+    if request.method == 'POST':
+        form = CourseCSVUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = form.cleaned_data['file']
+            decoded_file = file.read().decode('utf-8')
+            io_string = io.StringIO(decoded_file)
+            reader = csv.DictReader(io_string)
+
+            created = 0
+            updated = 0
+
+            for row in reader:
+                course_code = row.get('Course Code')
+                course_title = row.get('Course Title')
+                credit = row.get('Credits')
+                print("credit===>", credit)
+                year = row.get('Year')
+                semester = row.get('Semester')
+
+                if course_code:
+                    obj, created_obj = CourseLists.objects.update_or_create(
+                        course_code=course_code.strip(),
+                        defaults={
+                            'course_title': course_title.strip() if course_title else '',
+                            'year': year.strip() if year else '',
+                            'semester': semester.strip() if semester else '',
+                            'credit': credit.strip() if credit else 0,
+                        }
+                    )
+                    if created_obj:
+                        created += 1
+                    else:
+                        updated += 1
+
+            messages.success(request, f"{created} courses created, {updated} updated.")
+            return redirect('staff_teachers:view-course-list')
+    else:
+        form = CourseCSVUploadForm()
+    return render(request, 'staff/upload_course.html', {'form': form})
+
+def view_all_courses(request):
+    courses = CourseLists.objects.all() 
+    return render(request, 'staff/course_list.html', {'courses': courses})
+
+def edit_course_list(request, id):
+    course = get_object_or_404(CourseLists, pk=id)
+
+    if request.method == 'POST':
+        form = CourseEditForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Course updated successfully.")
+            return redirect('staff_teachers:view-course-list')
+        else:
+            print(form.errors)  # Debugging
+    else:
+        form = CourseEditForm(instance=course)
+
+    return render(request, 'staff/course_list.html', {'form': form})
 
 
-def student_transcript_view(request, reg_no):
-    student = get_object_or_404(TblStudentsAdmissions, registration_number__iexact=reg_no)
 
-    # Fetch and prefetch related data
-    entries = PhilosophystudentsResults.objects.filter(student=student).select_related(
-        'course'
-    ).order_by('course__year', 'course__semester')
 
-    # Group by (year, semester) tuple
-    grouped = defaultdict(list)
-    for entry in entries:
-        course = entry.course
-        year = course.year or 0
-        semester = course.semester or 0
-        key = (year, semester)
-        grouped[key].append(entry)
+def show_exam_results(request):
+    template = 'staff/show_results.html'
+    results = CourseResults.objects.all()
+    
+    context = {
+        'results': results
+    }
+
+    return render(request, template, context)
+
+def create_course_list(request):
+    if request.method == 'POST':
+        form = CourseEditForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Course created successfully.")
+            return redirect('staff_teachers:view-course-list')
+        else:
+            print("Form errors:", form.errors)
+            messages.error(request, "There were errors in your form. Please review and submit again.")
+    else:
+        form = CourseEditForm()
+
+    return render(request, 'staff/create_course.html', {'form': form})
+
+
+
+
+def compute_class_awarded(average):
+    if average >= 70:
+        return "First Class Honours"
+    elif average >= 60:
+        return "Upper Second Class Honours"
+    elif average >= 50:
+        return "Lower Second Class Honours"
+    elif average >= 45:
+        return "Adequate Pass"
+    elif average >= 40:
+        return "Bare Pass"
+    else:
+        return "Fail"
+
+def populate_transcript(request, student_id):
+    template = 'staff/student_transcript.html'
+    student = get_object_or_404(TblStudentsAdmissions, pk=student_id)
+    results = CourseResults.objects.filter(student=student).order_by('year', 'semester')
+
+    # Group results by semester
+    semester_dict = defaultdict(list)
+    for result in results:
+        key = f"Year:{result.year}  Semester:{result.semester}"
+        semester_dict[key].append(result)
 
     semester_data = []
-    for (year, semester), courses in grouped.items():
-        total_score = Decimal("0.00")
-        total_credits = Decimal("0.00")
+    total_score = 0
+    total_credits = 0
 
-        for c in courses:
-            course = c.course
-            try:
-                marks = Decimal(course.marks)
-                credit = course.credit or Decimal("0")
-                total_score += marks * credit
-                total_credits += credit
-            except (InvalidOperation, AttributeError):
-                continue
+    for sem, courses in semester_dict.items():
+        course_data = []
+        sem_score = 0
+        sem_credits = 0
 
-        avg = (total_score / total_credits).quantize(Decimal("0.01")) if total_credits else Decimal("0.00")
+        for course in courses:
+            credit = course.credit or 0
+            score = course.marks or 0
+
+            course_data.append({
+                'course': course
+            })
+            sem_score += score * credit
+            sem_credits += credit
+
+        avg = round(sem_score / sem_credits, 2) if sem_credits > 0 else 0
         semester_data.append({
-            "semester": f"{year} Semester {semester}",
-            "courses": courses,
-            "average": avg
+            'semester': sem,
+            'courses': course_data,
+            'average': avg
         })
 
-    # Sort just in case keys weren't strictly ordered
-    semester_data.sort(key=lambda x: (int(x["semester"].split()[0]), int(x["semester"].split()[-1])))
+        total_score += sem_score
+        total_credits += sem_credits
 
-    # Fetch transcript summary if available
-    summary = getattr(student, 'transcriptsummary', None)
+    overall_avg = round(total_score / total_credits, 2) if total_credits > 0 else 0
 
-    return render(request, 'staff/student_transcript.html', {
-        "student": student,
-        "semester_data": semester_data,
-        "summary": summary,
-    })
+    context = {
+        'student': student,
+        'semester_data': semester_data,
+        'summary': {
+            'overall_average': overall_avg,
+            'accumulated_credits': total_credits,
+            'class_awarded': compute_class_awarded(overall_avg),
+            'award_date': now()
+        },
+        'now': now(),
+    }
+    return render(request, template, context)
 
+
+
+def generate_transcript_pdf(request, student_id):
+    student = get_object_or_404(TblStudentsAdmissions, pk=student_id)
+    results = CourseResults.objects.filter(student=student).order_by('year', 'semester')
+
+    semester_dict = defaultdict(list)
+    for result in results:
+        key = f"Year:{result.year}  Semester:{result.semester}"
+        semester_dict[key].append(result)
+
+    semester_data = []
+    total_score = 0
+    total_credits = 0
+
+    for sem, courses in semester_dict.items():
+        course_data = []
+        sem_score = 0
+        sem_credits = 0
+
+        for course in courses:
+            credit = course.credit or 0
+            score = course.marks or 0
+
+            course_data.append({'course': course})
+            sem_score += score * credit
+            sem_credits += credit
+
+        avg = round(sem_score / sem_credits, 2) if sem_credits > 0 else 0
+        semester_data.append({
+            'semester': sem,
+            'courses': course_data,
+            'average': avg
+        })
+
+        total_score += sem_score
+        total_credits += sem_credits
+
+    overall_avg = round(total_score / total_credits, 2) if total_credits > 0 else 0
+
+    context = {
+        'student': student,
+        'semester_data': semester_data,
+        'summary': {
+            'overall_average': overall_avg,
+            'accumulated_credits': total_credits,
+            'class_awarded': compute_class_awarded(overall_avg),
+            'award_date': now()
+        },
+        'now': now(),
+        'request': request,
+        'logo_url': request.build_absolute_uri(static('img/new_logo.png')),
+    }
+
+    html_string = render_to_string('staff/student_transcript_pdf.html', context)
+    html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
+
+    result = tempfile.NamedTemporaryFile(delete=True)
+    html.write_pdf(result.name)
+
+    with open(result.name, 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'filename=transcript_{student.registration_number}.pdf'
+        return response
+
+
+def language_portal(request):
+    pass
+
+def clc_claim_form(request):
+    template = 'staff/clc_pay_form.html'
+    # claims = ClaimForm.objects.filter(staff_email=request.user.email)
+    form = ClaimFormForm()
+
+    context = {
+        # 'claims': claims,
+        'form': form
+    }
+
+    return render(request, template, context)

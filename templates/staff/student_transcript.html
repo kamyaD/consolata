@@ -86,6 +86,12 @@
     border-top: 1px dashed #000;
     padding-top: 10px;
   }
+
+  .transcript-details {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+  }
 </style>
 <div class="row justify-content-center">
   <div class="col-lg-9">
@@ -117,24 +123,28 @@
     <div class="semester-section col-lg-9">
 
       <div class="text-center mb-3">
-        <h5 class="semester-title">{{ semester.semester }}</h5>
+        <h5 class="semester-title transcript-details">{{ semester.semester }}</h5>
       </div>
 
       <table class="transcript-table table table-bordered w-100">
         <thead class="table-light">
           <tr>
+            <th>Year.</th>
             <th>Course Code.</th>
             <th>Course Description</th>
             <th>Score</th>
+            <th>Grade</th>
             <th>Credit</th>
           </tr>
         </thead>
         <tbody>
           {% for entry in semester.courses %}
             <tr>
-              <td>{{ entry.course.code }}</td>
-              <td>{{ entry.course.title }}</td>
+              <td>{{ entry.course.class_no }}</td>
+              <td>{{ entry.course.course_code }}</td>
+              <td>{{ entry.course.course_title }}</td>
               <td>{{ entry.course.marks }}</td>
+              <td>{{ entry.course.grade }}</td>
               <td>{{ entry.course.credit }}</td>
             </tr>
           {% endfor %}
@@ -156,22 +166,7 @@
       <p><strong>Award Date:</strong> {{ summary.award_date|date:"d M Y" }}</p>
       <p><strong>Grade Obtained:</strong> {{ summary.class_awarded }}</p>
 
-      <!-- Signature Section -->
-      <div class="row mt-5">
-        <div class="col-md-6 text-start">
-          <p><strong>Dean's Signature:</strong></p>
-          <div style="border-bottom: 1px solid #000; width: 80%; height: 2em;"></div>
-          <p class="mt-1">Dean of Studies</p>
-        </div>
-
-        <div class="col-md-6 text-end">
-          <p><strong>Registrar's Signature:</strong></p>
-          <div style="border-bottom: 1px solid #000; width: 80%; height: 2em; float: right;"></div>
-          <p class="mt-1">Registrar</p>
-        </div>
-      </div>
-    </div>
-  </div>
+      
 {% endif %}
 
 
@@ -203,7 +198,9 @@
       </div>
 
       <div class="footer-note">
-        NB. All averages on this transcript are credit sensitive.
+        NB. All averages on this transcript are credit sensitive.<br>
+        <a href="{% url 'staff_teachers:generate-transcript-pdf' student.pk %}" class="btn btn-primary mt-6" >Download Transcript PDF</a>
+  
       </div>
     </div>
   </div>

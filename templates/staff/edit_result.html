@@ -1,0 +1,70 @@
+{% extends 'home/base2.html' %}
+{% load static %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
+{% endblock %}
+
+{% block objectives %}active{% endblock %}
+
+{% block content %}
+                
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h5>Edit Course Result for {{ result.student.first_name }} {{ result.student.last_name }}</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'staff_teachers:edit-result' result.id %}">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="course_code" class="form-label">Course Code</label>
+                    <input type="text" class="form-control" name="course_code" id="course_code" value="{{ result.course_code }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="course_title" class="form-label">Course Title</label>
+                    <input type="text" class="form-control" value="{{ result.course_title }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="credit" class="form-label">Credit</label>
+                    <input type="text" class="form-control" name="credit" id="credit" value="{{ result.credit }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="congregation" class="form-label">Congregation</label>
+                    <input type="text" class="form-control" name="congregation" id="congregation" value="{{ result.congregation }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="semester" class="form-label">Semester</label>
+                    <select class="form-select" name="semester" id="semester">
+                        <option value="">-- Select Semester --</option>
+                        <option value="Semester 1" {% if result.semester == "Semester 1" %}selected{% endif %}>Semester 1</option>
+                        <option value="Semester 2" {% if result.semester == "Semester 2" %}selected{% endif %}>Semester 2</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="text" class="form-control" name="year" id="year" value="{{ result.year }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="marks" class="form-label">Marks</label>
+                    <input type="number" class="form-control" name="marks" id="marks" value="{{ result.marks }}" step="0.1" >
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save"></i> Update Result
+                </button>
+                <a href="{% url 'staff_teachers:view-results' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

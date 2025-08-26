@@ -1,0 +1,472 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Consolata University</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <!-- <link href="{% static 'assets2/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets2/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon-16x16.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon-32x32.png' %}">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets2/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets2/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets2/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets2/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets2/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Add these in your <head> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets2/css/main.css' %}" rel="stylesheet">
+  <link href="{% static 'css/conso_css.css' %}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Mentor
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <style>
+
+
+
+  </style>
+</head>
+
+<body class="index-page">
+  <!-- 🔝 TOP BAR -->
+  <div class="top-bar custom-top-bar" style="background-color: #ae1f23; color: white;">
+
+  <div class="container-fluid d-flex justify-content-between align-items-center small px-3">
+    <div>
+      <a href="{% url 'home:language-center' %}" class="me-3 text-white text-decoration-none">Language Center</a>
+      <a href="#" class="me-3 text-white text-decoration-none">Student Corner</a>
+      <a href="#" class="text-white text-decoration-none">Staff Corner</a>
+    </div>
+    <div>
+      <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+      <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+      <a href="#" class="text-white"><i class="bi bi-envelope"></i></a>
+    </div>
+  </div>
+</div>
+
+
+  <header id="header" class="header sticky-top bg-white shadow-sm" >
+    <div class="container-fluid d-flex align-items-center justify-content-between px-3 ml-20" >
+      <a href="{% url 'home:home' %}" class="logo d-flex align-items-center me-auto">
+        <img src="{% static 'img/new_logo.png' %}" alt="Logo" style="height: 200px; width: auto;"/>
+        <h2 class="sitename ms-2" style="color: #ae1f23;">Consolata International <center>University</center></h2>
+
+      </a>
+      
+
+      <nav id="navmenu" class="navmenu">
+        
+        <ul>
+          {% if user.is_authenticated and request.user.role == "Student" %}
+          <li><a href="{% url 'userauth:profile' %}">Profile</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Results</a></li>
+          <li><a href="#">Fee Payment</a></li>
+          <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
+          {% elif user.is_authenticated and request.user.role == "Lecturer" %}
+          <li><a href="{% url 'userauth:profile' %}">Profile</a></li>
+          <li><a href="#">Courses</a></li>
+          <li><a href="#">Results</a></li>
+          <li><a href="#">Payslip</a></li>
+          <li><a href="{% url 'userauth:logout'%}">Logout</a></li>
+          {% else %}
+          
+           <!-- ABOUT TU Dropdown -->
+           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle " href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
+              ABOUT CIU
+            </a>
+            <ul class="dropdown-menu">
+              <!-- Submenu: About Tangaza -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle custom-top-bar " href="#">About CIU University</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#" style="color: #d2a749;">Mission, Vision & Philosophy</a></li>
+                  <li><a class="dropdown-item" href="#" style="color: #d2a749;">History</a></li>
+                  <li><a class="dropdown-item" href="#">Partners</a></li>
+                  <li><a class="dropdown-item" href="#">Virtual Tour</a></li>
+                  <li><a class="dropdown-item" href="#">Vacancies</a></li>
+                  <li><a class="dropdown-item" href="#">Tenders</a></li>
+                </ul>
+              </li>
+
+              <!-- Submenu: Governance -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#" >Governance</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Board of Trustees</a></li>
+                  <li><a class="dropdown-item" href="#">University Council</a></li>
+                  <li><a class="dropdown-item" href="#">Chancellor</a></li>
+                  <li><a class="dropdown-item" href="#">Vice Chancellor</a></li>
+                  <li><a class="dropdown-item" href="#">Management Board</a></li>
+                  <li><a class="dropdown-item" href="#">Faculty</a></li>
+                </ul>
+              </li>
+
+              <!-- Submenu: Departments -->
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="#" >Departments</a>
+                <ul class="dropdown-submenu">
+                  <li><a class="dropdown-item" href="#">Leaders Guild</a></li>
+                  <li><a class="dropdown-item" href="#">Alumni</a></li>
+                  <li><a class="dropdown-item" href="#">HR</a></li>
+                  <li><a class="dropdown-item" href="#">ICT</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <!-- ACADEMICS Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
+              ACADEMICS
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{% url 'home:philosophy-school' %}">School of Philosophy</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Postgraduate</a></li>
+                  <li><a class="dropdown-item" href="#">Undergraduate</a></li>
+                  <li><a class="dropdown-item" href="#">Diploma</a></li>
+                  <li><a class="dropdown-item" href="#">Certificate</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{% url 'home:theology-school'%}">School of Theology</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Theology</a></li>
+                  <li><a class="dropdown-item" href="#">Arts & Social Sciences</a></li>
+                  <li><a class="dropdown-item" href="#">Education</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{% url 'home:psychology-school'%}">School Of Psychology</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">IOP</a></li>
+                  <li><a class="dropdown-item" href="#">IYS</a></li>
+                  <li><a class="dropdown-item" href="#">CLM</a></li>
+                  <li><a class="dropdown-item" href="#">ISC</a></li>
+                  <li><a class="dropdown-item" href="#">IST</a></li>
+                  <li><a class="dropdown-item" href="#">TEFLAP</a></li>
+                </ul>
+              </li>
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{% url 'home:language-center' %}">Language Center</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">IOP</a></li>
+                  <li><a class="dropdown-item" href="#">IYS</a></li>
+                  <li><a class="dropdown-item" href="#">CLM</a></li>
+                  <li><a class="dropdown-item" href="#">ISC</a></li>
+                  <li><a class="dropdown-item" href="#">IST</a></li>
+                  <li><a class="dropdown-item" href="#">TEFLAP</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item"><a class="nav-link" href="#" style="color: #163650;">RESEARCH</a></li>
+
+          <!-- CICE -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="ciceDropdown" data-bs-toggle="dropdown">
+            LIBRARY
+            </a>
+            <!-- <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Chaplaincy</a></li>
+              <li><a class="dropdown-item" href="#">Service Learning</a></li>
+              <li><a class="dropdown-item" href="#">Inclusion Office</a></li>
+              <li><a class="dropdown-item" href="#">Safeguarding</a></li>
+            </ul> -->
+          </li>
+          
+
+          <!-- <li class="nav-item"><a class="nav-link" href="#">CONTACT</a></li> -->
+
+          <!-- LOGIN & REGISTER -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" style="color: #163650;">
+              LOGIN & REGISTER
+            </a>
+            <ul class="dropdown-menu">
+              <li class="dropdown-submenu">
+                <a class="dropdown-item dropdown-toggle" href="{% url 'userauth:login' %}">Login</a>
+              
+              </li>
+              <li class="dropdown-submenu">
+              <a class="dropdown-item dropdown-toggle" href="{% url 'userauth:register' %}">Register</a>
+              </li>
+            </li>
+            </ul>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="ciceDropdown" data-bs-toggle="dropdown" style="color: #163650;">
+            CONTACTS
+            </a>
+            <!-- <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Chaplaincy</a></li>
+              <li><a class="dropdown-item" href="#">Service Learning</a></li>
+              <li><a class="dropdown-item" href="#">Inclusion Office</a></li>
+              <li><a class="dropdown-item" href="#">Safeguarding</a></li>
+            </ul> -->
+          </li>
+          {% endif %}
+       
+          
+
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+   
+
+
+    </div>
+  </header>
+  <main class="main" >
+
+    <!-- Hero Section -->
+    
+    
+
+    <section id="about" class="about section bg-white py-5">
+      <div class="container-fluid">
+        <div class="row gx-5">
+    
+          <!-- Sidebar Menu Column (Left) -->
+          <div class="col-lg-3 px-4 d-flex flex-column" style="min-height: calc(60vh - 60px);">
+            <div class="flex-grow-1 d-flex flex-column p-3 rounded shadow-sm" style="background-color: #163650;">
+              <!-- <h5 class="text-white mb-4">Menu</h5> Menu title -->
+              <img src="{% static 'img/theology.png' %}" class="card card-profile border-0 shadow-sm mt-3 mt-md-0" alt="Students"/>
+              <ul class="nav flex-column border-0 card2 shadow-sm  mt-md-0">
+                <li class="nav-item">
+                    <a class="nav-link active text-white text-center " href="{% url 'userauth:login' %}"><strong>Online Applicattion</strong></a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link text-white" href="#philosophy">Philosophy Program</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="#affiliation">Affiliation</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-white" href="#graduates">Graduates</a> -->
+                </li>
+              </ul>
+              
+            </div>
+          </div>
+          
+          <!-- Content Column -->
+          <div class="col-lg-9" data-aos="fade-up" data-aos-delay="200">
+            <div class="row">
+              
+              <!-- Left: Brief History -->
+              <div class="col-md-12 content">
+                <!-- <section id="about-theology"> -->
+                    <h2>About the School of Theology</h2>
+                  
+                    <p>
+                      At <strong>CIU School of Theology</strong>, we are dedicated to providing an exceptional theological formation that nurtures the mind, strengthens the spirit, and prepares mission agents well equipped to carry out the mission of the Church in the world—with compassion, wisdom, and integrity.
+                    </p>
+                  
+                    <p>
+                      Rooted in a deep commitment to the Catholic faith, theological education, and missionary formation, our programs blend rigorous academic training with meaningful preparation for mission and ministry in today’s ever-changing world. Students benefit from a dynamic environment enriched by international and intercultural experiences, allowing them to grow through engagement with people from diverse countries, cultures, languages, and social contexts.
+                    </p>
+                  
+                    <p>
+                      Our faculty—comprising experienced Priests and Religious—is passionate about mentoring students to become leaders who can think critically, serve selflessly, and contribute positively to the global mission of the Church. Whether you are preparing for pastoral ministry, academic research, or community leadership, CIU School of Theology provides a supportive and transformative space where faith, intellectual growth, and missionary spirit flourish together.
+                    </p>
+                    <h4>Our Mission</h4>
+                    <p>
+                      We aim to provide a transformative educational experience that prepares leaders who are academically proficient, compassionate, ethical, and socially responsible. Rooted in the rich tradition of the Consolata Missionaries, we foster a learning community where intellectual curiosity is encouraged, spiritual growth is nurtured, and a passion for mission and service is ignited.
+                    </p>
+                  
+                    <h4>Spiritual Formation & Guidance</h4>
+                    <p>
+                      The School of Theology offers opportunities for regular spiritual services, prayer groups, retreats, and personal spiritual direction. These experiences nurture the spiritual lives of students, helping them grow in faith and deepen their relationship with God.
+                    </p>
+                  
+                    <h4>Mentorship & Vocation Guidance</h4>
+                    <p>
+                      Faculty members often serve as mentors, guiding students on their personal faith journeys and helping them reflect deeply on their vocational call. This mentorship plays a crucial role in the holistic formation of students.
+                    </p>
+                  
+                    <h4>Why Study at CIU School of Theology?</h4>
+                    <ul>
+                      <li><strong>Education:</strong> Rooted in the philosophy of Catholic Higher Education with a special focus on Mission Studies.</li>
+                      <li><strong>Holistic Formation:</strong> Integration of rigorous theological education with personal spiritual development for well-rounded leadership.</li>
+                      <li><strong>Diverse Programs:</strong> Flexible courses designed for pastoral ministry, academic research, and community leadership.</li>
+                      <li><strong>Global Perspective:</strong> A cross-cultural approach to theology that enhances ministry, outreach, and missionary service.</li>
+                    </ul>
+                  
+                    
+                  
+                    <h4>Courses Offered</h4>
+                    <ul>
+                      <li>Baccalaureate in Theology (STB)</li>
+                      <li>Bachelor of Theology (BATh)</li>
+                      <li>Diploma in Theology</li>
+                      <li>Certificate in Theology</li>
+                      <li>Diploma in Religious Studies</li>
+                    </ul>
+                  <!-- </section> -->
+                  
+              </div>
+          
+              <!-- Right: Card with Image -->
+              <!-- <div class="col-md-4">
+                <div class="card card-profile border-0 shadow-sm mt-3 mt-md-0">
+                  <div class="card-body text-center">
+                    <img src="{% static 'img/chancellor.jpeg' %}" alt="Rev. Fr. Dr. James Kabata"
+                         class="rounded-circle mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+                    <h5 class="card-title mb-1">Rev. Fr. Dr. James Kabata</h5>
+                    <p class="card-text small text-muted">Vice Chancellor Consolata International University</p>
+                    <hr class="my-2">
+                    <p class="card-text">Rev. Fr. Dr. Kabata has led the institution with a vision of academic excellence rooted in Catholic values and a commitment to holistic education.</p>
+                  </div>
+                </div>
+              </div> -->
+              
+          
+            </div>
+          </div>
+          
+    
+        </div>
+      </div>
+    </section>
+    
+    <!-- Why Us Section -->
+    
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+
+      <div class="row">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Consolata International University</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>Karen Nairobi-Kenya</p>
+            <!-- <p>New York, NY 535022</p> -->
+            <p class="mt-3"><strong>Phone:</strong> <span> +254-733-777-307</span></p>
+            <p><strong>Email:</strong> <span> info@ciu.ac.ke</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Programs:</h4>
+          <ul>
+            <li><a href="#">Religious Studie</a></li>
+            <li><a href="#">Philosophy Studies</a></li>
+            <li><a href="#">Language Studies</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">GTG-Kenya</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="">Kamya Domnick Email: domisemak@gmail.com</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets2/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets2/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets2/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets2/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets2/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets2/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets2/js/main.js' %}"></script>
+  <script>
+    function toggleDetails(event) {
+    event.preventDefault();
+    const button = event.currentTarget;
+    const targetId = button.getAttribute('data-target');
+    const target = document.getElementById(targetId);
+    const span = button.querySelector('span');
+
+    if (target.style.display === "none") {
+      target.style.display = "block";
+      span.textContent = "Show Less";
+    } else {
+      target.style.display = "none";
+      span.textContent = "Learn More";
+    }
+  }
+
+  </script>
+
+</body>
+
+</html>

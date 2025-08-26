@@ -1,4 +1,16 @@
+/**
+* Template Name: Mentor
+* Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+* Updated: Aug 07 2024 with Bootstrap v5.3.3
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
 
+/*--------------------------------------------------------------
+# Font & Color Variables
+# Help: https://bootstrapmade.com/color-system/
+--------------------------------------------------------------*/
+/* Fonts */
 :root {
   --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Raleway",  sans-serif;
@@ -61,9 +73,9 @@ a {
 }
 
 a:hover {
-  color: #7a9bd6;
+  color: color-mix(in srgb, var(--accent-color), transparent 25%);
+  text-decoration: none;
 }
-
 
 h2,
 h2,
@@ -132,7 +144,7 @@ h6 {
 .pulsating-play-btn {
   width: 94px;
   height: 94px;
-  /* background: radial-gradient(var(--accent-color) 50%, in srgb, var(--accent-color), transparent 75%) 52%); */
+  background: radial-gradient(var(--accent-color) 50%, color-mix(in srgb, var(--accent-color), transparent 75%) 52%);
   border-radius: 50%;
   display: block;
   position: relative;
@@ -151,7 +163,7 @@ h6 {
   animation-timing-function: steps;
   opacity: 1;
   border-radius: 50%;
-  /* border: 5px solid in srgb, var(--accent-color), transparent 30%); */
+  border: 5px solid color-mix(in srgb, var(--accent-color), transparent 30%);
   top: -15%;
   left: -15%;
   background: rgba(198, 16, 0, 0);
@@ -249,7 +261,7 @@ h6 {
 .header .btn-getstarted:hover,
 .header .btn-getstarted:focus:hover {
   color: var(--contrast-color);
-  /* background: in srgb, var(--accent-color), transparent 15%); */
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
 }
 
 @media (max-width: 1200px) {
@@ -407,7 +419,7 @@ h6 {
     margin: 0;
     border-radius: 6px;
     background-color: var(--nav-mobile-background-color);
-    border: 1px solid in srgb, var(--default-color), transparent 90%);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
     box-shadow: none;
     overflow-y: auto;
     transition: 0.3s;
@@ -440,7 +452,7 @@ h6 {
     justify-content: center;
     border-radius: 50%;
     transition: 0.3s;
-    background-color: in srgb, var(--accent-color), transparent 90%);
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
   }
 
   .navmenu a i:hover,
@@ -552,9 +564,9 @@ h6 {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 1px solid in srgb, var(--default-color), transparent 50%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
   font-size: 16px;
-  color: in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
   margin-right: 10px;
   transition: 0.3s;
 }
@@ -598,7 +610,7 @@ h6 {
 }
 
 .footer .footer-links ul a {
-  color: in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
   display: inline-block;
   line-height: 1;
 }
@@ -617,7 +629,7 @@ h6 {
   padding: 6px 8px;
   position: relative;
   border-radius: 50px;
-  border: 1px solid in srgb, var(--default-color), transparent 80%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
   display: flex;
   background-color: var(--surface-color);
   transition: 0.3s;
@@ -651,13 +663,13 @@ h6 {
 }
 
 .footer .footer-newsletter .newsletter-form input[type=submit]:hover {
-  background: in srgb, var(--accent-color), transparent 20%);
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
 .footer .copyright {
   padding-top: 25px;
   padding-bottom: 25px;
-  background-color: in srgb, var(--default-color), transparent 95%);
+  background-color: color-mix(in srgb, var(--default-color), transparent 95%);
 }
 
 .footer .copyright p {
@@ -728,7 +740,7 @@ h6 {
 }
 
 .scroll-top:hover {
-  background-color: in srgb, var(--accent-color), transparent 20%);
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
   color: var(--contrast-color);
 }
 
@@ -761,7 +773,7 @@ h6 {
 
 .page-title .heading {
   padding: 80px 0;
-  border-top: 1px solid in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .page-title .heading h2 {
@@ -770,7 +782,7 @@ h6 {
 }
 
 .page-title nav {
-  background-color: in srgb, var(--accent-color) 90%, black 5%);
+  background-color: color-mix(in srgb, var(--accent-color) 90%, black 5%);
   padding: 20px 0;
 }
 
@@ -795,7 +807,7 @@ h6 {
   content: "/";
   display: inline-block;
   padding-right: 10px;
-  color: in srgb, var(--default-color), transparent 70%);
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 /*--------------------------------------------------------------
@@ -834,7 +846,7 @@ section,
   margin: 0;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: in srgb, var(--default-color), transparent 50%);
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
   position: relative;
 }
 
@@ -882,7 +894,7 @@ section,
 
 .hero:before {
   content: "";
-  background: in srgb, var(--background-color), transparent 60%);
+  background: color-mix(in srgb, var(--background-color), transparent 60%);
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -900,7 +912,7 @@ section,
 }
 
 .hero p {
-  color: in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
   margin: 10px 0 0 0;
   font-size: 24px;
 }
@@ -983,7 +995,7 @@ section,
 }
 
 .about .content .read-more:hover {
-  background: in srgb, var(--accent-color), transparent 20%);
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
   padding-right: 19px;
 }
 
@@ -1011,7 +1023,7 @@ section,
 }
 
 .counts .stats-item p {
-  color: in srgb, var(--default-color), transparent 40%);
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
   padding: 0;
   margin: 0;
   font-family: var(--heading-font);
@@ -1041,7 +1053,7 @@ section,
 
 .why-us .why-box .more-btn {
   display: inline-block;
-  background: in srgb, var(--contrast-color), transparent 85%);
+  background: color-mix(in srgb, var(--contrast-color), transparent 85%);
   padding: 8px 40px 10px 40px;
   color: var(--contrast-color);
   transition: all ease-in-out 0.4s;
@@ -1063,14 +1075,14 @@ section,
   padding: 40px 30px;
   width: 100%;
   height: 100%;
-  border: 1px solid in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .why-us .icon-box i {
   color: var(--accent-color);
   font-size: 32px;
   margin-bottom: 30px;
-  background: in srgb, var(--accent-color), transparent 95%);
+  background: color-mix(in srgb, var(--accent-color), transparent 95%);
   border-radius: 50px;
   display: flex;
   align-items: center;
@@ -1088,7 +1100,7 @@ section,
 
 .why-us .icon-box p {
   font-size: 15px;
-  color: in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
 }
 
 .why-us .icon-box:hover i {
@@ -1109,7 +1121,7 @@ section,
   align-items: center;
   padding: 20px;
   transition: 0.3s;
-  border: 1px solid in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   position: relative;
 }
 
@@ -1145,7 +1157,7 @@ section,
 --------------------------------------------------------------*/
 .courses .course-item {
   background-color: var(--surface-color);
-  border: 1px solid in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   border-radius: 5px;
 }
 
@@ -1180,17 +1192,17 @@ section,
   margin: 0;
   font-weight: 700;
   font-size: 18px;
-  color: in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
 
 .courses .course-content .description {
   font-size: 14px;
-  color: in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
 
 .courses .trainer {
   padding-top: 15px;
-  border-top: 1px solid in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .courses .trainer .trainer-profile img {
@@ -1202,7 +1214,7 @@ section,
   padding-left: 10px;
   font-weight: 600;
   font-size: 16px;
-  color: in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
   transition: 0.3s;
 }
 
@@ -1212,7 +1224,7 @@ section,
 
 .courses .trainer .trainer-rank {
   font-size: 18px;
-  color: in srgb, var(--default-color), transparent 60%);
+  color: color-mix(in srgb, var(--default-color), transparent 60%);
 }
 
 .courses .trainer .trainer-rank .user-icon {
@@ -1224,7 +1236,7 @@ section,
 --------------------------------------------------------------*/
 .trainers-index .member {
   background-color: var(--surface-color);
-  border: 1px solid in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   text-align: center;
   margin-bottom: 20px;
 }
@@ -1247,14 +1259,14 @@ section,
   font-style: italic;
   display: block;
   font-size: 13px;
-  color: in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
 
 .trainers-index .member p {
   padding-top: 10px;
   font-size: 14px;
   font-style: italic;
-  color: in srgb, var(--default-color), transparent 40%);
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
 }
 
 .trainers-index .member .social {
@@ -1262,7 +1274,7 @@ section,
 }
 
 .trainers-index .member .social a {
-  color: in srgb, var(--default-color), transparent 60%);
+  color: color-mix(in srgb, var(--default-color), transparent 60%);
   transition: 0.3s;
 }
 
@@ -1316,7 +1328,7 @@ section,
 
 .testimonials .testimonial-item {
   background-color: var(--surface-color);
-  border: 1px solid in srgb, var(--default-color), transparent 90%);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
   box-sizing: content-box;
   padding: 30px 30px 30px 60px;
   margin: 30px 15px;
@@ -1339,7 +1351,7 @@ section,
 }
 
 .testimonials .testimonial-item h2 {
-  color: in srgb, var(--default-color), transparent 50%);
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
   font-size: 14px;
   margin: 0;
 }
@@ -1355,7 +1367,7 @@ section,
 
 .testimonials .testimonial-item .quote-icon-left,
 .testimonials .testimonial-item .quote-icon-right {
-  color: in srgb, var(--accent-color), transparent 60%);
+  color: color-mix(in srgb, var(--accent-color), transparent 60%);
   font-size: 26px;
   line-height: 0;
 }
@@ -1442,7 +1454,7 @@ section,
   display: block;
   width: 100%;
   height: 1px;
-  background: in srgb, var(--default-color), transparent 90%);
+  background: color-mix(in srgb, var(--default-color), transparent 90%);
   bottom: 0;
   left: 0;
 }
@@ -1459,7 +1471,7 @@ section,
 }
 
 .courses-course-details .course-info {
-  background: in srgb, var(--default-color), transparent 95%);
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
   padding: 10px 15px;
   margin-bottom: 15px;
 }
@@ -1498,7 +1510,7 @@ section,
   transition: 0.3s;
   color: var(--default-color);
   border-radius: 0;
-  border-right: 2px solid in srgb, var(--default-color), transparent 90%);
+  border-right: 2px solid color-mix(in srgb, var(--default-color), transparent 90%);
   font-weight: 600;
   font-size: 15px;
 }
@@ -1524,7 +1536,7 @@ section,
 }
 
 .tabs .details p {
-  color: in srgb, var(--default-color), transparent 20%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
 }
 
 .tabs .details p:last-child {
@@ -1607,7 +1619,7 @@ section,
   font-style: italic;
   display: block;
   font-size: 15px;
-  color: in srgb, var(--default-color), transparent 40%);
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
   margin-bottom: 10px;
 }
 
@@ -1668,7 +1680,7 @@ section,
 }
 
 .events .card-text {
-  color: in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
 }
 
 .events .card:hover img {
@@ -1701,8 +1713,8 @@ section,
   padding: 20px 15px;
   font-size: 16px;
   font-weight: 600;
-  color: in srgb, var(--default-color), transparent 20%);
-  background: in srgb, var(--default-color), transparent 95%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
 }
 
 .pricing .pricing-item h2 {
@@ -1718,7 +1730,7 @@ section,
 }
 
 .pricing .pricing-item h2 span {
-  color: in srgb, var(--default-color), transparent 40%);
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
   font-size: 16px;
   font-weight: 300;
 }
@@ -1742,12 +1754,12 @@ section,
 }
 
 .pricing .pricing-item ul .na {
-  color: in srgb, var(--default-color), transparent 40%);
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
   text-decoration: line-through;
 }
 
 .pricing .btn-wrap {
-  background: in srgb, var(--default-color), transparent 95%);
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
   margin: 0 -20px -20px -20px;
   padding: 20px 15px;
   text-align: center;
@@ -1768,7 +1780,7 @@ section,
 }
 
 .pricing .btn-buy:hover {
-  background: in srgb, var(--accent-color), transparent 20%);
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
 .pricing .featured h3 {
@@ -1840,8 +1852,8 @@ section,
   box-shadow: none;
   border-radius: 0;
   color: var(--default-color);
-  background-color: in srgb, var(--background-color), transparent 50%);
-  border-color: in srgb, var(--default-color), transparent 80%);
+  background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
 .contact .php-email-form input[type=text]:focus,
@@ -1853,7 +1865,7 @@ section,
 .contact .php-email-form input[type=text]::placeholder,
 .contact .php-email-form input[type=email]::placeholder,
 .contact .php-email-form textarea::placeholder {
-  color: in srgb, var(--default-color), transparent 70%);
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 .contact .php-email-form button[type=submit] {
@@ -1866,7 +1878,7 @@ section,
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: in srgb, var(--accent-color), transparent 20%);
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
 /*--------------------------------------------------------------

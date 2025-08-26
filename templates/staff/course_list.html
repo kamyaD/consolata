@@ -1,15 +1,196 @@
-{% extends 'staff/base.html' %}
-{% block title %}Courses{% endblock %}
+
+{% extends 'home/base2.html' %}
+{% load static %}
+
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
+{% endblock %}
+
+{% block objectives %}active{% endblock %}
+
 {% block content %}
-<h2>Course List</h2>
-<a class="btn btn-primary" href="{% url 'staff_teachers:course-add' %}">Add Course</a><span>
-<ul class="list-group">
-    
-    {% for course in object_list %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="card-title">All Courses</h2>
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <a href="{%url 'staff_teachers:course-list' %}" type="button" class="btn btn-primary text-nowrap">Upload Courses</a>
+                        <a href="{%url 'staff_teachers:create-course-list' %}" type="button" class="btn btn-primary text-nowrap">Add Course</a>
+                      </div>
+                    </div>
+                    {% if courses %}
+                    <table d="biannual_appraisals" class="table table-striped table-bordered display text-nowrap">
+                        <thead>
+                          <tr>
+                            <th >#</th>
+                            <th >Course Code</th>
+                            <th >Course Title</th>
+                            <th >Credit</th>
+                            <th >Year</th>
+                            <th >Semester</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for course in courses %}
+                            <tr>
+                              <td>{{ forloop.counter }}</td>
+                              <td><a href="#" 
+                                class="btn btn-outline-secondary text-nowrap edit-course-btn"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editCourseModal"
+                                data-id="{{ course.id }}"
+                                data-code="{{ course.course_code }}"
+                                data-title="{{ course.course_title }}"
+                                data-credit="{{ course.credit }}"
+                                data-year="{{ course.year }}"
+                                data-semester="{{ course.semester }}">
+                                {{ course.course_code }}
+                             </a></td>
+                              <td>{{ course.course_title }}</td>
+                              <td>{{ course.credit }}</td>
+                              <td>{{ course.year }}</td>
+                              <td>{{ course.semester }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                      {% else %}
+                      <div class="alert alert-info">No courses found.</div>
+                    {% endif %}
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade mt-10" id="editCourseModal" data-backdrop="static" data-keyboard="false" style="width:100%">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
         
-        <li class="list-group-item">
-            <a href="{% url 'staff_teachers:course-detail' course.pk %}">{{ course.code }} - {{ course.title }}</a>
-        </li>
-    {% endfor %}
-</ul>
+        <form method="post" id="submitForm" action=""  enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="card shadow mb-4">
+            <div class="card-body">
+              <div class="mb-5">
+                  <center><h5 class="card-title align-items-center">Edit Course</h5></center>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="ticketFunction" class="col-sm-4 col-form-label">Course Code.:</label>
+                <div class="col-sm-8  py-2">
+                  <input type="text" class="form-control" id="course-code" name="course_code" value="" placeholder="">
+                  <input type="hidden" id="course-id" name="course_id" value="">
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="ticketFunction" class="col-sm-4 col-form-label">Course Title.:</label>
+                <div class="col-sm-8  py-2">
+                  <input type="text" class="form-control" id="course-title" name="course_title" value="" placeholder="">
+                </div>
+                
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="ticketFunction" class="col-sm-4 col-form-label">Year.:</label>
+                <div class="col-sm-8  py-2">
+                  <input type="text" class="form-control" id="year" name="year" value="" placeholder="">
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="ticketFunction" class="col-sm-4 col-form-label">Semester.:</label>
+                <div class="col-sm-8  py-2">
+                  <input type="text" class="form-control" id="semester" name="semester" value="" placeholder="">
+                  
+                </div>
+                
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="ticketFunction" class="col-sm-4 col-form-label">Credit.:</label>
+                <div class="col-sm-8  py-2">
+                  <input type="text" class="form-control" id="credit" name="credit" value="" placeholder="">
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-md-6">
+              
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <div class="submit-spinner" id="spinner"></div>
+            <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+        </div>
+        </div>
+      </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'assets/js/vendor.min.js' %}"></script>
+<script src="{% static 'assets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'assets/js/datatable/datatable-basic.init.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $('#biannual_appraisals').DataTable({
+            "order": [[ 1, "desc" ]]  // Order by the Period column (4th column)
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+      const editButtons = document.querySelectorAll('.edit-course-btn');
+      
+      editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const id = this.dataset.id;
+          const code = this.dataset.code;
+          const title = this.dataset.title;
+          const credit = this.dataset.credit;
+          const year = this.dataset.year;
+          const semester = this.dataset.semester;
+
+          // Populate modal inputs
+          document.getElementById('course-id').value = id;
+          document.getElementById('course-code').value = code;
+          document.getElementById('course-title').value = title;
+          document.getElementById('credit').value = credit;
+          document.getElementById('year').value = year;
+          document.getElementById('semester').value = semester;
+          
+          
+          // Optionally update form action dynamically
+          const form = document.getElementById('submitForm');
+          form.action = `/staff/edit-course/${id}/`; // adjust URL to your actual endpoint
+        });
+      });
+    });
+
+
+</script>
+
 {% endblock %}

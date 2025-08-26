@@ -15,10 +15,10 @@
             <div class="table-responsive">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="card-title">Results</h2>
+                        <h2 class="card-title">Class Results</h2>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             
-                            <form method="post" enctype="multipart/form-data" action="{% url 'staff_teachers:upload-csv' %}">
+                            <form method="post" enctype="multipart/form-data" action="{% url 'staff_teachers:student-result-upload' %}">
                                 {% csrf_token %}
                                 <label for="csv_file">Upload CSV File:</label>
                                 <input type="file" name="csv_file" accept=".csv" required>
@@ -31,32 +31,35 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Student</th>
                                 <th>Congregation</th>
-                                <th>Registration Number</th>
-                                <th>School</th>
-                                <th>Year</th>
+                                <th>Course Code</th>
+                                <th>Course Name</th>
                                 <th>Semester</th>
-                                <th>Course</th>
+                                <th>Year</th>
+                                <th>Class</th>
                                 <th>Marks</th>
+                                <th>Grade</th>
+                                <th>Credit</th>
+                                <th>-</th>
                             </tr>
-                        </thead>    
+                        </thead>
                         <tbody>
                             {% for result in results %}
                             
-                            
                             <tr>
                                 <td>{{result.id}}</td>
-                                <td><a href="{% url 'staff_teachers:student-transcript' result.student.registration_number %}">{{result.student.first_name}}</a></td>
-                                <td>{{result.student.last_name}}</td>
+                                <td><a href="{% url 'staff_teachers:populate-transcript' result.student.pk %}">{{result.student}}</a></td>
                                 <td>{{result.congregation}}</td>
-                                <td>{{result.student.registration_number}}</td>
-                                <td>{{result.course.school}}</td>
-                                <td>{{result.course.year}}</td>
-                                <td>{{result.course.semester}}</td>
-                                <td>{{result.course.title}}</td> 
-                                <td>{{result.course.marks}}</td>  
+                                <td>{{result.course_code}}</td>
+                                <td>{{result.course_title}}</td>
+                                <td>{{result.semester}}</td>
+                                <td>{{result.year}}</td>
+                                <td>{{result.class_no}}</td>
+                                <td>{{result.marks}}</td>
+                                <td>{{result.grade}}</td>
+                                <td>{{result.credit}}</td>
+                                <td><a class="btn btn-light" href="{% url 'staff_teachers:edit-result' result.id %}">Edit</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>

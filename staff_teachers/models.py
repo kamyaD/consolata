@@ -1,5 +1,12 @@
 from django.db import models
 from student.models import TblStudentsAdmissions
+from django.utils.timezone import now
+
+def get_year_choices():
+    current_year = now().year
+    return [(year, year) for year in range(2000, current_year + 1)]
+
+
 
 # Create your models here.
 class TblTeachersPay(models.Model):
@@ -252,83 +259,6 @@ ACADEMIC_YEAR_CHOICES = [
     ('2029-30', '2029-30'),
 ]
 
-class AcademicPeriod(models.Model):
-    academic_year = models.CharField(max_length=9, choices=ACADEMIC_YEAR_CHOICES)  # e.g., "2020-21"
-    semester = models.CharField(max_length=100, choices=[('Semester 1', 'Semester 1'), ('Semester 2', 'Semester 2')])
-
-    class Meta:
-        unique_together = ['academic_year', 'semester']
-    
-    def __str__(self):
-        return f"{self.academic_year} Semester {self.semester}"
-    
-class Course(models.Model):
-    code = models.CharField(max_length=20, null=True, blank=True)
-    credit = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    year = models.IntegerField(null=True, blank=True)
-    semester = models.IntegerField(null=True, blank=True)
-    school = models.CharField(max_length=250, null=True, blank=True)
-    marks = models.CharField(max_length=250, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.code} - {self.title}"
-    
-    
-    
-class CourseLists(models.Model):
-    year= models.CharField(max_length=250, null=True, blank=True)
-    semester = models.CharField(max_length=250, null=True, blank=True)
-    course_code = models.CharField(max_length=250, null=True, blank=True)
-    course_title = models.CharField(max_length=250, null=True, blank=True)
-    credit = models.CharField(max_length=250, null=True, blank=True)
-    school = models.CharField(max_length=250, null=True, blank=True)
-    
-    
-
-
-class TranscriptSummary(models.Model):
-    student = models.OneToOneField(TblStudentsAdmissions, on_delete=models.CASCADE)
-    overall_average = models.DecimalField(max_digits=5, decimal_places=2)
-    accumulated_credits = models.DecimalField(max_digits=5, decimal_places=2)
-    class_awarded = models.CharField(max_length=50, null=True, blank=True)  # e.g., Upper Second Class Honours
-    award_date = models.DateField()
-
-    def __str__(self):
-        return f"{self.student} Summary"
-    
-
-class GradeScale(models.Model):
-    min_score = models.PositiveIntegerField()
-    max_score = models.PositiveIntegerField()
-    letter_grade = models.CharField(max_length=2, null=True, blank=True)
-    description = models.CharField(max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.letter_grade} ({self.min_score} - {self.max_score})"
-    
-
-class PhilosophystudentsResults(models.Model):
-    student = models.ForeignKey(TblStudentsAdmissions, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    congregation = models.CharField(max_length=200, null=True, blank=True)
-    s_no = models.CharField(max_length=200, null=True, blank=True)
-    # period = models.ForeignKey(AcademicPeriod, on_delete=models.CASCADE)
-
-
-
-class TranscriptEntry(models.Model):
-    student = models.ForeignKey(TblStudentsAdmissions, on_delete=models.CASCADE)
-    course = models.ForeignKey(PhilosophystudentsResults, on_delete=models.CASCADE)
-    period = models.ForeignKey(AcademicPeriod, on_delete=models.CASCADE)
-    score = models.DecimalField(max_digits=5, decimal_places=2)
-    period = models.ForeignKey(AcademicPeriod, on_delete=models.CASCADE)
-
-
-    def __str__(self):
-        return f"{self.student.last_name} {self.student.first_name}"
-
-
 MONTH_CHOICES = [
     ("JANUARY", "January"),
     ("FEBRUARY", "February"),
@@ -473,3 +403,39 @@ class TimetableEntry(models.Model):
 
 
 
+class Course(models.Model):
+    title = models.CharField(max_length=200, unique=True)
+    year = models.CharField(max_length=10, choices=ACADEMIC_YEAR_CHOICES, default='2023-24')
+    semester = models.CharField(max_length=10, choices=[('Semester 1', 'Semester 1'), ('Semester 2', 'Semester 2')], default='Semester 1')
+
+
+    def __str__(self):
+        return self.title
+    
+class CourseResults(models.Model):
+    student = models.ForeignKey(
+    TblStudentsAdmissions,
+    to_field='studentid',  # important!
+    db_column='student_id',  # keep consistent with existing DB
+    on_delete=models.CASCADE
+)
+
+    congregation = models.CharField(max_length=250, null=True, blank=True)
+    course_code = models.CharField(max_length=100, null=True, blank=True)
+    course_title = models.CharField(max_length=250, null=True, blank=True)
+    semester = models.CharField(max_length=50, null=True, blank=True)
+    year = models.CharField(max_length=250, choices=[('2024-25', '2024-25', ), ('2025-26', '2025-26'), ('2026-27', '2026-27'), ('2027-28', '2027-28')], default='2024-25')
+    marks = models.FloatField(null=True, blank=True)
+    grade = models.CharField(max_length=10, null=True, blank=True)
+    credit = models.FloatField(null=True, blank=True)
+    class_no = models.CharField(max_length=50, null=True, blank=True)
+
+
+    class Meta:
+        managed = True
+        db_table = 'tbl_results'
+
+    def __str__(self):
+        return f"{self.student.first_name} {self.student.last_name} - {self.course_code}"
+
+    

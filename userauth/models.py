@@ -29,14 +29,19 @@ class CustomUser(AbstractUser):
         ('Formator', 'Formator'),
         ('Registrar', 'Registrar'),
         ('DVC Finance', 'DVC Finance'),
-        ('Finance Controller', 'Finance Controller'),
+        ('Finance Administrator', 'Finance Administrator'),
         ('Secretary', 'Secretary'),
+        ('The Rector', 'The Rector'),
+        ('DVC Academics', 'DVC Academics'),
+        ('HOD Language', 'HOD Language'),
+        ('IT Administrator', 'IT Administrator'),
     
     )
     DEPARTMENT_CHOICES = (
         ('Philosophy', 'Philosophy'),   
         ('Language', 'Language'),
         ('Psychology', 'Psychology'),
+        ('Theology', 'Theology'),
     )
     
     GENDER_CHOICES = (
@@ -53,7 +58,7 @@ class CustomUser(AbstractUser):
 
 
     email = models.EmailField(unique=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, blank=True)
+    role = models.CharField(max_length=300, choices=ROLE_CHOICES, blank=True)
     is_active = models.BooleanField(default=False)
     school = models.CharField(max_length=20, choices=DEPARTMENT_CHOICES, blank=True)
     # school = models.CharField(max_length=250, blank=True, null=True)

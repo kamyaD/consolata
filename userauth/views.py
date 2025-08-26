@@ -44,10 +44,15 @@ def login_view(request):
                 next_url = request.POST.get('next')
                 return redirect(next_url or 'staff_teachers:timetable')
             
-            if user.role == 'DVC Finance' or user.role == 'Finance Controller':
+            if user.role == 'DVC Finance' or user.role == 'Finance Administrator':
                 login(request, user)
                 next_url = request.POST.get('next')
                 return redirect(next_url or 'staff_teachers:all-claims')
+            
+            if user.role == 'HOD Language':
+                login(request, user)
+                next_url = request.POST.get('next')
+                return redirect(next_url or 'staff_teachers:teachers-pay')
             
             else:
                 

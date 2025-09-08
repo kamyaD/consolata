@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vvccg6^@(asd7g(kwtw298^7@f0p09n^)o3eji)%!#&$c8te#a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['ciu.ac.ke']
 
@@ -107,7 +107,16 @@ DATABASES = {
         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
         'HOST': 'localhost',
         'PORT': '3306',
+    },
+    'old_website':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'otijeuil_cipkenya_cip_website',
+        'USER': 'otijeuil_admin',
+        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
+        
 }
 
 

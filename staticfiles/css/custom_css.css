@@ -1,0 +1,102 @@
+
+.status-bar {
+    display: flex;
+    position: relative;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-radius: 5px;
+    margin-right: 0px;
+}
+
+.status-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 10px;
+    color: #fff;
+}
+
+.status-step.completed {
+    background-color: #ddd;
+    ;
+    /* Gray for pending */
+}
+
+.status-step.current {
+    background-color: #198754;
+    ;
+    /* Green for current */
+}
+
+.status-step.pending {
+    background-color: #ddd;
+    /* Gray for pending */
+    color: #000;
+}
+
+.status-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 1px;
+    height: 100%;
+    background-color: #fff;
+    transform: translateY(-50%);
+}
+
+.status-label {
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+.status-bar {
+        display: flex;
+        position: relative;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        border-radius: 5px;
+        margin-right: 0px;
+    }
+
+    .status-step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        padding: 10px;
+        color: #fff;
+    }
+
+    .status-step.completed {
+        background-color: #ddd;
+        ;
+        /* Gray for pending */
+    }
+
+    .status-step.current {
+        background-color: #198754;
+        ;
+        /* Green for current */
+    }
+
+    .status-step.pending {
+        background-color: #ddd;
+        /* Gray for pending */
+        color: #000;
+    }
+
+    .status-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: 1px;
+        height: 100%;
+        background-color: #fff;
+        transform: translateY(-50%);
+    }
+
+    .status-label {
+        margin-top: 5px;
+        font-size: 0.9rem;
+    }

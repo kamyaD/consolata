@@ -1,0 +1,84 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block extracss %}
+<link href="{% static 'css/style_dynamic.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block title %}Home | Consolata International University{% endblock %}
+
+{% block content %}
+<p></p>
+<section class="vc-message mb-4 mt-4"> 
+  <div class="container vc-grid-sidebar"> 
+    <!-- Sidebar --> 
+     <aside class="vc-sidebar"> 
+      <h3>Language Center</h3> 
+      <ul> 
+        <li><a href="#programs">Language Programs</a></li>
+        <li><a href="#admissions">Admissions</a></li> 
+        <!-- <li><a href="#research">Research</a></li>  -->
+        <li><a href="#contact">Contact School</a></li> 
+      </ul> 
+      <!-- <h3>Contact Info</h3> <p>Email: info@ciu.ac.ke<br>Phone: +254 700 000 000</p> --> 
+      </aside> 
+      <!-- Main VC content --> 
+       <div class="vc-main"> 
+        <!-- Main VC content --> 
+       <div class="vc-main"> 
+        <div class="vc-text"> 
+            <p>
+                The <strong>Consolata Language Centre</strong> was founded by the Institute of the Consolata Missionaries to meet the growing need for high‑quality, culturally immersive language education in East and Central Africa. Situated on Seminary Road, Nairobi, the Centre officially opened on January 14, 2010, and has since become a trusted hub for learners from diverse backgrounds .
+              </p>
+            
+              <h4>Mission & Vision</h4>
+              <p>
+                With the motto <em>"Rising for competency in language learning & teaching"</em>, the Centre is committed to providing internationally recognized, technology-enhanced language services. Its mission emphasizes cultural exposure, professional growth, and evangelization. The vision is to be the region’s symbol of excellence and a multicultural hub of linguistic learning .
+              </p>
+            
+              <h4>Languages & Programmes</h4>
+              <p>
+                We offer courses in English, Kiswahili, Italian, French, Portuguese, Spanish, Chinese, and German—each structured across six proficiency levels from beginner to advanced. Specialized offerings include pre-university English and exam preparation for IELTS, TOEFL, GRE, SAT, GMAT, and PITMAN .
+              </p>
+            
+              <h4>Facilities & Learning Support</h4>
+              <p>
+                Our modern facility includes:
+              </p>
+              <ul>
+                <li>A fully equipped amphitheatre seating 300, with multimedia, internet, and videoconference capabilities</li>
+                <li>Small classrooms (14 students max), a digital and multimedia language library, and a dedicated language lab</li>
+                <li>24‑hour computer booths with licensed learning software</li>
+              </ul>
+              <p>
+                Free student amenities include tea/coffee, access to language learning booths, internet connectivity, multimedia resources, and tutor-led grammar, reading, writing, listening, and speaking practice sessions .
+              </p>
+            
+              <h4>Cultural Immersion & Extra Services</h4>
+              <p>
+                We facilitate cultural immersion through excursions, cultural days, public lectures, and a “Know Your Host Country” program—helping students deepen their understanding of Kenyan and East African culture .
+              </p>
+              <p>
+                Additional services offered at a fee include translation and interpretation, proofreading, cultural orientation, and venue hire (amphitheatre). We also provide ICT training and e‑learning options for children and adults .
+              </p>
+            
+              <h4>Why Choose Us?</h4>
+              <p>
+                Rated 4.7 stars on reputable local platforms, the Centre is recognized for its inclusive, technology-driven language education and cultural training. We serve learners from all walks of life looking to master a new language for work, travel, mission, or personal development.
+              </p>
+        </div> 
+        <div class="vc-photo-container"> <div class="vc-photo" style="background-image: url('{% static 'img/mwake.jpg' %}');">
+
+        </div> 
+        <div class="vc-caption"> 
+          <h4>Rev. Fr. Sylvester Mwake Kiamba</h4> 
+          <p>Dean of Language School</p> 
+        </div> 
+      </div> 
+
+    </div> 
+  </div> </section> 
+  
+  <p></p>
+{% endblock %}

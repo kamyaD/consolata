@@ -1,0 +1,106 @@
+/* custom.css */
+
+/* body {
+    color: blue !important;
+} */
+p {
+    
+    color:#666666 !important;
+} 
+body{
+    color:#666666 !important;
+}
+table{
+    color:#666666 !important;
+}
+td{
+    color:#666666 !important; 
+}
+div{
+    color:#666666 !important;
+}
+
+.container {
+    
+    color:#666666 !important;
+}
+.leave_type_balance_number {
+    font-size: 1em; /* Larger font size for remaining leaves */
+    color: #4f49cc; /* Blue color for leaves taken */
+    font-weight: bold;
+    /* color:#666666 !important */
+}
+
+.max_leaves {
+    font-size: 1em; /* Default font size for max leaves */
+    color: #4f49cc; /* Blue color for leaves taken */
+    font-weight: bold;
+}
+
+.portal_leave_balance {
+    font-size: 1em; /* Default font size for leaves taken */
+    color: #4f49cc; /* Blue color for leaves taken */
+    font-weight: bold;
+}
+/* scrollable-cards.css */
+.scrollable-cards-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 10px;
+}
+
+.scrollable-card-item {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 300px; /* Adjust the width as needed */
+    margin-right: 1rem;
+    scroll-snap-align: center;
+}
+
+.scrollable-cards-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for better UX */
+}
+
+.scroll-controls {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.scroll-button {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.scroll-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.carousel-control-prev,
+  .carousel-control-next {
+    top: 50%; /* Align with the middle of the carousel */
+    transform: translateY(-50%);
+  }
+
+.carousel-inner {
+    padding: 0 3rem; /* Increase space at the ends */
+  }
+
+.carousel-item .card {
+    margin: 0 0.25rem; /* Reduce space between cards */
+  }
+
+.carousel-indicators {
+    bottom: -2rem; /* Adjust as needed */
+  }
+.key-text {
+    font-weight: bold;
+}
+.value-text {
+    color: #000; /* Or any other style you want */
+}

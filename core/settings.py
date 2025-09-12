@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vvccg6^@(asd7g(kwtw298^7@f0p09n^)o3eji)%!#&$c8te#a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['ciu.ac.ke']
+ALLOWED_HOSTS = ["ciu.ac.ke", "www.ciu.ac.ke", "127.0.0.1", "localhost"]
+
 
 
 # Application definition
@@ -99,24 +100,35 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'otijeuil_consolata_local',
+#         'USER': 'otijeuil_admin',
+#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+#         'HOST': '102.212.247.162',
+#         'PORT': '',
+#     },
+#     'old_website':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'otijeuil_cipkenya_cip_website',
+#         'USER': 'otijeuil_admin',
+#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+#         'HOST': '102.212.247.162',
+#         'PORT': '',
+#     }
+        
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'otijeuil_consolata_local',
-        'USER': 'otijeuil_admin',
-        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    },
-    'old_website':{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'otijeuil_cipkenya_cip_website',
-        'USER': 'otijeuil_admin',
-        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+        'NAME': 'consolata_local',
+        'USER': 'dommy',
+        'PASSWORD': 'dommy123',
         'HOST': 'localhost',
         'PORT': '3306',
     }
-        
 }
 
 
@@ -169,13 +181,23 @@ USE_I18N = True
 USE_TZ = True
 
 
+# Production
+# STATIC_URL = '/consolata/static/'  # because your app runs under /consolata/
+# STATIC_ROOT = Path('/home/otijeuil/public_html/consolata/static/')  # adjust to your cPanel user
+# STATICFILES_DIRS = [BASE_DIR / 'static']
 
-STATIC_URL = '/consolata/static/'  # because your app runs under /consolata/
-STATIC_ROOT = Path('/home/otijeuil/public_html/consolata/static/')  # adjust to your cPanel user
-STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+#Local
+STATIC_URL = '/static/'
 
+# Where collectstatic will copy files for production
+STATIC_ROOT = BASE_DIR / 'staticfiles'  
+
+# Where your custom static assets live during dev
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 
 MEDIA_URL = '/media/'

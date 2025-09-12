@@ -1,23 +1,46 @@
 from django.shortcuts import render
-from student.models import TblStudentsAdmissions
+# from student.models import TblStudentsAdmissions
+# # ciu/views.py
+# from django.shortcuts import render
+from .models import News, Event, Testimonial
 
 
 
 # Create your views here.
-def home(request):
-    students = TblStudentsAdmissions.objects.all()
-    print(students.count())
+# def home(request):
+#     students = TblStudentsAdmissions.objects.all()
+#     print(students.count())
 
-    return render(request, 'home/index.html', {'students': students.count() })
+#     return render(request, 'home/index.html', {'students': students.count() })
 
 def psychology_school(request):
-    return render(request, 'home/psychology_school.html')
+    return render(request, 'home/psychology.html')
 
 def theology_school(request):
-    return render(request, 'home/theology_school.html')
+    return render(request, 'home/theology.html')
 
 def philosophy_school(request):
-    return render(request, 'home/philosophy_school.html')
+    return render(request, 'home/philosophy.html')
 
 def language_center(request):
-    return render(request, 'home/language_center.html')
+    return render(request, 'home/language.html')
+
+def history(request):
+    return render(request, 'home/history.html')
+
+def leadership(request):
+    return render(request, 'home/leadership.html')
+
+def requirements(request):
+    return render(request, 'home/requirements.html')
+
+def home(request):
+    latest_news = News.objects.order_by("-created_at")[:3]
+    upcoming_events = Event.objects.order_by("date")[:3]
+    testimonials = Testimonial.objects.all()[:3]
+
+    return render(request, "home/index.html", {
+        "latest_news": latest_news,
+        "upcoming_events": upcoming_events,
+        "testimonials": testimonials,
+    })

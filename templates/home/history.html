@@ -1,0 +1,70 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block extracss %}
+<link href="{% static 'css/style_dynamic.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block title %}Home | Consolata International University{% endblock %}
+
+{% block content %}
+<p></p>
+<section class="vc-message mb-4 mt-4"> 
+  <div class="container vc-grid-sidebar"> 
+    <!-- Sidebar --> 
+     <aside class="vc-sidebar"> 
+      <h3>History</h3> 
+      <ul> 
+        <li><a href="#programs">About Consolata Missionaries</a></li>
+        <li><a href="#admissions">Consolata Vocations</a></li> 
+        <!-- <li><a href="#research">Research</a></li>  -->
+        <li><a href="#contact">Contact School</a></li> 
+      </ul> 
+      <!-- <h3>Contact Info</h3> <p>Email: info@ciu.ac.ke<br>Phone: +254 700 000 000</p> --> 
+      </aside> 
+      <!-- Main VC content --> 
+       <div class="vc-main"> 
+        <!-- Main VC content --> 
+       <div class="vc-main"> 
+        <div class="vc-text"> 
+            <h4 class="mb-3">BRIEF HISTORY OF CONSOLATA UNIVERSITY</h4>
+                <p>
+                  The Consolata Missionaries in Kenya, following the directives of the Congregation for the Evangelization of Peoples and the encouragement of the AMECEA Conference (Lusaka 1970), decided to start the construction of their own Seminary.
+                </p>
+                
+                <p>
+                  In 1970 the recruiting of African Candidates for Religious Missionary Priesthood began. The building of the residence (near to St. Thomas Aquinas Seminary in Langata) was started in 1971 and in 1972 part of it was ready. The Philosophy students began attending classes at the nearby Kenya National Diocesan Major Seminary, but in 1974 it became necessary to have classes and other facilities for Consolata students, since the Philosophical course of the National Seminary was transferred to Mabanga, in Bungoma District.
+                </p>
+                
+                <p>
+                  Thus a two-year course in Philosophy was set up at Consolata Seminary, ending with the award of a Diploma in Philosophy and Religious Studies. In order to meet the needs of an increasing number of students both from the Consolata and other Congregations, new buildings were added in 1980 and the curriculum was revised into a 3-year course to prepare for affiliation to Urbaniana University in Rome, which was granted in 1982, enabling the students to obtain the First Degree in Philosophy (Baccalaureate) recognized by the Church and in line with other Ecclesiastical Universities all over the world.
+                </p>
+                
+                <p>
+                  In 1996 a decision was reached to make the Seminary and Institute of Philosophy two independent institutions so they could better develop each in its own way. A new building for the Institute was erected in 1997 and inaugurated in January 1998. A library was built in 1999 and a hall added in 2003.
+                </p>
+                
+                <p>
+                  For the information of civil authorities, students, and the public at large, it should be clearly understood that the main purpose of our Institute is to prepare candidates for the priesthood and religious life with a view to proceed to theological studies. Therefore, our B.A. in Philosophy is mainly for ecclesiastical purposes, to qualify the student to enter a Theology College or Seminary for priestly academic formation.
+                </p>
+                
+                <p>
+                  In view of the history, the needs for formation, and future development, the Consolata Institute of Philosophy needs to renew its Affiliation to Urbaniana University.
+                </p>
+          
+        </div> 
+        <div class="vc-photo-container"> <div class="vc-photo" style="background-image: url('{% static 'img/alamano.jpeg' %}');">
+
+        </div> 
+        <div class="vc-caption"> 
+          <h4>St.Joseph Alamano </h4> 
+          <p>Founder Of Consolata Missionaries</p> 
+        </div> 
+      </div> 
+
+    </div> 
+  </div> </section> 
+  
+  <p></p>
+{% endblock %}

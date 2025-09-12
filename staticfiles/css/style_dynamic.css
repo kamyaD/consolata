@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Navbar */
+  .navbar {
+    background: #9d2235;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .navbar ul { list-style: none; display: flex; gap: 1rem; }
+  .navbar a { color: white; text-decoration: none; }
+  .navbar a:hover { color: #f1b434; }
+  
+  /* Slideshow */
+  .slideshow { position: relative; width: 100%; overflow: hidden; }
+  .slideshow img { width: 100%; display: block; animation: slide 15s infinite; }
+  
+  /* News & Events */
+  .news-grid, .event-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+  .news-card, .event-card { border: 1px solid #ccc; padding: 1rem; border-radius: 8px; }
+  
+  /* Testimonials */
+  .testimonial-grid { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .testimonial-card { background: #f9f9f9; padding: 1rem; border-left: 4px solid #9d2235; }
+  
+  /* Footer */
+  footer { background: #222; color: #eee; padding: 2rem; text-align: center; }
+  
+  /* Slideshow Animation */
+  @keyframes slide {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-100%); }
+    66% { transform: translateX(-200%); }
+    100% { transform: translateX(0); }
+  }
+  

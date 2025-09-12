@@ -1,0 +1,201 @@
+.max-width-900 {
+    max-width: 1350px;
+    margin: auto;
+  }
+  
+  .carousel-image {
+    height: 500px;
+    object-fit: cover;
+  }
+  
+  .caption-small {
+    bottom: 20px;
+  }
+  
+  .btn-get-started.btn-sm {
+    padding: 6px 16px;
+    font-size: 14px;
+  }
+  .carousel-item {
+    position: relative;
+  }
+  
+  .carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5); /* semi-transparent dark overlay */
+    z-index: 1;
+  }
+  
+  .carousel-caption {
+    z-index: 2;
+    bottom: 20%;
+    left: 10%;
+    right: 10%;
+    text-align: left;
+  }
+  
+  .carousel-caption h2,
+  .carousel-caption p {
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+  }
+  
+  .bg-tangaza-blue {
+    background-color: #163650; /* Adjust this to match Tangaza's exact color */
+  }
+  
+  
+  .custom-top-bar {
+    min-height: 50px; /* You can increase this to 60px, 70px, etc. */
+    display: flex;
+    align-items: center;
+    font-size: 1.0rem;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    
+  }
+  
+  .custom-top-bar a:hover {
+    color: #d2a749 !important; 
+    border-bottom: 2px solid white;
+  }
+  
+  /* Apply horizontal layout to nested dropdown */
+  .dropdown-menu {
+    display: flex;
+    flex-direction: row; /* align submenus side-by-side */
+    padding: 1rem;
+    gap: 2rem; /* spacing between submenu columns */
+    border: none;
+  }
+  
+  /* Each submenu column */
+  .dropdown-submenu {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  /* Prevent inner dropdowns from collapsing on hover */
+  .dropdown-submenu .dropdown-menu {
+    position: static;
+    display: block;
+    box-shadow: none;
+    padding-left: 0;
+  }
+  .dropdown-submenu > a {
+    font-weight: bold;
+    border-bottom: 2px solid #d2a749;
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+    display: inline-block;
+    /* color: #ae1f23 !important; */
+  }
+  
+  /* Target all nav menu links on hover */
+  .navmenu a:hover,
+  .dropdown-menu a:hover {
+    color: #d2a749 !important;
+    border-bottom: 2px solid #d2a749;
+    text-decoration: none;
+  }
+  
+  /* Optional: Add smooth transition */
+  .navmenu a,
+  .dropdown-menu a {
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+  }
+
+  .enroll-btn {
+    border-color: #d2a749 !important;
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 16px;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+  }
+  
+  .enroll-btn:hover {
+    background-color: #d2a749;
+    color: #163650;
+    text-decoration: none;
+    border-color: #d2a749;
+  }
+
+  .nav-link.text-white:hover {
+    background-color: #d2a749;
+    color: white !important;
+    border-radius: 0.25rem;
+  }
+
+  .card-title {
+    font-weight: bold;
+  }
+  
+  .card-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  .card {
+    background-color: #f8f9fa; /* Light gray */
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .card2 {
+    background-color: rgba(0, 0, 0, 0.5); /* Light gray */
+    transition: all 0.3s ease-in-out;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card:hover {
+    background-color: #163650; /* Tangaza red */
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+
+.card:hover h5,
+.card:hover p,
+.card:hover .card-text {
+  color: white;
+}
+.card-profile {
+  background-color: #f8f9fa;
+  transition: all 0.3s ease-in-out;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+
+.card-profile:hover {
+  background-color: #163650;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-profile:hover h5,
+.card-profile:hover p {
+  color: white !important;
+}
+
+.card-profile img {
+  transition: transform 0.3s ease;
+}
+
+.card-profile:hover img {
+  transform: scale(1.05);
+}

@@ -1,0 +1,4 @@
+.form-check-input:checked {
+    background-color: red; /* Change the color of the toggle when it is checked */
+    border-color: red; /* Change the border color of the toggle when it is checked */
+}

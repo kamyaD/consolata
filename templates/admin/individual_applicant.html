@@ -1,5 +1,7 @@
 {% extends 'home/base2.html' %}
 {% load static %}
+{% load widget_tweaks %}
+
 
 
 {% block extracss %}
@@ -17,7 +19,7 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <!-- Student name on the left -->
-                  <h5 class="card-title mb-0">{{student.first_name}} {{student.sir_name}}</h5>
+                  <h5 class="card-title mb-0">{{student.first_name}} {{student.sir_name}} Reg:-{{student.registration_number}}</h5>
                   
                   <!-- Buttons grouped to the right -->
                   <div class="d-flex gap-2">

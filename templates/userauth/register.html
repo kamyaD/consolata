@@ -91,7 +91,7 @@
                       <label for="yourUsername" class="form-label">First Name</label>
                       <div class="input-group has-validation">
                         <!-- <span class="input-group-text" id="inputGroupPrepend"></span> -->
-                        <input type="text" name="first_name" class="form-control" id="yourUsername" value="{{ form.first_name.value|default_if_none:'' }}" required>
+                        <input type="text" name="first_name" class="form-control" id="first_name" value="{{ form.first_name.value|default_if_none:'' }}" required>
                         
                       </div>
                     </div>
@@ -99,7 +99,7 @@
                         <label for="yourUsername" class="form-label">Last Name</label>
                         <div class="input-group has-validation">
                           <!-- <span class="input-group-text" id="inputGroupPrepend"></span> -->
-                          <input type="text" name="last_name" class="form-control" id="yourLast" value="{{ form.last_name.value|default_if_none:'' }}" required>
+                          <input type="text" name="last_name" class="form-control" id="last_name" value="{{ form.last_name.value|default_if_none:'' }}" required>
                           
                         </div>
                       </div>
@@ -125,9 +125,9 @@
                     
                     
                     <div class="col-12">
-                        <label for="id_department" class="form-label">School:</label>
+                        <label for="id_school" class="form-label">School:</label>
                         <div class="input-group has-validation">
-                            <select name="department" id="department" class="form-control">
+                            <select name="school" id="school" class="form-control">
                               {% for choice in form.school.field.choices %}
                                 <option value="{{ choice.0 }}" {% if choice.0 == form.department.value %}selected{% endif %}>
                                   {{ choice.1 }}

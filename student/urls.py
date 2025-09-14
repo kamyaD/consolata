@@ -10,5 +10,6 @@ urlpatterns = [
     path('timetable/', views.fetch_timetable, name='timetable'),
     path('get-student-record/', views.view_individual_sudent, name='get-student-record'),
     path('student-results/', views.fetch_student_results, name='student-results'),
+    path('update-student/<int:pk>/', views.update_student, name='update-student'),
 ]
 

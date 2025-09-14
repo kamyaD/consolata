@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 from userauth.models import CustomUser
+# from staff_teachers.models import CourseResults
 
 
 def get_year_choices():
@@ -185,7 +186,7 @@ class TblStudentsAdmissions(models.Model):
     email = models.CharField(max_length=100, null=True, blank=True)
     occupation = models.CharField(max_length=50, null=True, blank=True)
     address = models.CharField(max_length=50, null=True, blank=True)
-    admission_year = models.CharField(max_length=20, choices=get_year_choices(), default=now().year)
+    admission_year = models.CharField(max_length=20, blank=True, null=True, default=now().year)
     month = models.CharField(max_length=20, choices=MONTH_CHOICES)
     billing_self = models.CharField(max_length=100, null=True, blank=True)
     organization = models.CharField(max_length=100, null=True, blank=True)

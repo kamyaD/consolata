@@ -6,8 +6,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import TblStudentsAdmissions
-from .forms import StudentCreationForm
+from .forms import StudentCreationForm, StudentUpdateForm
+from staff_teachers.models import CourseResults
 from staff_teachers.models import Timetable
+from userauth.models import CustomUser
 from .utils import render_to_pdf
 
 
@@ -105,21 +107,30 @@ def fetch_timetable(request):
 @login_required
 def view_individual_sudent(request):
     template = 'admin/individual_stident.html'
-    
+
     try:
         student = TblStudentsAdmissions.objects.get(email=request.user.email)
-        if student:
-            form = StudentCreationForm()
+        print("student", student.first_name)
 
-            context = {
-                'student': student,
-                'form': form
-            }
+        form = StudentCreationForm()
 
-            return render(request,template,context)
+        context = {
+            'student': student,
+            'form': form
+        }
+
+        return render(request, template, context)
+
+    except TblStudentsAdmissions.DoesNotExist:
+        messages.error(request, "Requested student record does not exist. Please apply here")
+        return redirect('student:online-application')
+
     except Exception as e:
-         messages.error(request, "Requested student record does not exist.Please apply here")
-         return redirect('student:online-application')
+        # This helps you see if there's another issue besides missing record
+        print("Unexpected error:", e)
+        messages.error(request, "Something went wrong while retrieving your record.")
+        return redirect('student:online-application')
+
 
 
 @login_required  
@@ -137,18 +148,21 @@ def fetch_student_results(request):
     
     return render(request, template, context)
 
-# def upload_course_code_csv(request):
-#     if request.method == 'POST':
-#         csv_file = request.FILES.get('csv_file')
-        
-#         if not csv_file.name.endswith('.csv'):
-#             messages.error(request, "Please upload a valid CSV file.")
-#             return redirect('student:fetch-student-results')
 
-#         # Process the CSV file here
-#         # For example, you can read the file and save the course codes to the database
-
-#         messages.success(request, "CSV file uploaded successfully.")
-#         return redirect('student:fetch-student-results')
+def update_student(request, pk):
+    student = get_object_or_404(TblStudentsAdmissions, pk=pk)
+    if request.method == "POST":
+        form = StudentUpdateForm(request.POST, request.FILES, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Student record updated successfully.")
+            return redirect("consolata_admin:view-student", pk=student.pk)
+    else:
+        form = StudentUpdateForm(instance=student)
     
-#     return render(request, 'student/upload_course_code_csv.html')
+    return render(request, "consolata_admin/student_edit.html", {"form": form, "student": student})
+
+
+
+
+        

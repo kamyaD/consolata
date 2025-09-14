@@ -1,6 +1,6 @@
 {% extends 'home/base2.html' %}
 {% load static %}
-
+{% load widget_tweaks %}
 
 {% block extracss %}
 <link rel="stylesheet" href="{% static 'assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css' %}">
@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="card-title">{{student.first_name}}  {{student.sir_name}}</h5>
-                        <!-- <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#studentModal">Assign Registration</a> -->
+                        <a href="" type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#studentModal">Edit Record</a>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     <div class="col-6">
                         <p style="color: black;"><strong>Permanent Address</strong>: {{student.permanent_address}}</p>
                         <p style="color: black;"><strong>Email Address</strong>: {{student.email}}</p>
-                        <!-- <p style="color: black;"><strong>Organization </strong>: {{student.email}}</p> -->
+                        <p style="color: black;"><strong>Registration Number </strong>: {{student.Registration}}</p>
                         
                         
                         <p style="color: black;"><strong>Phone Number </strong>: {{student.telephone}}</p>
@@ -219,43 +219,54 @@
         
     </div>
 </div>
-<div class="modal fade mt-10" id="studentModal" data-backdrop="static" data-keyboard="false" style="width:100%">
-    <div class="modal-dialog modal-xl" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          
-          <form method="post" id="submitForm" action="{% url 'consolata_admin:update-student' student.studentid %}"  enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="card shadow mb-4">
-              <div class="card-body">
-                <div class="mb-5">
-                    <center><h5 class="card-title align-items-center">Assign Registration Number ID</h5></center>
-                </div>
-                
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group row">
-                      <label for="ticketFunction" class="col-sm-4 col-form-label">Registration no.:</label>
-                      <div class="col-sm-8  py-2">
-                        <input type="text" class="form-control" id="reg-no" name="reg-no" value="{{student.registration_number}}" placeholder="{{student.registration_number}}">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <div class="submit-spinner" id="spinner"></div>
-                  <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-              </div>
-              </div>
-            </div>
-                                        
-          </form>
-        </div>
+<div class="modal fade" id="studentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content rounded-3 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-pencil-square me-2"></i> Edit Student Record — {{ student.first_name }} {{ student.sir_name }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+      <form method="post" action="{% url 'consolata_admin:update-student' student.studentid %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="row g-3">
+            {% for field in form %}
+              <div class="col-md-6">
+                <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                  {{ field.label }}
+                </label>
+                {% if field.field.widget.input_type == "select" %}
+                  {{ field|add_class:"form-select" }}
+                {% else %}
+                  {{ field|add_class:"form-control" }}
+                {% endif %}
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+                {% if field.errors %}
+                  <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            <i class="bi bi-x-circle"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Save Changes
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+</div>
+
 {% endblock %}
 
 {% block extrajs %}

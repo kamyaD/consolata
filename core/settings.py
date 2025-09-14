@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'student',
     'staff_teachers',
     'consolata_admin',
+    'widget_tweaks',
     'home',
 ]
 

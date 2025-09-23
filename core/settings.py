@@ -101,36 +101,37 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'otijeuil_consolata_local',
-#         'USER': 'otijeuil_admin',
-#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
-#         'HOST': '102.212.247.162',
-#         'PORT': '',
-#     },
-#     'old_website':{
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'otijeuil_cipkenya_cip_website',
-#         'USER': 'otijeuil_admin',
-#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
-#         'HOST': '102.212.247.162',
-#         'PORT': '',
-#     }
-        
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'consolata_local',
-        'USER': 'dommy',
-        'PASSWORD': 'dommy123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'otijeuil_consolata_local',
+        'USER': 'otijeuil_admin',
+        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+        'HOST': '102.212.247.162',
+        'PORT': '',
+    },
+    'old_website':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'otijeuil_cipkenya_cip_website',
+        'USER': 'otijeuil_admin',
+        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+        'HOST': '102.212.247.162',
+        'PORT': '',
     }
+        
 }
+
+# Local DB
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'consolata_local',
+#         'USER': 'dommy',
+#         'PASSWORD': 'dommy123',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 
@@ -158,15 +159,15 @@ AUTH_USER_MODEL = 'userauth.CustomUser'
 AUTHENTICATION_BACKENDS = ['userauth.backends.EmailBackend',
                             'django.contrib.auth.backends.ModelBackend',]
 # For testing: Emails print to console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # for production
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your_email@example.com'
-# EMAIL_HOST_PASSWORD = 'your_email_password'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'system@ciu.ac.ke'
+EMAIL_HOST_PASSWORD = 'os0GbOm!ycf0Djny'
 
 
 
@@ -183,22 +184,22 @@ USE_TZ = True
 
 
 # Production
-# STATIC_URL = '/consolata/static/'  # because your app runs under /consolata/
-# STATIC_ROOT = Path('/home/otijeuil/public_html/consolata/static/')  # adjust to your cPanel user
-# STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = '/consolata/static/'  # because your app runs under /consolata/
+STATIC_ROOT = Path('/home/otijeuil/public_html/consolata/static/')  # adjust to your cPanel user
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 #Local
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 # Where collectstatic will copy files for production
-STATIC_ROOT = BASE_DIR / 'staticfiles'  
+# STATIC_ROOT = BASE_DIR / 'staticfiles'  
 
 # Where your custom static assets live during dev
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
 
 
 MEDIA_URL = '/media/'

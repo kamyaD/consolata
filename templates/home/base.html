@@ -172,15 +172,38 @@
           <li class="dropdown">
             <a href="#">Academics ▾</a>
             <ul class="dropdown-menu">
-              <li><a href="{% url 'home:philosophy-school' %}">School Of Philosophy</a></li>
-              <li><a href="{% url 'home:psychology-school' %}">School Of Psychology</a></li>
-              <li><a href="{% url 'home:theology-school' %}">School Of Theology</a></li>
-              <li><a href="{% url 'home:language-center' %}">Language Center</a></li>
+              <li><a href="#undergrad">Undergraduate ▸</a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'home:philosophy-school' %}">School of Philosophy</a></li>
+                  <li><a href="{% url 'home:psychology-school' %}">School of Psychology</a></li>
+                  <li><a href="{% url 'home:theology-school' %}">School of Theology</a></li>
+                  <li><a href="{% url 'home:language-center' %}">Language Center</a></li>  
+                </ul>
+              </li>
+              <li><a href="#postgrad">Postgraduate</a></li>
+              <li class="dropdown">
+                <a href="#shortcourses">Short Courses ▸</a>
+                <ul class="dropdown-menu">
+                  <li><a href="#online">Online</a></li>
+                  <li><a href="#executive">Executive</a></li>
+                </ul>
+              </li>
             </ul>
           </li>
-          <li><a href="#">Research</a></li>
-          <li><a href="#">Contact Us</a></li>
-          <!-- <li><a href="{% url 'home:requirements' %}" class="btn btn-primary">Apply Now</a></li> -->
+          <li class="dropdown">
+            <a href="#admissions">Research ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="">Publications</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#">Login & Register ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'userauth:login'%}">Login</a></li>
+              <li><a href="{% url 'userauth:register' %}">Register</a></li>
+              <li><a href="https://cipportal.co.ke/portal">Portal</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
     </div>

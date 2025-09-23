@@ -112,25 +112,18 @@ def view_individual_sudent(request):
         student = TblStudentsAdmissions.objects.get(email=request.user.email)
         print("student", student.first_name)
 
-        form = StudentCreationForm()
+        # Pre-fill the form with student instance data
+        form = StudentCreationForm(instance=student)
 
         context = {
             'student': student,
             'form': form
         }
-
         return render(request, template, context)
 
     except TblStudentsAdmissions.DoesNotExist:
         messages.error(request, "Requested student record does not exist. Please apply here")
         return redirect('student:online-application')
-
-    except Exception as e:
-        # This helps you see if there's another issue besides missing record
-        print("Unexpected error:", e)
-        messages.error(request, "Something went wrong while retrieving your record.")
-        return redirect('student:online-application')
-
 
 
 @login_required  

@@ -220,7 +220,7 @@
     </div>
 </div>
 <div class="modal fade" id="studentModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content rounded-3 shadow-lg">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title">
@@ -232,17 +232,14 @@
       <form method="post" action="{% url 'consolata_admin:update-student' student.studentid %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="modal-body">
+          {{ form.media }}
           <div class="row g-3">
             {% for field in form %}
               <div class="col-md-6">
                 <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
                   {{ field.label }}
                 </label>
-                {% if field.field.widget.input_type == "select" %}
-                  {{ field|add_class:"form-select" }}
-                {% else %}
-                  {{ field|add_class:"form-control" }}
-                {% endif %}
+                {{ field|add_class:"form-control" }}
                 {% if field.help_text %}
                   <div class="form-text">{{ field.help_text }}</div>
                 {% endif %}
@@ -253,6 +250,7 @@
             {% endfor %}
           </div>
         </div>
+        
 
         <div class="modal-footer d-flex justify-content-between">
           <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">

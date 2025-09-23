@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from student.models import TblStudentsAdmissions
@@ -90,17 +90,24 @@ def view_individual_applicant(request, id):
 
 @login_required
 def update_student_records(request, id):
-    if request.method == 'POST':
-        post = request.POST
-        student = TblStudentsAdmissions.objects.get(studentid=id)
-        
-        student.registration_number = post.get('reg-no')
-        
-        student.save()
+    student = get_object_or_404(TblStudentsAdmissions, studentid=id)
 
-        messages.success(request, "Student record updated successfully")
-        return redirect('consolata_admin:student-panel', id=student.studentid)
-    
+    if request.method == 'POST':
+        form = StudentCreationForm(request.POST, request.FILES, instance=student)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Student record updated successfully")
+            return redirect('consolata_admin:student-panel', id=student.studentid)
+        else:
+            messages.error(request, "There were errors in the form. Please check and try again.")
+    else:
+        # This ensures the form is prefilled with student info
+        form = StudentCreationForm(instance=student)
+
+    return render(request, 'admin/individual_stident.html', {
+        'form': form,
+        'student': student
+    })
 
 @login_required
 def get_mailing_list(request):

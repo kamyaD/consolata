@@ -22,7 +22,69 @@
   .vc-sidebar h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; color: #002855; /* University navy */ border-bottom: 2px solid #e0e4ea; padding-bottom: 0.5rem; } 
   .vc-sidebar ul { list-style: none; padding: 0; margin: 0; } 
   .vc-sidebar ul li { margin-bottom: 0.75rem; } 
-  .vc-sidebar ul li a { display: block; padding: 0.6rem 1rem; border-radius: 0.5rem; text-decoration: none; color: #333; font-weight: 500; background: #f9fafb; transition: all 0.25s ease; border: 1px solid #e5e7eb; } .vc-sidebar ul li a:hover { background: #002855; color: #fff; border-color: #002855; transform: translateX(5px); } </style>
+  .vc-sidebar ul li a { display: block; padding: 0.6rem 1rem; border-radius: 0.5rem; text-decoration: none; color: #333; font-weight: 500; background: #f9fafb; transition: all 0.25s ease; border: 1px solid #e5e7eb; } .vc-sidebar ul li a:hover { background: #002855; color: #fff; border-color: #002855; transform: translateX(5px); } 
+  /* Mobile Menu Drawer */
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100%;
+    background: white;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    padding: 1.5rem;
+    z-index: 1050;
+    overflow-y: auto;
+  }
+  
+  .mobile-drawer.open {
+    transform: translateX(0);
+  }
+  
+  .drawer-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    float: right;
+    margin-bottom: 1rem;
+  }
+  
+  .menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1040;
+  }
+  
+  .menu-overlay.show {
+    display: block;
+  }
+  
+  /* Dropdowns inside mobile menu */
+  .mobile-drawer .dropdown-menu {
+    display: none;
+    padding-left: 1rem;
+  }
+  
+  .mobile-drawer .dropdown-menu.open {
+    display: block;
+  }
+  
+  .dropdown-toggle {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0;
+  }
+</style>
   {% endblock %}
 </head>
 <body>
@@ -33,7 +95,7 @@
       <div class="cta">
         <a class="btn" href="https://www.consolatalanguagecentre.co.ke/">Language Center</a>
         <a class="btn" href="#elearning">E-Learning</a>
-        <a class="btn" href="https://library.consolatainstituteofphilosophy.com/">Library</a>
+        <a class="btn" href="{% url 'home:library' %}">Library</a>
         <a class="btn" href="https://ciu.ac.ke:2096/">Emails</a>
         <a class="btn primary" href="{% url 'home:requirements' %}">Apply Now</a>
       </div>
@@ -46,23 +108,61 @@
       <div class="brand">
         <div class="logo">
           <a href="/">
-            <img src="{% static 'img/background-less-photo.png' %}" 
-                 alt="Consolata International University Logo"
-                 style="height:60px; width:auto;">
+            <img src="{% static 'img/background-less-photo.png' %}" alt="Consolata International University Logo" style="height:60px; width:auto;">
           </a>
         </div>
         <div>
           <h1>Consolata International University</h1>
-          <div class="tag">Teaching Minds · Transforming Lives</div>
+          <div class="tag">Empowered by Wisdom, Grounded in Faith, Dedicated to Service</div>
         </div>
       </div>
-      
-      <button class="menu-toggle">☰ Menu</button>
-      <nav>
+  
+      <!-- Mobile Menu Button -->
+      <button class="menu-toggle d-lg-none" id="mobileMenuToggle">☰</button>
+  
+      <!-- Overlay -->
+      <div id="mobileMenuOverlay" class="menu-overlay"></div>
+  
+      <!-- Mobile Drawer Menu -->
+      <nav id="mobileMenuDrawer" class="mobile-drawer">
+        <button class="drawer-close" id="mobileMenuClose">×</button>
         <ul>
           <li><a href="{% url 'home:home' %}">Home</a></li>
+  
           <li class="dropdown">
-            <a href="#about">About ▾</a>
+            <button class="dropdown-toggle">About ▾</button>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'home:history' %}">History</a></li>
+              <li><a href="#mission">Mission & Vision</a></li>
+              <li><a href="{% url 'home:leadership' %}">Leadership</a></li>
+            </ul>
+          </li>
+  
+          <li class="dropdown">
+            <button class="dropdown-toggle">Academics ▾</button>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'home:philosophy-school' %}">School Of Philosophy</a></li>
+              <li><a href="{% url 'home:psychology-school' %}">School Of Psychology</a></li>
+              <li><a href="{% url 'home:theology-school' %}">School Of Theology</a></li>
+              <li><a href="{% url 'home:language-center' %}">Language Center</a></li>  
+            </ul>
+          </li>
+  
+          <li><a href="#">Research</a></li>
+          <li><a href="https://ciu.ac.ke:2096/">Email</a></li>
+          <li><a href="{% url 'home:library' %}">Library</a></li>
+          <li><a href="https://www.consolatalanguagecentre.co.ke/">Language Center</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="{% url 'home:requirements' %}" class="text-danger fw-bold">Apply Now</a></li>
+        </ul>
+      </nav>
+  
+      <!-- Desktop Menu (unchanged) -->
+      <nav class="desktop-nav d-none d-lg-block">
+        <ul class="desktop-menu">
+          <li><a href="{% url 'home:home' %}">Home</a></li>
+          <li class="dropdown">
+            <a href="#">About ▾</a>
             <ul class="dropdown-menu">
               <li><a href="{% url 'home:history' %}">History</a></li>
               <li><a href="#mission">Mission & Vision</a></li>
@@ -70,52 +170,22 @@
             </ul>
           </li>
           <li class="dropdown">
-            <a href="#academics">Academics ▾</a>
+            <a href="#">Academics ▾</a>
             <ul class="dropdown-menu">
-              <li><a href="#undergrad">Undergraduate ▸</a>
-                <ul class="dropdown-menu">
-                  <li><a href="{% url 'home:philosophy-school' %}">School Of Philosophy</a></li>
-                  <li><a href="{% url 'home:psychology-school' %}">School Of Psychology</a></li>
-                  <li><a href="{% url 'home:theology-school' %}">School Of Theology</a></li>
-                  <li><a href="{% url 'home:language-center' %}">Language Center</a></li>  
-                </ul>
-              </li>
-              <li><a href="#postgrad">Postgraduate</a></li>
-              <li class="dropdown">
-                <a href="#shortcourses">Short Courses ▸</a>
-                <ul class="dropdown-menu">
-                  <li><a href="#online">Online</a></li>
-                  <li><a href="#executive">Executive</a></li>
-                </ul>
-              </li>
+              <li><a href="{% url 'home:philosophy-school' %}">School Of Philosophy</a></li>
+              <li><a href="{% url 'home:psychology-school' %}">School Of Psychology</a></li>
+              <li><a href="{% url 'home:theology-school' %}">School Of Theology</a></li>
+              <li><a href="{% url 'home:language-center' %}">Language Center</a></li>
             </ul>
           </li>
-          <!-- <li class="dropdown">
-            <a href="#admissions">Admissions ▾</a>
-            <ul class="dropdown-menu">
-              <li><a href="{% url 'home:requirements' %}">Requirements</a></li>
-              <li><a href="#scholarships">Scholarships</a></li>
-              <li><a href="#international">International Students</a></li>
-            </ul>
-          </li> -->
-          <li class="dropdown">
-            <a href="#admissions">Research ▾</a>
-            <ul class="dropdown-menu">
-              <li><a href="">Publications</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#">Login & Register ▾</a>
-            <ul class="dropdown-menu">
-              <li><a href="{% url 'userauth:login'%}">Login</a></li>
-              <li><a href="{% url 'userauth:register' %}">Register</a></li>
-              <li><a href="https://cipportal.co.ke/portal">Portal</a></li>
-            </ul>
-          </li>
+          <li><a href="#">Research</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <!-- <li><a href="{% url 'home:requirements' %}" class="btn btn-primary">Apply Now</a></li> -->
         </ul>
       </nav>
     </div>
   </header>
+  
 
   <!-- Hero / Slideshow -->
   
@@ -138,7 +208,7 @@
       <div>
         <h4>Contact</h4>
         <ul>
-          <li>Call: +254 700 000 000</li>
+          <li>Call: +254 733 777 307</li>
           <li>Email: admissions@ciu.ac.ke</li>
         </ul>
       </div>
@@ -182,6 +252,34 @@
         }
       });
     });
+  const mobileDrawer = document.getElementById('mobileMenuDrawer');
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const openBtn = document.getElementById('mobileMenuToggle');
+  const closeBtn = document.getElementById('mobileMenuClose');
+
+  function openMenu() {
+    mobileDrawer.classList.add('open');
+    overlay.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    mobileDrawer.classList.remove('open');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Toggle dropdowns
+  document.querySelectorAll('.dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const menu = btn.nextElementSibling;
+      menu.classList.toggle('open');
+    });
+  });
   </script>
   {% block extra_js %}{% endblock %}
 </body>

@@ -44,3 +44,6 @@ def home(request):
         "upcoming_events": upcoming_events,
         "testimonials": testimonials,
     })
+
+def library(request):
+    return render(request, 'home/library.html')

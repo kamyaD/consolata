@@ -152,8 +152,15 @@
           <li><a href="https://ciu.ac.ke:2096/">Email</a></li>
           <li><a href="{% url 'home:library' %}">Library</a></li>
           <li><a href="https://www.consolatalanguagecentre.co.ke/">Language Center</a></li>
-          <li><a href="#">Contact Us</a></li>
           <li><a href="{% url 'home:requirements' %}" class="text-danger fw-bold">Apply Now</a></li>
+          <li class="dropdown">
+            <a href="#">Login & Register ▾</a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'userauth:login'%}">Login</a></li>
+              <li><a href="{% url 'userauth:register' %}">Register</a></li>
+              <li><a href="https://cipportal.co.ke/portal">Portal</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
   

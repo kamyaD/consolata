@@ -1,8 +1,7 @@
 from django.shortcuts import render
-# from student.models import TblStudentsAdmissions
-# # ciu/views.py
-# from django.shortcuts import render
+
 from .models import News, Event, Testimonial
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -45,9 +44,11 @@ def home(request):
         "testimonials": testimonials,
     })
 
+@login_required
 def library(request):
     return render(request, 'home/library.html')
 
+@login_required
 def e_resources(request):
     return render(request, 'home/e-resources.html')
 

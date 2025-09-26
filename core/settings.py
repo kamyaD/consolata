@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vvccg6^@(asd7g(kwtw298^7@f0p09n^)o3eji)%!#&$c8te#a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["ciu.ac.ke", "www.ciu.ac.ke", "127.0.0.1", "localhost"]
 
@@ -191,3 +191,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# settings.py
+LOGIN_URL = 'userauth:login'  # Or the name/path of your login view
+# LOGIN_REDIRECT_URL = 'userauth:profile'  # Redirect after login
+LOGOUT_REDIRECT_URL = 'home:home'  # Redirect after logout
+SESSION_COOKIE_AGE = 1209600  # Two weeks in seconds
+

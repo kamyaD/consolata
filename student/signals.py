@@ -7,13 +7,18 @@ from django.utils.timezone import now
 def create_student_record(sender, instance, created, **kwargs):
     print("instance===>", instance)
     print("Signal triggered for user:", instance.email)
+
     if created and instance.role == "Student":
-        # Create a TblStudentsAdmissions record when a Student user is created
-        TblStudentsAdmissions.objects.create(
-            first_name=instance.first_name if hasattr(instance, "first_name") else "",
-            last_name=instance.last_name if hasattr(instance, "last_name") else "",
-            email=instance.email,
-            school=instance.school if hasattr(instance, "school") else "",
-            admission_year=str(now().year),  # default to current year
-            month=now().strftime("%B"),      # default to current month
-        )
+        # Check if a student with this email already exists
+        if not TblStudentsAdmissions.objects.filter(email=instance.email).exists():
+            TblStudentsAdmissions.objects.create(
+                first_name=getattr(instance, "first_name", ""),
+                last_name=getattr(instance, "last_name", ""),
+                email=instance.email,
+                school=getattr(instance, "school", ""),
+                admission_year=str(now().year),  # default to current year
+                month=now().strftime("%B"),      # default to current month
+            )
+            print(f"Student record created for {instance.email}")
+        else:
+            print(f"Student record for {instance.email} already exists. Skipping creation.")

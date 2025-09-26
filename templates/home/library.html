@@ -17,101 +17,105 @@
       <h3>Quick Links</h3> 
       <ul> 
         <li><a href="https://repository.consolatainstituteofphilosophy.com:8443/jspui/">Repository</a></li>
-        <li><a href="https://library.consolatainstituteofphilosophy.com/s">Library Search</a></li> 
+        <li><a href="https://library.consolatainstituteofphilosophy.com/">Library Search</a></li> 
         <li><a href="https://maktaba.consolatainstituteofphilosophy.com/">Library Intranet</a></li> 
-        <li><a href="https://consolatainstituteofphilosophy.com/e-resources.php">e-resources</a></li> 
+        <li><a href="{% url 'home:e-resources' %}">e-resources</a></li> 
         <li><a href="https://maktaba.consolatainstituteofphilosophy.com/">Maktaba</a></li>
       </ul> 
       <!-- <h3>Contact Info</h3> <p>Email: info@ciu.ac.ke<br>Phone: +254 700 000 000</p> --> 
       </aside> 
       <!-- Main VC content --> 
        <div class="vc-main"> 
-        <div class="vc-text"> 
+        <div class="vc-text">
+          <section class="mb-4">
+            <img src="{% static 'img/library-birds-view.webp'%}" alt="" style="width:100%"> 
+          </section>
+          
             <h2>Library Hours</h2>
-<p>Mon – Friday: 8:00 a.m to 8:00 p.m</p>
-<p>Saturdays: 9:00 a.m to 1:00 p.m</p>
-<p>Sundays and Public Holidays – Closed.</p>
-<!-- <p>Email: <a href="mailto:library.philosophicum@consolata.net">library.philosophicum@consolata.net</a></p> -->
+            <p>Mon – Friday: 8:00 a.m to 8:00 p.m</p>
+            <p>Saturdays: 9:00 a.m to 1:00 p.m</p>
+            <p>Sundays and Public Holidays – Closed.</p>
+            <!-- <p>Email: <a href="mailto:library.philosophicum@consolata.net">library.philosophicum@consolata.net</a></p> -->
 
-<h2>About the Blessed Allamano Library</h2>
-<p>The Saint Joseph Allamano Library is located at the academic complex. The library was built in 1999 with a hall added in 2003. The primary purpose of our Institute is to prepare candidates for the priesthood and religious life, offering a Bachelor of Arts in Philosophy. The library serves the Consolata Missionaries, students, staff, alumni, and the surrounding community.</p>
-<p><strong>Vision:</strong> To provide comprehensive access to resources that enrich theological studies, philosophical inquiry, and interfaith dialogue.</p>
-<p><strong>Mission:</strong> To serve the educational and research needs of students and faculty by offering comprehensive resources in Philosophy, Psychology, Theology, and Religious Studies.</p>
+            <h2>About the Blessed Allamano Library</h2>
+            <p>The Saint Joseph Allamano Library is located at the academic complex. The library was built in 1999 with a hall added in 2003. The primary purpose of our Institute is to prepare candidates for the priesthood and religious life, offering a Bachelor of Arts in Philosophy. The library serves the Consolata Missionaries, students, staff, alumni, and the surrounding community.</p>
+            <p><strong>Vision:</strong> To provide comprehensive access to resources that enrich theological studies, philosophical inquiry, and interfaith dialogue.</p>
+            <p><strong>Mission:</strong> To serve the educational and research needs of students and faculty by offering comprehensive resources in Philosophy, Psychology, Theology, and Religious Studies.</p>
 
-<h2>Library Objectives</h2>
-<ul>
-  <li>To provide comprehensive resources to a wide range of books, journals, and digital resources in Philosophy, Theology, Religious Studies, and other relevant academic disciplines to support student and faculty research.</li>
-  <li>To support educational excellence in an environment that promotes academic success by offering resources that align with the educational goals of students and faculty.</li>
-  <li>To develop and maintain a robust collection of research materials that support scholarly inquiry and innovative research in various fields of study.</li>
-  <li>To promote information literacy to students and faculty with the skills needed to effectively locate, evaluate, and use information resources for their academic and research activities.</li>
-  <li>To create spaces and opportunities for collaborative learning and intellectual engagement among students and faculty.</li>
-  <li>To provide user-friendly access to both physical and electronic resources to meet the diverse needs of all library patrons.</li>
-  <li>To regularly review and update the library’s collections to ensure they remain relevant to the evolving academic and research interests of the institution.</li>
-</ul>
+            <h2>Library Objectives</h2>
+            <ul>
+              <li>To provide comprehensive resources to a wide range of books, journals, and digital resources in Philosophy, Theology, Religious Studies, and other relevant academic disciplines to support student and faculty research.</li>
+              <li>To support educational excellence in an environment that promotes academic success by offering resources that align with the educational goals of students and faculty.</li>
+              <li>To develop and maintain a robust collection of research materials that support scholarly inquiry and innovative research in various fields of study.</li>
+              <li>To promote information literacy to students and faculty with the skills needed to effectively locate, evaluate, and use information resources for their academic and research activities.</li>
+              <li>To create spaces and opportunities for collaborative learning and intellectual engagement among students and faculty.</li>
+              <li>To provide user-friendly access to both physical and electronic resources to meet the diverse needs of all library patrons.</li>
+              <li>To regularly review and update the library’s collections to ensure they remain relevant to the evolving academic and research interests of the institution.</li>
+            </ul>
 
-<h2>Library Goals</h2>
-<ul>
-  <li>Provide a variety of library materials.</li>
-  <li>Provide a conducive learning environment.</li>
-  <li>Foster research and innovation.</li>
-  <li>Promote information literacy.</li>
-  <li>Leverage technology for learning.</li>
-  <li>Provide user support for lifelong learning.</li>
-  <li>Preserve and promote knowledge.</li>
-</ul>
+            <h2>Library Goals</h2>
+            <ul>
+              <li>Provide a variety of library materials.</li>
+              <li>Provide a conducive learning environment.</li>
+              <li>Foster research and innovation.</li>
+              <li>Promote information literacy.</li>
+              <li>Leverage technology for learning.</li>
+              <li>Provide user support for lifelong learning.</li>
+              <li>Preserve and promote knowledge.</li>
+            </ul>
 
-<h2>Overview</h2>
-<p>Welcome to the Saint Joseph Allamano Library. We provide excellent services and acquire relevant and up-to-date information resources in both print and electronic formats. Our library supports research and academic success in an environment that promotes study, collaboration, and the use of information and communication technology.</p>
+            <h2>Overview</h2>
+            <p>Welcome to the Saint Joseph Allamano Library. We provide excellent services and acquire relevant and up-to-date information resources in both print and electronic formats. Our library supports research and academic success in an environment that promotes study, collaboration, and the use of information and communication technology.</p>
 
-<!-- <h4>Location:</h4>
-<p><a href="https://maps.app.goo.gl/" target="_blank">Click here to view on Google Maps</a></p> -->
+            <!-- <h4>Location:</h4>
+            <p><a href="https://maps.app.goo.gl/" target="_blank">Click here to view on Google Maps</a></p> -->
 
-<h2>Sections and Services</h2>
-<ul>
-  <li>Reference Section</li>
-  <li>Circulation Section</li>
-  <li>E-Library (19 computers with internet access)</li>
-  <li>Newspaper Facility</li>
-  <li>Wireless (Wi-Fi) Services</li>
-  <li>CAS (Current Awareness Service) for newly acquired materials</li>
-</ul>
+            <h2>Sections and Services</h2>
+            <ul>
+              <li>Reference Section</li>
+              <li>Circulation Section</li>
+              <li>E-Library (19 computers with internet access)</li>
+              <li>Newspaper Facility</li>
+              <li>Wireless (Wi-Fi) Services</li>
+              <li>CAS (Current Awareness Service) for newly acquired materials</li>
+            </ul>
 
-<h2>Library Collections</h2>
-<ul>
-  <li>Open Shelves/Reading Area</li>
-  <li>Short Loan Collection (2 hours maximum borrowing)</li>
-  <li>Reference Collection (library use only)</li>
-  <li>Recreational Collection (Novels, Plays, Poetry)</li>
-</ul>
+            <h2>Library Collections</h2>
+            <ul>
+              <li>Open Shelves/Reading Area</li>
+              <li>Short Loan Collection (2 hours maximum borrowing)</li>
+              <li>Reference Collection (library use only)</li>
+              <li>Recreational Collection (Novels, Plays, Poetry)</li>
+            </ul>
 
-<h2>Library Rules and Regulations</h2>
-<ul>
-  <li>Silence must be maintained at all times.</li>
-  <li>Eating, drinking, sleeping, and smoking are prohibited.</li>
-  <li>All library materials should be returned on time to avoid fines.</li>
-</ul>
+            <h2>Library Rules and Regulations</h2>
+            <ul>
+              <li>Silence must be maintained at all times.</li>
+              <li>Eating, drinking, sleeping, and smoking are prohibited.</li>
+              <li>All library materials should be returned on time to avoid fines.</li>
+            </ul>
 
-<h2>Online Resources</h2>
+            <h2>Online Resources</h2>
 
-<h4>E-Resources</h4>
-<p>Access e-books, e-journals, databases, and other digital collections available through KLISC. <a href="#">View Resources</a></p>
+            <h4>E-Resources</h4>
+            <p>Access e-books, e-journals, databases, and other digital collections available through KLISC. <a href="#">View Resources</a></p>
 
-<h4>Multimedia Resources</h4>
-<p>Access audio-visual materials, including assistive technologies for users with special needs. <a href="#">View Resources</a></p>
+            <h4>Multimedia Resources</h4>
+            <p>Access audio-visual materials, including assistive technologies for users with special needs. <a href="#">View Resources</a></p>
 
-<h4>OPAC</h4>
-<p>Search for CIP library holdings through the Online Public Access Catalogue (OPAC). <a href="http://66.179.240.90:8001" target="_blank">Access OPAC</a></p>
+            <h4>OPAC</h4>
+            <p>Search for CIP library holdings through the Online Public Access Catalogue (OPAC). <a href="https://library.consolatainstituteofphilosophy.com" target="_blank">Access OPAC</a></p>
 
-<!-- <h2>Contact Us</h2>
-<p>If you have any questions, feel free to contact us at <a href="mailto:library.philosophicum@consolata.net">library.philosophicum@consolata.net</a></p>
+            <!-- <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to contact us at <a href="mailto:library.philosophicum@consolata.net">library.philosophicum@consolata.net</a></p>
 
-        </div> 
-        <div class="vc-caption"> 
-          <h4>Rev. Fr. Dr. James Kabata</h4> 
-          <p>Vice Chancellor</p> 
-        </div> 
-      </div> 
-    </div> 
-  </div> </section> 
-  <p></p> -->
+                    </div> 
+                    <div class="vc-caption"> 
+                      <h4>Rev. Fr. Dr. James Kabata</h4> 
+                      <p>Vice Chancellor</p> 
+                    </div> 
+                  </div> 
+                </div> 
+              </div> </section> 
+              <p></p> -->
 {% endblock %}

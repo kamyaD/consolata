@@ -109,7 +109,7 @@ def view_individual_sudent(request):
     template = 'admin/individual_stident.html'
 
     try:
-        student = TblStudentsAdmissions.objects.get(email=request.user.email)
+        student = TblStudentsAdmissions.objects.filter(email=request.user.email).first()
         print("student", student.first_name)
 
         # Pre-fill the form with student instance data

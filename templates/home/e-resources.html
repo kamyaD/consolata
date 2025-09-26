@@ -1,0 +1,182 @@
+{% load static %}
+{% block extra_css %}
+<link href="{% static 'css/style_dynamic.css' %}" rel="stylesheet">
+<style>
+  /* Page Layout */
+  .eresources-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+  }
+
+  /* Sidebar (Quick Links) */
+  .vc-sidebar {
+    flex: 1;
+    max-width: 250px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .vc-sidebar h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #0f62fe;
+    padding-bottom: 5px;
+    color: #111827;
+  }
+  .vc-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .vc-sidebar ul li {
+    margin-bottom: 12px;
+  }
+  .vc-sidebar ul li a {
+    color: #0f62fe;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .vc-sidebar ul li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Main Content */
+  .vc-main {
+    flex: 3;
+  }
+  .eresources-header {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+  }
+  .eresources-meta {
+    color: #6b7280;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  /* Table styling */
+  .eresources-table-wrapper {
+    overflow-x: auto;
+  }
+  .eresources-table {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.95rem;
+  }
+  .eresources-table th,
+  .eresources-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    vertical-align: top;
+    text-align: left;
+  }
+  .eresources-table th {
+    background-color: #f3f4f6;
+    font-weight: 700;
+    color: #111827;
+  }
+  .eresources-table tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  .eresources-table a {
+    color: #0f62fe;
+    text-decoration: none;
+  }
+  .eresources-table a:hover {
+    text-decoration: underline;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 900px) {
+    .eresources-container {
+      flex-direction: column;
+    }
+    .vc-sidebar {
+      max-width: 100%;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div class="eresources-container">
+    <!-- Sidebar -->
+    <aside class="vc-sidebar">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="{% url 'home:home' %}">Home</a></li>
+        <li><a href="https://repository.consolatainstituteofphilosophy.com:8443/jspui/">Repository</a></li>
+        <li><a href="https://library.consolatainstituteofphilosophy.com/">Library Search</a></li>
+        <li><a href="https://maktaba.consolatainstituteofphilosophy.com/">Library Intranet</a></li>
+        <li><a href="{% url 'home:e-resources' %}">e-resources</a></li>
+        <li><a href="https://maktaba.consolatainstituteofphilosophy.com/">Maktaba</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="vc-main">
+      <h1 class="eresources-header">Subscribed E-Resources — 2025</h1>
+      <div class="eresources-meta">
+        Official list of subscribed e-resources, descriptions and access links.
+      </div>
+
+      <div class="eresources-table-wrapper">
+        <table class="eresources-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>EBSCO Host Research Databases</td><td>The databases provide access to just over 16,500 abstracted and indexed journals from all branches of science, technology, medicine, social sciences and humanities.</td><td><a href="http://search.ebscohost.com/" target="_blank">search.ebscohost.com</a></td></tr>
+            <tr><td>EBSCO ATLA</td><td>An essential resource for religious and theological studies, providing bibliographic records covering biblical studies, world religions, church history and religion in social issues.</td><td><a href="https://www.ebsco.com/academic-libraries/subjects/religion-philosophy" target="_blank">ebsco.com/religion-philosophy</a></td></tr>
+            <tr><td>Oxford Journals</td><td>291 titles receiving an Impact Factor. Journals in Medicine & Health, Arts & Humanities, Sciences & Mathematics, Social Sciences and Law.</td><td><a href="https://academic.oup.com/journals" target="_blank">academic.oup.com/journals</a></td></tr>
+            <tr><td>Sage Research Methods</td><td>Subject Strengths: Research methods, qualitative and quantitative, cases, videos, datasets.</td><td><a href="https://methods.sagepub.com/" target="_blank">methods.sagepub.com</a></td></tr>
+            <tr><td>Taylor & Francis Journals</td><td>Information Science; Language & Literature; Law; Mathematics & Statistics; Medicine, Dentistry, Nursing & Allied Health; Visual Arts; Physical Sciences; Social Sciences; Sports, Leisure, Travel & Tourism and Urban Studies.</td><td><a href="https://www.tandfonline.com/" target="_blank">tandfonline.com</a></td></tr>
+            <tr><td>Taylor & Francis e-Books</td><td>5,000 titles (Perpetual Access). Access to Humanities, Social Sciences, Behavioural Sciences, Built Environment, STM and Law content.</td><td><a href="https://www.taylorfrancis.com/search?isLicensed=true&key=" target="_blank">taylorfrancis.com</a></td></tr>
+            <tr><td>Wiley Online Library</td><td>Full 2022 collection. Access to journal titles which cover life, health and physical sciences, social science and the humanities.</td><td><a href="https://onlinelibrary.wiley.com/" target="_blank">onlinelibrary.wiley.com</a></td></tr>
+            <tr><td>PROQUEST (Academic Complete)</td><td>ProQuest preserves rich, vast and varied information and packages it with digital technologies that enhance discovery, sharing and management.</td><td><a href="https://ebookcentral.proquest.com/lib/" target="_blank">ebookcentral.proquest.com/lib/</a></td></tr>
+            <tr><td>OECD iLibrary</td><td>OECD iLibrary is the online library of the Organisation for Economic Cooperation and Development featuring books, papers and statistics.</td><td><a href="https://www.oecd-ilibrary.org/" target="_blank">oecd-ilibrary.org</a></td></tr>
+            <tr><td>Project Muse</td><td>High quality books and journals in the humanities and social sciences from university presses and scholarly societies.</td><td><a href="https://muse.jhu.edu/browse" target="_blank">muse.jhu.edu/browse</a></td></tr>
+            <tr><td>University of Chicago Press</td><td>Journals presenting original research from international scholars in Social Sciences, Humanities, Education, Biological and Medical Sciences, and Physical Sciences.</td><td><a href="https://www.journals.uchicago.edu/" target="_blank">journals.uchicago.edu</a></td></tr>
+            <tr><td>Henry Stewart Talks</td><td>Subject Strength: Biomedicine, Life Sciences, Marketing and Management collection.</td><td><a href="https://hstalks.com/" target="_blank">hstalks.com</a></td></tr>
+            <tr><td>IEEE Xplore</td><td>Electrical Engineering, Telecommunications, Computer Science and many related fields.</td><td><a href="https://ieeexplore.ieee.org/Xplore/home.jsp" target="_blank">ieeexplore.ieee.org</a></td></tr>
+            <tr><td>Lexis Nexis Legal Library</td><td>Thousands of trusted legal, tax and regulatory sources including Butterworths, Halsbury's Laws, Tolley’s and many primary source materials.</td><td><a href="https://www.lexisnexis.com/uk/legal/" target="_blank">lexisnexis.com/uk/legal</a></td></tr>
+            <tr><td>BUKU</td><td>Covers e-books in technical and vocational training (TVETs) including carpentry, agriculture, civil engineering, electrical infrastructure, hospitality, mechatronics and more.</td><td><a href="https://buku.app/login" target="_blank">buku.app/login</a></td></tr>
+            <tr><td>Wolters Kluwer — Basic Sciences Collection</td><td>Covers journals, cases, videos, clinical skills in Health sciences including medical education, pharmacology, physiology and related topics.</td><td><a href="https://lwwhealthlibrary.com/umbrella-index.aspx" target="_blank">lwwhealthlibrary.com/umbrella-index.aspx</a></td></tr>
+            <tr><td>Wolters Kluwers Ovid eBooks</td><td>Covers ebooks in Health sciences including biochemistry, anatomy, microbiology, epidemiology and pathology.</td><td><a href="https://ovidsp.ovid.com/autologin.html" target="_blank">ovidsp.ovid.com/autologin.html</a></td></tr>
+            <tr><td>JSTOR</td><td>Covers Economics, History, Political science, Archaeology, African Studies, Music, Art & Art History, Business and many more.</td><td><a href="https://www.jstor.org/" target="_blank">jstor.org</a></td></tr>
+            <tr><td>Royal Society</td><td>Subject strength: biochemistry, immunology, bioinformatics, ecology, microbiology and many more.</td><td><a href="https://royalsociety.org/" target="_blank">royalsociety.org</a></td></tr>
+            <tr><td>Duke University Press — E-Duke Journals</td><td>Scholarly collection across African studies, anthropology, literary studies, film & media and more.</td><td><a href="https://read.dukeupress.edu/" target="_blank">read.dukeupress.edu</a></td></tr>
+            <tr><td>Edward Elgar Publishing</td><td>Business management, education, economics, geography, innovation, research methods and development studies.</td><td><a href="https://www.e-elgar.com/" target="_blank">e-elgar.com</a></td></tr>
+            <tr><td>Project Euclid (Euclid Prime Collection)</td><td>Applied mathematics, statistics, theoretical mathematics and Mathematical Sciences Publishers journals.</td><td><a href="https://projecteuclid.org/" target="_blank">projecteuclid.org</a></td></tr>
+            <tr><td>Mathematical Sciences Publishers</td><td>Provides free access to MSP’s journals; subject coverage: mathematics, mechanics & engineering.</td><td><a href="https://msp.org/publications/journals/" target="_blank">msp.org/publications/journals/</a></td></tr>
+            <tr><td>OpenEdition Journals</td><td>Bundle of 175 journals in the Humanities and Social Sciences published by university presses and small academic publishers.</td><td><a href="https://journals.openedition.org/?lang=en" target="_blank">journals.openedition.org</a></td></tr>
+            <tr><td>European Respiratory Journals</td><td>Adult and paediatric respiratory medicine including epidemiology, immunology, oncology and thoracic surgery.</td><td><a href="https://erj.ersjournals.com/" target="_blank">erj.ersjournals.com</a></td></tr>
+            <tr><td>International Water Association (IWA Publishing)</td><td>Publishes 17 peer-reviewed journals in water and environmental research.</td><td><a href="https://www.iwapublishing.com/journals" target="_blank">iwapublishing.com/journals</a></td></tr>
+            <tr><td>The Company of Biologists' Journals</td><td>Free access to Development, Journal of Cell Science, and Journal of Experimental Biology.</td><td><a href="https://www.biologists.com/journals/" target="_blank">biologists.com/journals/</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock %}

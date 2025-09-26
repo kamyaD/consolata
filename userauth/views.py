@@ -4,25 +4,34 @@ from .forms import CustomUserCreationForm
 from student.models import TblStudentsAdmissions
 from django.contrib import messages
 from django.db import IntegrityError
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
-        
+
         if form.is_valid():
-            try:
-                form.save()
-                messages.success(request, "Account created successfully.")
-                return redirect('userauth:login')
-            except IntegrityError as e:
-                print("IntegrityError:", e)
-                if "Duplicate entry" in str(e):
-                    form.add_error('first_name', 'Username already exists.')
-                else:
+            # Check if a user with this email or username already exists
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+
+            if User.objects.filter(username=username).exists():
+                form.add_error('username', 'This username is already taken.')
+            elif User.objects.filter(email=email).exists():
+                form.add_error('email', 'This email is already registered.')
+            else:
+                try:
+                    form.save()
+                    messages.success(request, "Account created successfully.")
+                    return redirect('userauth:login')
+                except IntegrityError as e:
+                    print("IntegrityError:", e)
                     form.add_error(None, 'Something went wrong. Please try again.')
     else:
         form = CustomUserCreationForm()
-    
+
     return render(request, 'userauth/register.html', {'form': form})
 
 def login_view(request):

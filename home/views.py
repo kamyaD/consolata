@@ -47,3 +47,7 @@ def home(request):
 
 def library(request):
     return render(request, 'home/library.html')
+
+def e_resources(request):
+    return render(request, 'home/e-resources.html')
+

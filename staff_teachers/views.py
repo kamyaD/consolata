@@ -128,8 +128,6 @@ def fetch_student_class_sign(request):
 
 
 
-
-
 def generate_timetable_pdf(request):
     # Fetch all timetable records
     tables = TimetableEntry.objects.all()

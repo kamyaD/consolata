@@ -16,8 +16,8 @@ class StudentUpdateForm(forms.ModelForm):
     class Meta:
         model = TblStudentsAdmissions
         fields = [
-            "first_name", "sir_name", "other_names", "gender", "nationality", "id_passport", 
-            "date_of_birth", "marital_status", "diocese", "religion", "congregation", 
+            "first_name", "last_name","sir_name", "other_names", "gender", "nationality", "id_passport", 
+            "date_of_birth", "birth_place","marital_status", "diocese", "religion", "congregation", 
             "permanent_adress", "email", "telephone", "next_of_kin", "next_of_kin_address", 
             "next_of_kin_email", "next_of_kin_phone", "registration_status", "school", 
             "school_of_philosophy", "school_of_theology", "school_of_counselling", 

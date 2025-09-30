@@ -64,7 +64,11 @@ DURATION_CHOICES = [
     ('1 Months', '1 Months'),
     ('2 Months', '2 Months'),
     ('3 Months', '3 Months'),
-    ('4 Months', '4 Months')
+    ('4 Months', '4 Months'),
+    ('1 Year', '1 Year'),
+    ('2 Year', '2 Year'),
+    ('3 Year', '3 Year'),
+    ('4 Year', '4 Year'),
 ]
 
 MODALITY_OF_STUDY_CHOICES = [

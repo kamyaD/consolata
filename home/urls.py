@@ -14,6 +14,5 @@ urlpatterns = [
     path('requirements/', views.requirements, name='requirements'),
     path('library/', views.library, name='library'),
     path('e-resources/', views.e_resources, name='e-resources'),
-
-   
+    path('publications/', views.publications, name='publications')
 ]

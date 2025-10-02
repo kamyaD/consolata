@@ -52,3 +52,6 @@ def library(request):
 def e_resources(request):
     return render(request, 'home/e-resources.html')
 
+def publications(request):
+    return render(request, 'home/publications.html')
+

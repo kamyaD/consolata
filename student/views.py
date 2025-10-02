@@ -113,7 +113,7 @@ def view_individual_sudent(request):
         print("student", student.first_name)
 
         # Pre-fill the form with student instance data
-        form = StudentCreationForm(instance=student)
+        form = StudentUpdateForm(instance=student)
 
         context = {
             'student': student,
@@ -151,6 +151,7 @@ def update_student(request, pk):
             messages.success(request, "Student record updated successfully.")
             return redirect("consolata_admin:view-student", pk=student.pk)
     else:
+        messages.error(request, "Please fill all the required fields.")
         form = StudentUpdateForm(instance=student)
     
     return render(request, "consolata_admin/student_edit.html", {"form": form, "student": student})

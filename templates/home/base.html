@@ -94,10 +94,12 @@
       <div>Call: +254 733 777 307 · admissions@ciu.ac.ke</div>
       <div class="cta">
         <a class="btn" href="https://www.consolatalanguagecentre.co.ke/">Language Center</a>
-        <a class="btn" href="#elearning">E-Learning</a>
+        <!-- <a class="btn" href="#elearning">E-Learning</a> -->
         <a class="btn" href="{% url 'home:library' %}">Library</a>
         <a class="btn" href="https://ciu.ac.ke:2096/">Emails</a>
-        <a class="btn primary" href="{% url 'home:requirements' %}">Apply Now</a>
+        <a class="btn primary" href="{% url 'home:requirements' %}">Requirements</a>
+        <a class="btn primary" href="{% url 'student:online-application' %}">Online Application</a>
+        <!-- <li><center> <button class="btn btn-secondary">Application Form</button></center></li> -->
       </div>
     </div>
   </div>
@@ -108,7 +110,7 @@
       <div class="brand">
         <div class="logo">
           <a href="/">
-            <img src="{% static 'img/background-less-photo.png' %}" alt="Consolata International University Logo" style="height:60px; width:auto;">
+            <img src="{% static 'img/background-less-photo.png' %}" alt="Logo" style="height:60px; width:auto;">
           </a>
         </div>
         <div>

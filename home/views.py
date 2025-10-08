@@ -44,7 +44,7 @@ def home(request):
         "testimonials": testimonials,
     })
 
-@login_required
+# @login_required
 def library(request):
     return render(request, 'home/library.html')
 
@@ -54,4 +54,7 @@ def e_resources(request):
 
 def publications(request):
     return render(request, 'home/publications.html')
+
+def psychology_admissions(request):
+    return render(request, 'home/psychology_admissions.html')
 

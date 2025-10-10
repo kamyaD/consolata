@@ -1,0 +1,117 @@
+{% extends 'home/base2.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <a href="{% url 'student:applicants_list' %}" class="btn btn-secondary mb-3">⬅ Back to List</a>
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4>Application Details - {{ application.surname }} {{ application.first_name }}</h4>
+        </div>
+        <div class="card-body">
+
+            <!-- ✅ Personal Information -->
+            <h5 class="mt-3">👤 Personal Information</h5>
+            <hr>
+            <p><strong>Full Name:</strong> {{ application.surname }} {{ application.first_name }} {{ application.other_names }}</p>
+            <p><strong>Gender:</strong> {{ application.get_gender_display }}</p>
+            <p><strong>Citizenship:</strong> {{ application.citizenship }}</p>
+            <p><strong>Date of Birth:</strong> {{ application.date_of_birth }}</p>
+            <p><strong>Place of Birth:</strong> {{ application.place_of_birth }}</p>
+            <p><strong>Marital Status:</strong> {{ application.get_marital_status_display }}</p>
+
+            <!-- ✅ Religious Info -->
+            <h5 class="mt-4">✝ Religious Details & Address</h5>
+            <hr>
+            <p><strong>Religious Affiliation:</strong> {{ application.religious_affiliation }}</p>
+            <p><strong>Religious Status:</strong> {{ application.get_religious_status_display }}</p>
+            <p><strong>Diocese:</strong> {{ application.diocese }}</p>
+            <p><strong>Congregation:</strong> {{ application.congregation }}</p>
+            <p><strong>Permanent Address:</strong> {{ application.permanent_address }}</p>
+
+            <!-- ✅ Next of Kin -->
+            <h5 class="mt-4">👪 Next of Kin / Emergency Contact</h5>
+            <hr>
+            <p><strong>Address:</strong> {{ application.next_of_kin_address }}</p>
+            <p><strong>Email:</strong> {{ application.next_of_kin_email }}</p>
+            <p><strong>Phone:</strong> {{ application.next_of_kin_phone }}</p>
+
+            <!-- ✅ Program Selection -->
+            <h5 class="mt-4">🎓 Programme Information</h5>
+            <hr>
+            <p><strong>Study Mode:</strong> {{ application.get_study_mode_display }}</p>
+            <p><strong>School Applied:</strong> {{ application.school_applied }}</p>
+            <p><strong>Programme:</strong> {{ application.programme_applied }}</p>
+            <p><strong>Expected Duration:</strong> {{ application.anticipated_duration_years }} Years</p>
+
+            <!-- ✅ Education History -->
+            <h5 class="mt-4">📚 Education Background</h5>
+            <hr>
+            {% if education_history %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Institution Type</th>
+                        <th>Name</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Qualification</th>
+                        <th>Grade/Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for edu in education_history %}
+                        <tr>
+                            <td>{{ edu.get_institution_type_display }}</td>
+                            <td>{{ edu.institution_name }}</td>
+                            <td>{{ edu.from_year }}</td>
+                            <td>{{ edu.to_year }}</td>
+                            <td>{{ edu.qualification }}</td>
+                            <td>{{ edu.grade_or_result }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>No education history provided.</p>
+            {% endif %}
+
+            <!-- ✅ Sponsor & Recommendation -->
+            <h5 class="mt-4">🤝 Sponsor & Recommendation</h5>
+            <hr>
+            <p><strong>Recommending Authority:</strong> {{ application.recommending_authority }}</p>
+            <p><strong>Recommending Organization:</strong> {{ application.recommending_organization }}</p>
+            <p><strong>Sponsor Name:</strong> {{ application.sponsor_name }}</p>
+            <p><strong>Sponsor Type:</strong> {{ application.sponsor_type }}</p>
+            <p><strong>Sponsor Contact:</strong> {{ application.sponsor_phone }} / {{ application.sponsor_email }}</p>
+
+            <!-- ✅ Disability & Final Declaration -->
+            <h5 class="mt-4">⚕ Disability & Declaration</h5>
+            <hr>
+            <p><strong>Has Disability:</strong> {{ application.has_disability }}</p>
+            <p><strong>Nature:</strong> {{ application.nature_of_disability }}</p>
+            <p><strong>Referral Source:</strong> {{ application.referral_source }}</p>
+            <p><strong>Consent Signed:</strong> {% if application.consent_signed %} ✅ Yes {% else %} ❌ No {% endif %}</p>
+
+            <h5 class="mt-4">Attachments</h5>
+            <hr>
+            {% if application.attachments.all %}
+            <ul class="list-group">
+                {% for att in application.attachments.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                    <strong>{{ att.get_attachment_type_display }}</strong>
+                    <div class="small text-muted">{{ att.original_filename }}</div>
+                    </div>
+                    <a class="btn btn-sm btn-outline-primary" href="{{ att.file.url }}" target="_blank" download>Download</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No attachments uploaded.</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

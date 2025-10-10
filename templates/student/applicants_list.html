@@ -1,0 +1,40 @@
+{% extends 'home/base2.html' %} {# Optional if you have a base template #}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Submitted Applications</h2>
+
+    {% if applicants %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="">
+                    <tr>
+                        <th>#</th>
+                        <th>Applicant Name</th>
+                        <th>Email</th>
+                        <th>Program</th>
+                        <th>School</th>
+                        <th>Submission Date</th>
+                        <!-- <th>Status</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for app in applicants %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'student:applicant_detail' app.id %} ">{{ app.surname }} {{ app.first_name }} {{ app.other_names }}</a></td>
+                        <td>{{ app.email }}</td>
+                        <td>{{ app.programme_applied }}</td>
+                        <td>{{ app.school_applied }}</td>
+                        <td>{{ app.created_at|date:"d M, Y - H:i" }}</td>
+                        <!-- <td><span class="badge bg-success">Submitted</span></td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">No applications submitted yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

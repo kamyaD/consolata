@@ -1,5 +1,5 @@
 from django import forms
-from student.models import TblStudentsAdmissions
+from student.models import TblStudentsAdmissions, StudentApplication
 
 class StudentCreationForm(forms.ModelForm):
     class Meta:
@@ -36,4 +36,19 @@ class StudentUpdateForm(forms.ModelForm):
             "registration_status": forms.Select(attrs={"class": "form-control"}),
             "school": forms.Select(attrs={"class": "form-control"}),
             "ever_studied_at_ciu": forms.Select(attrs={"class": "form-control"}),
+        }
+
+
+
+class StudentApplicationForm(forms.ModelForm):
+    class Meta:
+        model = StudentApplication
+        exclude = ['applicant_user', 'created_at', 'updated_at']
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+            'permanent_address': forms.Textarea(attrs={'rows': 2}),
+            'recommendation_address': forms.Textarea(attrs={'rows': 2}),
+            'sponsor_address': forms.Textarea(attrs={'rows': 2}),
+            'nature_of_disability': forms.Textarea(attrs={'rows': 2}),
+            'next_of_kin_address': forms.Textarea(attrs={'rows': 2}),
         }

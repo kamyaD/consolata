@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 from userauth.models import CustomUser
+from django.conf import settings
 # from staff_teachers.models import CourseResults
 
 
@@ -273,8 +274,6 @@ class StudentClassSignIN(models.Model):
     cssr = models.CharField(max_length=250, null=True, blank=True)
 
 
-
-
     
 class CourseCodes(models.Model):
     course_code = models.CharField(max_length=100, unique=True)
@@ -300,3 +299,190 @@ class CourseLists(models.Model):
 
     def __str__(self):
         return f"{self.course_code} - {self.semester} {self.year}"
+
+
+
+class StudentApplication(models.Model):
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ]
+
+    MARITAL_STATUS_CHOICES = [
+        ('single', 'Single'),
+        ('married', 'Married'),
+    ]
+
+    RELIGIOUS_STATUS_CHOICES = [
+        ('priest', 'Priest'),
+        ('deacon', 'Deacon'),
+        ('sister', 'Sister'),
+        ('brother', 'Brother'),
+        ('seminarian', 'Seminarian'),
+        ('none', 'Not Religious'),
+    ]
+
+    STUDY_MODE_CHOICES = [
+        ('fulltime', 'Full Time'),
+        ('parttime', 'Part Time'),
+        ('auditing', 'Auditing'),
+        ('evening', 'Evening Study'),
+        ('weekend', 'Weekend'),
+        ('distance', 'Distance Learning'),
+    ]
+
+    SCHOOL_APPLIED =[
+        ('school of Philosophy', 'School Of Philosophy'),
+        ('school of theology', 'School Of Theology'),
+        ('school of counselling psychology', 'School Of Counselling Psychology')
+    ]
+
+    PROGRAM_APPLIED =[
+        ('baccalaureate', 'Baccalaureate'),
+        ('bachelor', 'Bachelor'),
+        ('diploma', 'Diploma'),
+        ('certificate', 'Certificate')
+    ]
+
+    ANTICIPATED_DURATION =[
+        ('1 year', '1 Year'),
+        ('2 years', '2 Years'),
+        ('3 years', '3 Years'),
+        ('4 years', '4 Years')
+    ]
+
+    applicant_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+    )
+
+    # --- PERSONAL INFO ---
+    surname = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    other_names = models.CharField(max_length=150, blank=True, null=True)
+    gender = models.CharField(choices=GENDER_CHOICES, max_length=10)
+    citizenship = models.CharField(max_length=100)
+    passport_or_id_no = models.CharField(max_length=50)
+    date_of_birth = models.DateField()
+    place_of_birth = models.CharField(max_length=100, blank=True, null=True)
+    marital_status = models.CharField(choices=MARITAL_STATUS_CHOICES, max_length=10, blank=True, null=True)
+
+    # Religious details
+    religious_affiliation = models.CharField(max_length=100, blank=True, null=True)
+    religious_status = models.CharField(choices=RELIGIOUS_STATUS_CHOICES, max_length=20, blank=True, null=True)
+    diocese = models.CharField(max_length=150, blank=True, null=True)
+    congregation = models.CharField(max_length=150, blank=True, null=True)
+
+    # Contacts
+    permanent_address = models.TextField(blank=True, null=True)
+    email = models.EmailField(unique=False)
+    phone_number = models.CharField(max_length=30, blank=True, null=True)
+
+    # Next of kin
+    next_of_kin_name = models.CharField(max_length=150, blank=True, null=True)
+    next_of_kin_relationship = models.CharField(max_length=100, blank=True, null=True)
+    next_of_kin_address = models.TextField(blank=True, null=True)
+    next_of_kin_email = models.EmailField(blank=True, null=True)
+    next_of_kin_phone = models.CharField(max_length=30, blank=True, null=True)
+
+    # --- PROGRAM INFO ---
+    study_mode = models.CharField(max_length=20, choices=STUDY_MODE_CHOICES, blank=True, null=True)
+    school_applied = models.CharField(max_length=150, choices=SCHOOL_APPLIED, blank=True, null=True)
+    programme_applied = models.CharField(max_length=150, choices=PROGRAM_APPLIED, blank=True, null=True)
+    anticipated_duration_years = models.CharField(max_length=150, choices=ANTICIPATED_DURATION, blank=True, null=True)
+
+    studied_before = models.BooleanField(default=False)
+    previous_student_id = models.CharField(max_length=50, blank=True, null=True)
+    previous_school = models.CharField(max_length=150, blank=True, null=True)
+    enrollment_from = models.IntegerField(blank=True, null=True)
+    enrollment_to = models.IntegerField(blank=True, null=True)
+
+    # --- SPONSOR / RECOMMENDATION ---
+    recommending_authority = models.CharField(max_length=150, blank=True, null=True)
+    recommending_organization = models.CharField(max_length=150, blank=True, null=True)
+    recommendation_address = models.TextField(blank=True, null=True)
+    recommendation_phone = models.CharField(max_length=30, blank=True, null=True)
+    recommendation_email = models.EmailField(blank=True, null=True)
+
+    sponsor_name = models.CharField(max_length=150, blank=True, null=True)
+    sponsor_type = models.CharField(max_length=100, blank=True, null=True)
+    sponsor_address = models.TextField(blank=True, null=True)
+    sponsor_phone = models.CharField(max_length=30, blank=True, null=True)
+    sponsor_email = models.EmailField(blank=True, null=True)
+    sponsor_province = models.CharField(max_length=150, blank=True, null=True)
+
+    # --- OTHER INFO ---
+    referral_source = models.CharField(max_length=200, blank=True, null=True)  # How did you know about CIU?
+    has_disability = models.BooleanField(default=False)
+    nature_of_disability = models.TextField(blank=True, null=True)
+
+    # --- CONSENT ---
+    consent_signed = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    
+
+
+    def __str__(self):
+        return f"{self.surname} {self.first_name}"
+
+
+class EducationHistory(models.Model):
+    """
+    One-to-many education rows linked to StudentApplication.
+    type_of_institution can be: primary, secondary, college, seminary, university, other
+    """
+    INSTITUTION_TYPE_CHOICES = [
+        ('primary', 'Primary'),
+        ('secondary', 'Secondary'),
+        ('college', 'College'),
+        ('seminary', 'Seminary'),
+        ('university', 'University'),
+        ('other', 'Other'),
+    ]
+
+    application = models.ForeignKey(StudentApplication, related_name='education_rows', on_delete=models.CASCADE)
+    institution_type = models.CharField(max_length=20, choices=INSTITUTION_TYPE_CHOICES)
+    institution_name = models.CharField(max_length=255)
+    from_year = models.IntegerField(blank=True, null=True)
+    to_year = models.IntegerField(blank=True, null=True)
+    qualification = models.CharField(max_length=255, blank=True, null=True)
+    grade_or_result = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ['-to_year', 'institution_type']
+
+    def __str__(self):
+        return f"{self.institution_type} - {self.institution_name}"
+
+
+# app/models.py (append)
+
+class ApplicationAttachment(models.Model):
+    """
+    Stores uploaded files linked to a StudentApplication.
+    """
+    ATTACHMENT_TYPE_CHOICES = [
+        ('fee_receipt', 'Application Fee Receipt'),
+        ('id_passport', 'ID / Passport'),
+        ('passport_photo', 'Passport Photo'),
+        ('degree', 'Degree Certificate'),
+        ('transcript', 'Transcript'),
+        ('professional', 'Professional Qualification'),
+        ('diploma', 'Diploma / Certificate'),
+        ('highschool', 'High School Certificate'),
+        ('cv', 'Curriculum Vitae'),
+        ('recommendation', 'Recommendation Letter'),
+        ('letter_of_interest', 'Letter of Interest File'),
+        ('other', 'Other'),
+    ]
+
+    application = models.ForeignKey('StudentApplication', related_name='attachments', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='applications/documents/%Y/%m/%d/')
+    attachment_type = models.CharField(max_length=40, choices=ATTACHMENT_TYPE_CHOICES, default='other')
+    original_filename = models.CharField(max_length=512, blank=True, null=True)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.get_attachment_type_display()} - {self.original_filename or self.file.name}"
+

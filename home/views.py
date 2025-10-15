@@ -48,7 +48,7 @@ def home(request):
 def library(request):
     return render(request, 'home/library.html')
 
-@login_required
+# @login_required
 def e_resources(request):
     return render(request, 'home/e-resources.html')
 

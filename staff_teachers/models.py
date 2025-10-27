@@ -438,4 +438,18 @@ class CourseResults(models.Model):
     def __str__(self):
         return f"{self.student.first_name} {self.student.last_name} - {self.course_code}"
 
-    
+class PsychologyRegistration(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+    number = models.CharField(max_length=15)
+    email = models.EmailField()
+    gender = models.CharField(max_length=10)
+    category = models.CharField(max_length=50)
+    payment_code = models.CharField(max_length=50)
+    adm = models.CharField(max_length=20, blank=True, null=True)
+    registration_date = models.DateField(default=now)
+
+    class Meta:
+        managed = False
+        app_label = 'old_website_app'
+        db_table = 'tbl_psychology_registration'
+        

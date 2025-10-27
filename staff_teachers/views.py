@@ -4,10 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import (TblTeachersPay, TblSchoolInvoice,TblRecordSlip, ClaimForm, ClaimItem,
-                    Timetable, TblClaimSheet, TimetableEntry, CourseResults)
+                    Timetable, TblClaimSheet, TimetableEntry, CourseResults,PsychologyRegistration)
 from student.models import StudentClassSignIN, TblStudentsAdmissions,CourseLists
 from student.utils import render_to_pdf
-from .forms import TblClaimSheetForm, ClaimFormForm, TimetableEntryForm
+from .forms import TblClaimSheetForm, ClaimFormForm, TimetableEntryForm, PsychologyRegistrationForm
 import datetime
 import csv
 import io
@@ -23,6 +23,7 @@ from .forms import CourseCSVUploadForm, CourseEditForm
 from django.utils.timezone import now
 from collections import defaultdict
 from django.conf import settings
+
 
 
 
@@ -876,3 +877,31 @@ def clc_claim_form(request):
     }
 
     return render(request, template, context)
+
+@login_required
+def psychology_list(request):
+   
+    registrations = (
+        PsychologyRegistration.objects.using('old_website')
+        .all()
+        .order_by('-registration_date')
+    )
+
+    context = {'registrations': registrations}
+    return render(request, 'old_website_app/psychology_list.html', context)
+
+
+def psychology_register(request):
+    if request.method == 'POST':
+        form = PsychologyRegistrationForm(request.POST)
+        if form.is_valid():
+            # Save to the old_website database
+            instance = form.save(using='old_website')
+            messages.success(request, f"Registration for {instance.name} was successful!")
+            return redirect('psychology_register')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = PsychologyRegistrationForm()
+
+    return render(request, 'old_website_app/psychology_register.html', {'form': form})

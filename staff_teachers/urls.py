@@ -33,4 +33,6 @@ urlpatterns = [
     path('generate-transcript-pdf/<int:student_id>', views.generate_transcript_pdf, name='generate-transcript-pdf'),
     path('language-portal/', views.language_portal, name="language-portal"),
     path('clc-claim-form', views.clc_claim_form, name='clc-claim-form'),
+    path('psychology/', views.psychology_list, name='psychology_list'),
+    path('psychology/register/', views.psychology_register, name='psychology_register'),
 ]

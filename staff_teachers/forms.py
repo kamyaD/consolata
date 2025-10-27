@@ -1,7 +1,7 @@
 from django import forms
 from .models import TimetableEntry, TblClaimSheet, ClaimForm
 from student.models import CourseLists
-from staff_teachers.models import TblTeachersPay
+from staff_teachers.models import TblTeachersPay, PsychologyRegistration
 
 class TimetableEntryForm(forms.ModelForm):
     class Meta:
@@ -82,3 +82,23 @@ class ClcClaimForm(forms.ModelForm):
         model = TblTeachersPay
         fields = '__all__'
         
+
+
+
+class PsychologyRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = PsychologyRegistration
+        fields = ['name', 'number', 'email', 'gender', 'category', 'payment_code', 'adm', ]
+        widgets = {
+            'gender': forms.Select(choices=[
+                ('Male', 'Male'),
+                ('Female', 'Female'),
+                ('Other', 'Other'),
+            ]),
+            'category': forms.TextInput(attrs={'placeholder': 'e.g. Personal Development'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'number': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'payment_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'adm': forms.TextInput(attrs={'class': 'form-control'}),
+        }

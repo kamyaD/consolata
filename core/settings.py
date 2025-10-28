@@ -105,7 +105,6 @@ DATABASES = {
         
 }
 
-git 
 
 # Local DB
 # DATABASES = {

@@ -90,15 +90,23 @@ class PsychologyRegistrationForm(forms.ModelForm):
         model = PsychologyRegistration
         fields = ['name', 'number', 'email', 'gender', 'category', 'payment_code', 'adm', ]
         widgets = {
-            'gender': forms.Select(choices=[
+            'gender': forms.Select(attrs={'class': 'form-control'},choices=[
                 ('Male', 'Male'),
                 ('Female', 'Female'),
                 ('Other', 'Other'),
             ]),
-            'category': forms.TextInput(attrs={'placeholder': 'e.g. Personal Development'}),
+            'category': forms.Select(attrs={'class': 'form-control'}, choices=[
+            ('Personal development', 'Personal development'),
+            ('Priest', 'Priest'),
+            ('Brothers', 'Brothers'),
+            ('Sisters', 'Sisters'),
+            ('Formees', 'Formees'),
+            ('Others', 'Others'),
+            ]),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'number': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'registration_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'payment_code': forms.TextInput(attrs={'class': 'form-control'}),
             'adm': forms.TextInput(attrs={'class': 'form-control'}),
         }

@@ -93,7 +93,7 @@
                   </a>
                   <ul id="manageUserSubmenu" class="collapse list-unstyled ms-3">
                     <li><a class="sidebar-link" href="{% url 'consolata_admin:admin-panel' %}">Students</a></li>
-                    <li><a class="sidebar-link" href="{% url 'student:applicants_list' %}">Online applications</a></li>
+                    <li><a class="sidebar-link" href="{% url 'student:applicants_list' %}">Online Applications</a></li>
                     <li><a class="sidebar-link" href="{% url 'consolata_admin:mailing-list' %}" >Send Emails</a></li>
                   </ul>
                 </li>
@@ -138,6 +138,10 @@
                     
                   </ul>
                 </li>
+                <li class="sidebar-item">
+                  <a class="sidebar-link"  href="{% url 'staff_teachers:psychology_list' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Online Psychology Applications</a>
+                </li>
+                
                
                 {% endif %}
                 {% if request.user.role == "Admin" %}
@@ -331,7 +335,9 @@
                 <li class="sidebar-item">
                   <a class="sidebar-link"  href="{% url 'staff_teachers:claim-form-detail' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Claim Form</a>
                 </li>
-
+                <li class="sidebar-item">
+                  <a class="sidebar-link"  href="{% url 'staff_teachers:psychology_list' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Online Psychology Applications</a>
+                </li>
                 
                   
                 <!-- </ul> -->
@@ -347,6 +353,10 @@
                     <a class="sidebar-link" href="{% url 'staff_teachers:timetable' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Class Time Table</a>
                   </li>
                   <li class="sidebar-item"><a class="sidebar-link" href="{% url 'staff_teachers:all-claims' %}">Staff Claim Forms</a></li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link"  href="{% url 'staff_teachers:psychology_list' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Online Psychology Applications</a>
+                  </li>
+                  
                 <!-- </ul> -->
                 
               </ul>
@@ -359,11 +369,23 @@
                     <a class="sidebar-link" href="{% url 'staff_teachers:timetable' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Class Time Table</a>
                   </li>
                   <li class="sidebar-item"><a class="sidebar-link" href="{% url 'staff_teachers:all-claims' %}">Staff Claim Forms</a></li>
+                  <li class="sidebar-item">
+                    <a class="sidebar-link"  href="{% url 'staff_teachers:psychology_list' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Online Psychology Applications</a>
+                  </li>
+                  
                 <!-- </ul> -->
                 
               </ul>
 
               {% endif %}
+              {% if request.user.role == "Secretary" %}
+              
+                
+                <!-- <ul id="claimFormSubmenu" class="collapse list-unstyled ms-3"> -->
+                  <li class="sidebar-item">
+                    <a class="sidebar-link"  href="{% url 'staff_teachers:psychology_list' %}"><iconify-icon icon="solar:letter-line-duotone"></iconify-icon>Online Psychology Applications</a>
+                  </li>
+                  {% endif %}
               {% if request.user.role == "HOD Language" %}
               
                 

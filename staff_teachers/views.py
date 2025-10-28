@@ -882,7 +882,7 @@ def clc_claim_form(request):
 def psychology_list(request):
    
     registrations = (
-        PsychologyRegistration.objects.using('old_website')
+        PsychologyRegistration.objects
         .all()
         .order_by('-registration_date')
     )
@@ -896,9 +896,10 @@ def psychology_register(request):
         form = PsychologyRegistrationForm(request.POST)
         if form.is_valid():
             # Save to the old_website database
-            instance = form.save(using='old_website')
+            instance= form.save()
+            
             messages.success(request, f"Registration for {instance.name} was successful!")
-            return redirect('psychology_register')
+            return redirect('staff_teachers:psychology_register')
         else:
             messages.error(request, "Please correct the errors below.")
     else:

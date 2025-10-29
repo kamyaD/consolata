@@ -116,14 +116,14 @@ DATABASES = {
 #         'HOST': 'localhost',
 #         'PORT': '3306',
 #     },
-    # 'old_website':{
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'otijeuil_cipkenya_cip_website',
-    #     'USER': 'dommy',
-    #     'PASSWORD': 'dommy123',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306',
-    # }
+#     'old_website':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'otijeuil_cipkenya_cip_website',
+#         'USER': 'dommy',
+#         'PASSWORD': 'dommy123',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
         
 # }
 

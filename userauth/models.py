@@ -23,7 +23,6 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     ROLE_CHOICES = (
-        # ('Admin', 'Admin'),
         ('Student', 'Student'),
         ('Lecturer', 'Lecturer'),
         ('Formator', 'Formator'),
@@ -35,15 +34,15 @@ class CustomUser(AbstractUser):
         ('DVC Academics', 'DVC Academics'),
         ('HOD Language', 'HOD Language'),
         ('IT Administrator', 'IT Administrator'),
-    
     )
+
     DEPARTMENT_CHOICES = (
-        ('Philosophy', 'Philosophy'),   
+        ('Philosophy', 'Philosophy'),
         ('Language', 'Language'),
         ('Psychology', 'Psychology'),
         ('Theology', 'Theology'),
     )
-    
+
     GENDER_CHOICES = (
         ('Male', 'Male'),
         ('Female', 'Female')
@@ -52,29 +51,24 @@ class CustomUser(AbstractUser):
     MARITAL_CHOICES = (
         ('Single', 'Single'),
         ('Married', 'Married'),
-        ('Priest','Priest'),
+        ('Priest', 'Priest'),
         ('Sister', 'Sister')
     )
 
-
+    username = None  # disable the username field
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=300, choices=ROLE_CHOICES, blank=True)
-    is_active = models.BooleanField(default=False)
     school = models.CharField(max_length=20, choices=DEPARTMENT_CHOICES, blank=True)
-    # school = models.CharField(max_length=250, blank=True, null=True)
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     marital_status = models.CharField(max_length=10, choices=MARITAL_CHOICES, blank=True)
-    username = models.CharField(max_length=200, null=True, blank=True)
-
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    
+
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-    
+    REQUIRED_FIELDS = []  # no username field anymore
+
     objects = CustomUserManager()
 
-    
     def __str__(self):
         return self.email

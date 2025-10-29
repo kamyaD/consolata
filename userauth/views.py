@@ -13,13 +13,10 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
-            # Check if a user with this email or username already exists
-            username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
 
-            if User.objects.filter(username=username).exists():
-                form.add_error('username', 'This username is already taken.')
-            elif User.objects.filter(email=email).exists():
+            # Check if a user with this email already exists
+            if User.objects.filter(email=email).exists():
                 form.add_error('email', 'This email is already registered.')
             else:
                 try:
@@ -29,6 +26,8 @@ def register_view(request):
                 except IntegrityError as e:
                     print("IntegrityError:", e)
                     form.add_error(None, 'Something went wrong. Please try again.')
+        else:
+            print(form.errors)
     else:
         form = CustomUserCreationForm()
 

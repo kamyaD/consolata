@@ -444,7 +444,7 @@ class PsychologyRegistration(models.Model):
     email = models.EmailField()
     gender = models.CharField(max_length=10)
     category = models.CharField(max_length=100)
-    payment_code = models.CharField(max_length=50)
+    payment_code = models.CharField(max_length=50, blank=True, null=True)
     adm = models.CharField(max_length=20, blank=True, null=True)
     registration_date = models.DateField(default=now)
 

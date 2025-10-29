@@ -88,7 +88,7 @@ class ClcClaimForm(forms.ModelForm):
 class PsychologyRegistrationForm(forms.ModelForm):
     class Meta:
         model = PsychologyRegistration
-        fields = ['name', 'number', 'email', 'gender', 'category', 'payment_code', 'adm', ]
+        fields = ['name', 'number', 'email', 'gender', 'category', ]
         widgets = {
             'gender': forms.Select(attrs={'class': 'form-control'},choices=[
                 ('Male', 'Male'),
@@ -107,6 +107,6 @@ class PsychologyRegistrationForm(forms.ModelForm):
             'number': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'registration_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'payment_code': forms.TextInput(attrs={'class': 'form-control'}),
-            'adm': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'payment_code': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'adm': forms.TextInput(attrs={'class': 'form-control'}),
         }

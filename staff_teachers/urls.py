@@ -35,4 +35,5 @@ urlpatterns = [
     path('clc-claim-form', views.clc_claim_form, name='clc-claim-form'),
     path('psychology/', views.psychology_list, name='psychology_list'),
     path('psychology/register/', views.psychology_register, name='psychology_register'),
+    path('send-bulk-email/', views.send_bulk_email, name='send-bulk-email')
 ]

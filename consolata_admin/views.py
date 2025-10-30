@@ -127,7 +127,7 @@ def send_bulk_email(request):
     if request.method == 'POST':
         subject = request.POST.get('subject')
         message = request.POST.get('message')
-        from_email = 'you@example.com'  # or settings.DEFAULT_FROM_EMAIL
+        from_email = 'info@ciu.ac.ke'  # or settings.DEFAULT_FROM_EMAIL
 
         students = TblStudentsAdmissions.objects.exclude(email__isnull=True).exclude(email__exact='').exclude(mail_status='inactive')
 
@@ -149,7 +149,7 @@ def send_email_to_ndividual_applicant(request, id):
         subject = request.POST.get('subject')
         message = request.POST.get('message')
         attachment = request.FILES.get('attachment')
-        from_email = 'you@example.com'  # or settings.DEFAULT_FROM_EMAIL
+        from_email = 'info@ciu.ac.ke'  # or settings.DEFAULT_FROM_EMAIL
 
         student = TblStudentsAdmissions.objects.get(pk=id)
 

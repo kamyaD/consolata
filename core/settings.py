@@ -157,7 +157,7 @@ AUTHENTICATION_BACKENDS = ['userauth.backends.EmailBackend',
 
 # for production
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'mail.ciu.ac.ke'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'system@ciu.ac.ke'

@@ -8,6 +8,7 @@ from .models import (TblTeachersPay, TblSchoolInvoice,TblRecordSlip, ClaimForm, 
 from student.models import StudentClassSignIN, TblStudentsAdmissions,CourseLists
 from student.utils import render_to_pdf
 from .forms import TblClaimSheetForm, ClaimFormForm, TimetableEntryForm, PsychologyRegistrationForm
+from django.core.mail import send_mass_mail, EmailMessage
 import datetime
 import csv
 import io
@@ -906,3 +907,37 @@ def psychology_register(request):
         form = PsychologyRegistrationForm()
 
     return render(request, 'old_website_app/psychology_register.html', {'form': form})
+
+@login_required
+def send_bulk_email(request):
+    if request.method == 'POST':
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+        attachment = request.FILES.get('attachment')
+        from_email = 'info@ciu.ac.ke'
+
+        students = PsychologyRegistration.objects.exclude(email__isnull=True).exclude(email__exact='')
+
+        sent_count = 0
+        for student in students:
+            try:
+                email = EmailMessage(
+                    subject=subject,
+                    body=message,
+                    from_email=from_email,
+                    to=[student.email],
+                )
+
+                # Attach the file if provided
+                if attachment:
+                    email.attach(attachment.name, attachment.read(), attachment.content_type)
+
+                email.send(fail_silently=False)
+                sent_count += 1
+            except Exception as e:
+                print(f"Error sending to {student.email}: {e}")
+
+        messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients.")
+        return redirect('staff_teachers:psychology_list')  # replace with your actual redirect
+
+    return render(request, 'old_website_app/psychology_list.html')

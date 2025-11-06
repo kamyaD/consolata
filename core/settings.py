@@ -162,6 +162,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'system@ciu.ac.ke'
 EMAIL_HOST_PASSWORD = 'os0GbOm!ycf0Djny'
+EMAIL_TIMEOUT = 10000
 
 
 

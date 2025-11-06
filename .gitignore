@@ -19,3 +19,4 @@ media_files/
 *.DS_Store
 static/*
 media/*
+# .env 

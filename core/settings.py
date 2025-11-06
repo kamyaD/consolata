@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'consolata_admin',
     'widget_tweaks',
     'home',
+    'django_rq'
 ]
 
 MIDDLEWARE = [
@@ -163,6 +164,15 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'system@ciu.ac.ke'
 EMAIL_HOST_PASSWORD = 'os0GbOm!ycf0Djny'
 
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
 
 
 # Internationalization

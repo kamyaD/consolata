@@ -24,6 +24,8 @@ from .forms import CourseCSVUploadForm, CourseEditForm
 from django.utils.timezone import now
 from collections import defaultdict
 from django.conf import settings
+import django_rq
+from .tasks import  send_bulk_email_task
 
 
 
@@ -916,28 +918,11 @@ def send_bulk_email(request):
         attachment = request.FILES.get('attachment')
         from_email = 'info@ciu.ac.ke'
 
-        students = PsychologyRegistration.objects.exclude(email__isnull=True).exclude(email__exact='')
+        attachment_data = None
+        if attachment:
+            attachment_data = (attachment.name, attachment.read(), attachment.content_type)
 
-        sent_count = 0
-        for student in students:
-            try:
-                email = EmailMessage(
-                    subject=subject,
-                    body=message,
-                    from_email=from_email,
-                    to=[student.email],
-                )
-
-                # Attach the file if provided
-                if attachment:
-                    email.attach(attachment.name, attachment.read(), attachment.content_type)
-
-                email.send(fail_silently=False)
-                sent_count += 1
-            except Exception as e:
-                print(f"Error sending to {student.email}: {e}")
-
-        messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients.")
-        return redirect('staff_teachers:psychology_list')  # replace with your actual redirect
-
-    return render(request, 'old_website_app/psychology_list.html')
+        queue = django_rq.get_queue('default')
+        queue.enqueue(send_bulk_email_task, subject, message, from_email, attachment_data)
+        messages.success(request, "Emails are being queued for sending (in batches).")
+        return redirect('staff_teachers:psychology_list')

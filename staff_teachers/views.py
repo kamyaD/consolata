@@ -8,7 +8,7 @@ from .models import (TblTeachersPay, TblSchoolInvoice,TblRecordSlip, ClaimForm, 
 from student.models import StudentClassSignIN, TblStudentsAdmissions,CourseLists
 from student.utils import render_to_pdf
 from .forms import TblClaimSheetForm, ClaimFormForm, TimetableEntryForm, PsychologyRegistrationForm
-from django.core.mail import send_mass_mail, EmailMessage
+from django.core.mail import send_mass_mail, EmailMessage,get_connection
 import datetime
 import csv
 import io
@@ -921,11 +921,17 @@ def send_bulk_email(request):
         sent_count = 0
         for student in students:
             try:
+                connection = get_connection(
+                    username='apikey',
+                    password=settings.EMAIL_HOST_PASSWORD,
+                    fail_silently=False,
+                )
                 email = EmailMessage(
                     subject=subject,
                     body=message,
                     from_email=from_email,
                     to=[student.email],
+                    connection=connection
                 )
 
                 # Attach the file if provided

@@ -168,10 +168,11 @@ EMAIL_TIMEOUT = 10000
 
 RQ_QUEUES = {
     'default': {
-        'URL': 'rediss://default:AV4yAAIncDI4ZDQyZjdlOTQxNGQ0ZjkwOTM0NmIyZTUxNDkwMDY4Y3AyMjQxMTQ@real-caiman-24114.upstash.io:6379',
+        'URL': 'rediss://default:AV4yAAIncDI4ZDQyZjdlOTQxNGQ0ZjkwOTM0NmIyZTUxNDkwMDY4Y3AyMjQxMTQ@real-caiman-24114.upstash.io:6380',
         'DEFAULT_TIMEOUT': 360,
     }
 }
+
 
 
 # Internationalization

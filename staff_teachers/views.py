@@ -925,6 +925,7 @@ def send_bulk_email(request):
                     username='apikey',
                     password=settings.EMAIL_HOST_PASSWORD,
                     fail_silently=False,
+                    EMAIL_TIMEOUT = 300
                 )
                 email = EmailMessage(
                     subject=subject,

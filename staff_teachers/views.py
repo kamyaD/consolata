@@ -24,8 +24,7 @@ from .forms import CourseCSVUploadForm, CourseEditForm
 from django.utils.timezone import now
 from collections import defaultdict
 from django.conf import settings
-import time
-
+import time, re
 
 
 
@@ -917,17 +916,18 @@ def send_bulk_email(request):
         attachment = request.FILES.get('attachment')
         from_email = 'info@ciu.ac.ke'
 
-        # Get all valid student emails
-        students = list(
-            PsychologyRegistration.objects.filter(email__isnull=False)
-            .exclude(email__exact='')
-        )
+        # 1. Get valid emails
+        valid_email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
+        students = PsychologyRegistration.objects.exclude(email__isnull=True).exclude(email__exact='')
+        valid_students = [s for s in students if valid_email_regex.match(s.email.strip())]
 
-        total_students = len(students)
+        total = len(valid_students)
         sent_count = 0
-        batch_size = 100
+        batch_size = 50  # Send 50 at a time
 
-        # Use one connection for efficiency
+        print(f"Preparing to send to {total} valid recipients...")
+
+        # 2. Reuse one SMTP connection
         connection = get_connection(
             username='apikey',
             password=settings.EMAIL_HOST_PASSWORD,
@@ -935,9 +935,9 @@ def send_bulk_email(request):
             timeout=3600  # 1 hour timeout
         )
 
-        for i in range(0, total_students, batch_size):
-            batch = students[i:i + batch_size]
-            emails = []
+        for i in range(0, total, batch_size):
+            batch = valid_students[i:i + batch_size]
+            messages_batch = []
 
             for student in batch:
                 email = EmailMessage(
@@ -947,24 +947,20 @@ def send_bulk_email(request):
                     to=[student.email],
                     connection=connection
                 )
-
                 if attachment:
-                    attachment.open('rb')
                     email.attach(attachment.name, attachment.read(), attachment.content_type)
-                    attachment.close()
-
-                emails.append(email)
+                messages_batch.append(email)
 
             try:
-                sent = connection.send_messages(emails)
-                sent_count += sent or 0
-                print(f"Sent batch {i//batch_size + 1}: {sent or 0} emails")
+                connection.send_messages(messages_batch)
+                sent_count += len(batch)
+                print(f"Sent batch {i // batch_size + 1}: {len(batch)} emails")
+                time.sleep(2)  # optional pause to avoid rate limit
             except Exception as e:
-                print(f"Error sending batch {i//batch_size + 1}: {e}")
-                # Optional: wait a bit before retrying
-                time.sleep(2)
+                print(f"Error in batch {i // batch_size + 1}: {e}")
 
-        messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients out of {total_students}.")
+        connection.close()
+        messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients out of {total}.")
         return redirect('staff_teachers:psychology_list')
 
     return render(request, 'old_website_app/psychology_list.html')

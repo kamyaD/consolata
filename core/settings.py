@@ -157,12 +157,12 @@ AUTHENTICATION_BACKENDS = ['userauth.backends.EmailBackend',
 
 # for production
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.ciu.ac.ke'
+EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'system@ciu.ac.ke'
-EMAIL_HOST_PASSWORD = 'os0GbOm!ycf0Djny'
-
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
+DEFAULT_FROM_EMAIL = 'info@ciu.ac.ke'
 
 
 # Internationalization

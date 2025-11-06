@@ -916,35 +916,50 @@ def send_bulk_email(request):
         attachment = request.FILES.get('attachment')
         from_email = 'info@ciu.ac.ke'
 
-        students = PsychologyRegistration.objects.exclude(email__isnull=True).exclude(email__exact='')
-
+        # Fetch student emails
+        students = list(
+            PsychologyRegistration.objects.exclude(email__isnull=True).exclude(email__exact='')
+        )
+        batch_size = 100  # You can tune this (50–200 works best)
         sent_count = 0
-        for student in students:
-            try:
-                connection = get_connection(
-                    username='apikey',
-                    password=settings.EMAIL_HOST_PASSWORD,
-                    fail_silently=False,
-                    EMAIL_TIMEOUT = 300
-                )
-                email = EmailMessage(
-                    subject=subject,
-                    body=message,
-                    from_email=from_email,
-                    to=[student.email],
-                    connection=connection
-                )
 
-                # Attach the file if provided
-                if attachment:
-                    email.attach(attachment.name, attachment.read(), attachment.content_type)
+        try:
+            # One connection reused for all batches
+            connection = get_connection(
+                username='apikey',
+                password=settings.EMAIL_HOST_PASSWORD,
+                fail_silently=False,
+                timeout=300,  # 5 minutes per send batch
+            )
 
-                email.send(fail_silently=False)
-                sent_count += 1
-            except Exception as e:
-                print(f"Error sending to {student.email}: {e}")
+            # Process emails in batches
+            for i in range(0, len(students), batch_size):
+                batch = students[i:i + batch_size]
+                emails = []
+
+                for student in batch:
+                    email = EmailMessage(
+                        subject=subject,
+                        body=message,
+                        from_email=from_email,
+                        to=[student.email],
+                        connection=connection,
+                    )
+                    if attachment:
+                        email.attach(attachment.name, attachment.read(), attachment.content_type)
+                    emails.append(email)
+
+                # Send current batch
+                connection.send_messages(emails)
+                sent_count += len(batch)
+                print(f"✅ Sent batch {i // batch_size + 1} ({len(batch)} emails)")
+
+            connection.close()
+
+        except Exception as e:
+            print(f"❌ Error during batch send: {e}")
 
         messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients.")
-        return redirect('staff_teachers:psychology_list')  # replace with your actual redirect
+        return redirect('staff_teachers:psychology_list')
 
     return render(request, 'old_website_app/psychology_list.html')

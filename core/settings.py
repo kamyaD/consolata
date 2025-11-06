@@ -168,9 +168,7 @@ EMAIL_TIMEOUT = 10000
 
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
+        'URL': 'rediss://default:AV4yAAIncDI4ZDQyZjdlOTQxNGQ0ZjkwOTM0NmIyZTUxNDkwMDY4Y3AyMjQxMTQ@real-caiman-24114.upstash.io:6379',
         'DEFAULT_TIMEOUT': 360,
     }
 }

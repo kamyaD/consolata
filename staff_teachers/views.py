@@ -952,12 +952,12 @@ def send_bulk_email(request):
                 # Send current batch
                 connection.send_messages(emails)
                 sent_count += len(batch)
-                print(f"✅ Sent batch {i // batch_size + 1} ({len(batch)} emails)")
+                print(f"Sent batch {i // batch_size + 1} ({len(batch)} emails)")
 
             connection.close()
 
         except Exception as e:
-            print(f"❌ Error during batch send: {e}")
+            print(f"Error during batch send: {e}")
 
         messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients.")
         return redirect('staff_teachers:psychology_list')

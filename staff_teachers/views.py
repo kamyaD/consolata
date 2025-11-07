@@ -916,23 +916,27 @@ def send_bulk_email(request):
         attachment = request.FILES.get('attachment')
         from_email = 'info@ciu.ac.ke'
 
-        # 1. Get valid emails
+        # Validate emails
         valid_email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
         students = PsychologyRegistration.objects.exclude(email__isnull=True).exclude(email__exact='')
         valid_students = [s for s in students if valid_email_regex.match(s.email.strip())]
 
         total = len(valid_students)
         sent_count = 0
-        batch_size = 50  # Send 50 at a time
+        batch_size = 50
 
         print(f"Preparing to send to {total} valid recipients...")
 
-        # 2. Reuse one SMTP connection
+        # Read attachment data once
+        attachment_data = None
+        if attachment:
+            attachment_data = attachment.read()
+
         connection = get_connection(
             username='apikey',
             password=settings.EMAIL_HOST_PASSWORD,
             fail_silently=False,
-            timeout=3600  # 1 hour timeout
+            timeout=3600
         )
 
         for i in range(0, total, batch_size):
@@ -947,20 +951,18 @@ def send_bulk_email(request):
                     to=[student.email],
                     connection=connection
                 )
-                if attachment:
-                    email.attach(attachment.name, attachment.read(), attachment.content_type)
+                if attachment_data:
+                    email.attach(attachment.name, attachment_data, attachment.content_type)
                 messages_batch.append(email)
 
             try:
-                connection.send_messages(messages_batch)
-                sent_count += len(batch)
-                print(f"Sent batch {i // batch_size + 1}: {len(batch)} emails")
-                time.sleep(2)  # optional pause to avoid rate limit
+                sent_now = connection.send_messages(messages_batch)
+                sent_count += sent_now or 0
+                print(f"Sent batch {i // batch_size + 1}: {sent_now} emails")
+                time.sleep(2)  # Avoid rate limit
             except Exception as e:
                 print(f"Error in batch {i // batch_size + 1}: {e}")
 
         connection.close()
         messages.success(request, f"Bulk emails sent successfully to {sent_count} recipients out of {total}.")
         return redirect('staff_teachers:psychology_list')
-
-    return render(request, 'old_website_app/psychology_list.html')

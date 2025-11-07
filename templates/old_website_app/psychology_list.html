@@ -47,7 +47,7 @@
     <div class="modal-content">
       <div class="modal-body">
         
-        <form method="post" id="submitForm" action="{% url 'staff_teachers:send-bulk-email' %}" >
+        <form method="post" id="submitForm" enctype="multipart/form-data" action="{% url 'staff_teachers:send-bulk-email' %}">
           {% csrf_token %}
           <div class="card shadow mb-4">
             <div class="card-body">

@@ -11,7 +11,7 @@ from .forms import StudentCreationForm, StudentUpdateForm,StudentApplicationForm
 from staff_teachers.models import CourseResults
 from staff_teachers.models import Timetable
 from userauth.models import CustomUser
-from .utils import render_to_pdf
+# from .utils import render_to_pdf
 from django.db import transaction
 
 

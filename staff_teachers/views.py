@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from .models import (TblTeachersPay, TblSchoolInvoice,TblRecordSlip, ClaimForm, ClaimItem,
                     Timetable, TblClaimSheet, TimetableEntry, CourseResults,PsychologyRegistration)
 from student.models import StudentClassSignIN, TblStudentsAdmissions,CourseLists
-from student.utils import render_to_pdf
+# from student.utils import render_to_pdf
 from .forms import TblClaimSheetForm, ClaimFormForm, TimetableEntryForm, PsychologyRegistrationForm
 from django.core.mail import send_mass_mail, EmailMessage,get_connection
 import datetime

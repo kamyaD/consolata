@@ -72,7 +72,7 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True)
     marital_status = models.CharField(max_length=10, choices=MARITAL_CHOICES, blank=True)
     qualification = models.CharField(max_length=100, choices=QUALIFICATIONS_CHOICES, blank=True)
-    rates = models.IntegerField()
+    rates = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

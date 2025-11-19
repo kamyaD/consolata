@@ -50,7 +50,7 @@ def view_individual_sudent(request):
 
     except TblStudentsAdmissions.DoesNotExist:
         messages.error(request, "Requested student record does not exist. Please apply here")
-        return redirect('student:online-application')
+        return redirect('student:application_form')
 
 
 @login_required  

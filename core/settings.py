@@ -87,47 +87,47 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Production DB
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'otijeuil_consolata_local',
-#         'USER': 'otijeuil_admin',
-#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
-#         'HOST': '102.212.247.162',
-#         'PORT': '',
-#     },
-#     'old_website':{
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'otijeuil_cipkenya_cip_website',
-#         'USER': 'otijeuil_admin',
-#         'PASSWORD': 'WTL_T3p=jcEAPnjQ',
-#         'HOST': '102.212.247.162',
-#         'PORT': '',
-#     }
-        
-# }
-
-
-# Local DB
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'consolata_local',
-        'USER': 'dommy',
-        'PASSWORD': 'dommy123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'otijeuil_consolata_local',
+        'USER': 'otijeuil_admin',
+        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+        'HOST': '102.212.247.162',
+        'PORT': '',
     },
     'old_website':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'otijeuil_cipkenya_cip_website',
-        'USER': 'dommy',
-        'PASSWORD': 'dommy123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'USER': 'otijeuil_admin',
+        'PASSWORD': 'WTL_T3p=jcEAPnjQ',
+        'HOST': '102.212.247.162',
+        'PORT': '',
     }
         
 }
+
+
+# Local DB
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'consolata_local',
+#         'USER': 'dommy',
+#         'PASSWORD': 'dommy123',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     },
+#     'old_website':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'otijeuil_cipkenya_cip_website',
+#         'USER': 'dommy',
+#         'PASSWORD': 'dommy123',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+        
+# }
 
 
 
